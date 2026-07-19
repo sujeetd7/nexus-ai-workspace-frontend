@@ -2,7 +2,23 @@
   "extends": "../../configs/typescript/tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+
+    "jsx": "react-jsx",
+
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+
+    "types": ["react"],
+
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    "declaration": true,
+    "declarationMap": true
   },
-  "include": ["src/**/*"]
+  "include": ["src"]
 }
