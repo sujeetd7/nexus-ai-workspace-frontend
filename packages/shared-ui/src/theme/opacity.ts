@@ -1,13 +1,7 @@
 export const opacity = {
-  disabled: 0.38,
+  disabled: 0.45,
 
-  low: 0.54,
+  hover: 0.9,
 
-  medium: 0.72,
-
-  high: 0.87,
-
-  full: 1,
+  pressed: 0.75,
 } as const;
-
-export type Opacity = typeof opacity;

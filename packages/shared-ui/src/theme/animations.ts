@@ -1,11 +1,7 @@
 export const animations = {
-  fast: 150,
+  fast: "150ms",
 
-  normal: 250,
+  normal: "250ms",
 
-  slow: 400,
-
-  slower: 600,
+  slow: "400ms",
 } as const;
-
-export type Animations = typeof animations;

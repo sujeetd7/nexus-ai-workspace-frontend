@@ -1,14 +1,7 @@
-export type Nullable<T> = T | null;
+export type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
-export type Optional<T> = T | undefined;
+export type Status = "default" | "success" | "warning" | "danger" | "info";
 
-export type Maybe<T> = Nullable<T>;
+export type Shape = "square" | "rounded" | "pill";
 
-export type Primitive =
-  | string
-  | number
-  | boolean
-  | bigint
-  | symbol
-  | undefined
-  | null;
+export type Orientation = "horizontal" | "vertical";

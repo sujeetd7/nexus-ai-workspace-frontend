@@ -1,24 +1,28 @@
-export type ButtonVariant =
-  | "primary"
-  | "secondary"
-  | "outline"
-  | "ghost"
-  | "danger";
+import type { ReactNode } from "react";
 
-export type ButtonSize = "sm" | "md" | "lg";
+import type { Size } from "../../types/common";
+import type { BaseComponentProps } from "../../types/component";
+import type { PressHandler } from "../../types/events";
+import type { ColorScheme, Variant } from "../../types/variants";
 
-export interface ButtonProps {
-  label: string;
+export interface ButtonProps extends BaseComponentProps {
+  children?: ReactNode;
 
-  variant?: ButtonVariant;
+  variant?: Variant;
 
-  size?: ButtonSize;
+  colorScheme?: ColorScheme;
 
-  disabled?: boolean;
+  size?: Size;
 
   loading?: boolean;
 
+  disabled?: boolean;
+
   fullWidth?: boolean;
 
-  onPress?: () => void;
+  onPress?: PressHandler;
+
+  leftIcon?: ReactNode;
+
+  rightIcon?: ReactNode;
 }

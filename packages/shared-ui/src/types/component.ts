@@ -1,12 +1,13 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
-export interface BaseProps {
-  testID?: string;
+export interface BaseComponentProps {
+  children?: ReactNode;
 
   className?: string;
 
-  children?: React.ReactNode;
-}
-export interface ChildrenProps {
-  children?: ReactNode;
+  testID?: string;
+
+  accessibilityLabel?: string;
+
+  style?: unknown;
 }
