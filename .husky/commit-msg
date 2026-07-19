@@ -1,0 +1,5 @@
+pnpm commitlint --edit "$1"
+
+pnpm exec commitlint \
+  --config configs/commitlint/commitlint.config.cjs \
+  --edit "$1"

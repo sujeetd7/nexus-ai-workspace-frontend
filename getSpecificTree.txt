@@ -1,0 +1,36 @@
+function Show-Tree {
+    param(
+        [string]$Path = ".",
+        [string]$Indent = ""
+    )
+
+    $exclude = @(
+        "node_modules",
+        "dist",
+        "build",
+        "coverage",
+        ".git",
+        ".turbo",
+        ".next",
+        ".expo",
+        ".gradle",
+        ".idea",
+        ".vscode",
+        "Pods",
+        "DerivedData",
+        "bin",
+        "obj"
+    )
+
+    Get-ChildItem -LiteralPath $Path | Sort-Object PSIsContainer, Name | ForEach-Object {
+        if ($exclude -contains $_.Name) { return }
+
+        Write-Host "$Indent├── $($_.Name)"
+
+        if ($_.PSIsContainer) {
+            Show-Tree -Path $_.FullName -Indent "$Indent│   "
+        }
+    }
+}
+
+Show-Tree
