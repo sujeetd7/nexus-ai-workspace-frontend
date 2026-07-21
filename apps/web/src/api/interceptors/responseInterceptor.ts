@@ -1,5 +1,7 @@
 import type { AxiosResponse } from "axios";
 
-export function responseInterceptor(response: AxiosResponse): AxiosResponse {
+export function responseInterceptor<T>(
+  response: AxiosResponse<T>,
+): AxiosResponse<T> {
   return response;
 }

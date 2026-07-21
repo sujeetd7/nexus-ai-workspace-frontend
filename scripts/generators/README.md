@@ -2,16 +2,19 @@
 
 This directory contains all code generation infrastructure.
 
-Future generators:
+Implemented generators:
 
 - component
+- hook
+- slice
+
+Future generators:
+
 - screen
 - feature
-- hook
 - api
 - graphql
 - saga
-- slice
 - repository
 - service
 - zod

@@ -1,9 +1,10 @@
 import type { PropsWithChildren } from "react";
+
 import { lightTheme } from "../theme/light";
-import { ThemeContext } from "./ThemeContext";
+import { ThemeContext, type ThemeContextValue } from "./ThemeContext";
 
 export interface ThemeProviderProps extends PropsWithChildren {
-  theme?: typeof lightTheme;
+  theme?: ThemeContextValue;
 }
 
 export function ThemeProvider({

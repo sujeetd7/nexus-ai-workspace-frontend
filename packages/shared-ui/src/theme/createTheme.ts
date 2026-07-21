@@ -1,4 +1,4 @@
-import type { ThemeMode } from "../context";
+import type { ThemeMode } from "../providers/ThemeContext";
 import { darkTheme } from "./dark";
 import { lightTheme } from "./light";
 

@@ -32,13 +32,13 @@
     "typescript": "^5.8.3"
   },
   "engines": {
-    "node": ">=20.19.0"
+    "node": "22.22.2"
   },
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint .",
+    "lint": "cross-env ESLINT_USE_FLAT_CONFIG=false eslint .",
     "start": "react-native start",
     "test": "jest",
     "typecheck": "tsc --noEmit"

@@ -1,6 +1,8 @@
 name: Frontend Quality
 
 on:
+  workflow_dispatch:
+
   pull_request:
     branches:
       - main
@@ -12,7 +14,7 @@ on:
       - develop
 
 concurrency:
-  group: frontend-quality-${{ github.ref }}
+  group: frontend-quality-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -20,9 +22,9 @@ permissions:
 
 jobs:
   quality:
-    name: Lint, Typecheck, Test and Build
+    name: Install, Verify and Build
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
 
     steps:
       - name: Checkout repository
@@ -39,18 +41,18 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Print tool versions
+        run: |
+          node --version
+          pnpm --version
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm lint
+      - name: Validate dependency policy
+        run: pnpm deps:check
 
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Test
-        run: pnpm test
-
-      - name: Build web and shared packages
-        run: pnpm build
+      - name: Run quality pipeline
+        run: pnpm verify

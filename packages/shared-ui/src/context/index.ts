@@ -1,1 +1,5 @@
-export * from "./ThemeContext";
+export {
+  ThemeContext,
+  type ThemeContextValue,
+  type ThemeMode,
+} from "../providers/ThemeContext";

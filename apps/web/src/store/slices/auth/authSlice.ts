@@ -1,12 +1,17 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { AuthState, User } from "./types";
+
+import type { AuthResponse, AuthUser } from "../../../features/auth/types";
+import type { AuthState } from "./types";
 
 const initialState: AuthState = {
-  token: null,
+  accessToken: null,
   refreshToken: null,
   user: null,
   authenticated: false,
   loading: false,
+  initialized: false,
+  status: "idle",
+  error: null,
 };
 
 const authSlice = createSlice({
@@ -17,44 +22,93 @@ const authSlice = createSlice({
   reducers: {
     loginRequest(state) {
       state.loading = true;
+      state.error = null;
     },
 
-    loginSuccess(
+    authSuccess(state, action: PayloadAction<AuthResponse>) {
+      state.accessToken = action.payload.tokens.accessToken;
+
+      state.refreshToken = action.payload.tokens.refreshToken;
+
+      state.user = action.payload.user;
+      state.authenticated = true;
+      state.loading = false;
+      state.initialized = true;
+      state.status = "authenticated";
+      state.error = null;
+    },
+
+    authFailure(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.authenticated = false;
+      state.status = "unauthenticated";
+      state.error = action.payload;
+    },
+
+    sessionRestoreStarted(state) {
+      state.loading = true;
+      state.status = "restoring";
+      state.error = null;
+    },
+
+    sessionTokensRestored(
       state,
       action: PayloadAction<{
-        token: string;
+        accessToken: string;
         refreshToken: string;
-        user: User;
       }>,
     ) {
-      state.loading = false;
-
-      state.token = action.payload.token;
+      state.accessToken = action.payload.accessToken;
 
       state.refreshToken = action.payload.refreshToken;
 
-      state.user = action.payload.user;
-
+      state.loading = false;
+      state.initialized = true;
+      state.status = "authenticated";
       state.authenticated = true;
     },
 
-    loginFailure(state) {
-      state.loading = false;
+    sessionUserUpdated(state, action: PayloadAction<AuthUser>) {
+      state.user = action.payload;
     },
 
-    logout(state) {
-      state.token = null;
-
+    sessionRestoreFailed(state) {
+      state.accessToken = null;
       state.refreshToken = null;
-
       state.user = null;
-
       state.authenticated = false;
+      state.loading = false;
+      state.initialized = true;
+      state.status = "unauthenticated";
+    },
+
+    logoutCompleted(state) {
+      state.accessToken = null;
+      state.refreshToken = null;
+      state.user = null;
+      state.authenticated = false;
+      state.loading = false;
+      state.initialized = true;
+      state.status = "unauthenticated";
+      state.error = null;
+    },
+
+    clearAuthError(state) {
+      state.error = null;
     },
   },
 });
 
-export const { loginRequest, loginSuccess, loginFailure, logout } =
-  authSlice.actions;
+export const {
+  loginRequest,
+  authSuccess,
+  authFailure,
+  sessionRestoreStarted,
+  sessionTokensRestored,
+  sessionUserUpdated,
+  sessionRestoreFailed,
+  logoutCompleted,
+  clearAuthError,
+} = authSlice.actions;
 
 export default authSlice.reducer;

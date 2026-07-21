@@ -1,21 +1,18 @@
-export interface User {
-  id: string;
+import type { AuthUser } from "../../../features/auth/types";
 
-  email: string;
-
-  name: string;
-
-  roles: string[];
-}
+export type AuthStatus =
+  | "idle"
+  | "restoring"
+  | "authenticated"
+  | "unauthenticated";
 
 export interface AuthState {
-  token: string | null;
-
+  accessToken: string | null;
   refreshToken: string | null;
-
-  user: User | null;
-
+  user: AuthUser | null;
   authenticated: boolean;
-
   loading: boolean;
+  initialized: boolean;
+  status: AuthStatus;
+  error: string | null;
 }

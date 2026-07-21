@@ -1,0 +1,23 @@
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+
+export interface {{pascalName}}State {
+  loading: boolean;
+}
+
+const initialState: {{pascalName}}State = {
+  loading: false,
+};
+
+const {{name}}Slice = createSlice({
+  name: "{{name}}",
+  initialState,
+  reducers: {
+    setLoading(state, action: PayloadAction<boolean>) {
+      state.loading = action.payload;
+    },
+  },
+});
+
+export const { setLoading } = {{name}}Slice.actions;
+
+export default {{name}}Slice.reducer;
