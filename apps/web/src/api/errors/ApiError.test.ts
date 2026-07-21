@@ -85,4 +85,36 @@ describe("normalizeApiError", () => {
 
     expect(normalized.requestId).toBe("header-request-id");
   });
+
+  it("normalizes the backend nested error format", () => {
+    const axiosError = new AxiosError(
+      "Request failed",
+      "ERR_BAD_REQUEST",
+      undefined,
+      undefined,
+      {
+        status: 401,
+        statusText: "Unauthorized",
+        config: {
+          headers: new AxiosHeaders(),
+        },
+        headers: new AxiosHeaders(),
+        data: {
+          success: false,
+          error: {
+            code: "INVALID_CREDENTIALS",
+            message: "Email or password is incorrect.",
+          },
+          requestId: "request-123",
+        },
+      },
+    );
+
+    const normalized = normalizeApiError(axiosError);
+
+    expect(normalized.status).toBe(401);
+    expect(normalized.code).toBe("INVALID_CREDENTIALS");
+    expect(normalized.message).toBe("Email or password is incorrect.");
+    expect(normalized.requestId).toBe("request-123");
+  });
 });

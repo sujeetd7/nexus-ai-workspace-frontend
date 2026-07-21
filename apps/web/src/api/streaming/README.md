@@ -1,14 +1,15 @@
-# Streaming
+# Streaming Transport
 
-Streaming transport is intentionally deferred from Sprint 0.
+Streaming transport is deferred from Sprint 0.
 
-Planned support:
+Planned capabilities:
 
 - Server-Sent Events
 - WebSocket transport
 - cancellation
-- reconnection
-- authentication renewal
+- automatic reconnection
+- authenticated reconnect
 - request correlation
+- lifecycle monitoring
 
-Do not consume this package until implementation is complete.
+The streaming module must not be consumed until its implementation and tests are complete.

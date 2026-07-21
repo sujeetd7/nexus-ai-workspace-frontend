@@ -29,9 +29,15 @@ export class ApiError extends Error {
 }
 
 interface ErrorResponseBody {
-  message?: string;
-  error?: string;
+  success?: boolean;
+
+  error?: {
+    code?: string;
+    message?: string;
+  };
+
   code?: string;
+  message?: string;
   requestId?: string;
 }
 
@@ -55,14 +61,19 @@ export function normalizeApiError(error: unknown): ApiError {
 
   return new ApiError({
     status: axiosError.response?.status,
-    code: body?.code ?? axiosError.code,
+
+    code: body?.error?.code ?? body?.code ?? axiosError.code,
+
     message:
+      body?.error?.message ??
       body?.message ??
-      body?.error ??
       axiosError.message ??
       "The request failed.",
+
     data: body,
+
     requestId: body?.requestId ?? axiosError.response?.headers["x-request-id"],
+
     cause: error,
   });
 }
