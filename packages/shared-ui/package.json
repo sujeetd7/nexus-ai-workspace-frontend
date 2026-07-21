@@ -9,7 +9,7 @@
     "build": "echo \"No build yet\"",
     "lint": "echo \"No lint yet\"",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "echo \"No tests yet\"",
+    "test": "jest --passWithNoTests --config jest.config.cjs",
     "clean": "rimraf dist"
   },
   "peerDependencies": {

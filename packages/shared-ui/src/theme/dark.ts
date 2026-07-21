@@ -1,14 +1,12 @@
 import { breakpoints } from "../responsive";
-import {
-  animations,
-  elevation,
-  opacity,
-  radius,
-  shadows,
-  spacing,
-  typography,
-  zIndex,
-} from "./index";
+import { animations } from "./animations";
+import { elevation } from "./elevation";
+import { opacity } from "./opacity";
+import { radius } from "./radius";
+import { shadows } from "./shadows";
+import { spacing } from "./spacing";
+import { typography } from "./typography";
+import { zIndex } from "./zIndex";
 
 export const darkColors = {
   primary: "#3B82F6",

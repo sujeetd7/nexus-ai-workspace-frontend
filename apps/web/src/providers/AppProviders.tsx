@@ -1,13 +1,12 @@
 import type { PropsWithChildren } from "react";
-import { Provider } from "react-redux";
 
 import { ThemeProvider } from "@nexus/shared-ui";
-import { store } from "../store";
+import { ReduxProvider } from "./redux";
 
 export function AppProviders({ children }: PropsWithChildren) {
   return (
-    <Provider store={store}>
-      <ThemeProvider>{children}</ThemeProvider>
-    </Provider>
+    <ThemeProvider>
+      <ReduxProvider>{children}</ReduxProvider>
+    </ThemeProvider>
   );
 }

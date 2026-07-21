@@ -21,11 +21,6 @@ DerivedData
 *.ipa
 *.xcuserstate
 **/.xcode.env.local
-.turbo/
-.bundle/
-coverage/
-android/.gradle/
-ios/Pods/
 
 # Android/IntelliJ
 #
