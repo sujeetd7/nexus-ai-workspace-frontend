@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
     "clean": "rimraf dist",
-    "test": "jest --config jest.config.cjs --passWithNoTests"
+    "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
     "@nexus/shared-types": "workspace:*",
