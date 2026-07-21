@@ -1,0 +1,32 @@
+﻿Sprint 0 Branch Protection / Ruleset Evidence
+Generated: 2026-07-22 01:39:23 +05:30
+Repository: sujeetd7/nexus-ai-workspace-frontend
+Default branch probed: master
+
+gh binary: C:\Program Files\GitHub CLI\gh.exe
+
+=== gh auth status ===
+github.com
+  Γ£ô Logged in to github.com account sujeetd7 (keyring)
+  - Active account: true
+  - Git operations protocol: https
+  - Token: gho_************************************
+  - Token scopes: 'gist', 'read:org', 'repo', 'workflow'
+
+=== Repository rulesets (GET /repos/{owner}/{repo}/rulesets) ===
+gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)
+{"message":"Upgrade to GitHub Pro or make this repository public to enable this feature.","documentation_url":"https://docs.github.com/rest/repos/rules#get-all-repository-rulesets","status":"403"}
+
+=== Classic branch protection (GET /repos/{owner}/{repo}/branches/{branch}/protection) ===
+gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)
+{"message":"Upgrade to GitHub Pro or make this repository public to enable this feature.","documentation_url":"https://docs.github.com/rest/branches/branch-protection#get-branch-protection","status":"403"}
+
+=== Local readiness assets ===
+.github/CODEOWNERS: True
+.github/rulesets/default-branch-protection.json: True
+.github/workflows/quality.yml: True
+docs/sprint-0/branch-protection-plan.md: True
+
+=== Interpretation ===
+Ruleset API returned HTTP 403 for this private repository on the current GitHub plan.
+Protection settings are defined in-repo and ready to apply when the plan allows rulesets/branch protection.

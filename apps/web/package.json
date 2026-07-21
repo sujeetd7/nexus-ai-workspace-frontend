@@ -2,6 +2,7 @@
   "name": "web",
   "version": "0.0.0",
   "dependencies": {
+    "@nexus/shared-network": "workspace:*",
     "@nexus/shared-types": "workspace:*",
     "@nexus/shared-ui": "workspace:*",
     "@nexus/shared-utils": "workspace:*",
@@ -24,13 +25,13 @@
     "@types/react-redux": "^7.1.34",
     "@vitejs/plugin-react": "^6.0.3",
     "@vitest/coverage-v8": "^4.1.10",
-    "eslint": "^10.6.0",
+    "eslint": "^10.7.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.7.0",
     "jsdom": "^29.1.1",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.62.0",
+    "typescript-eslint": "^8.64.0",
     "vite": "^8.1.1",
     "vitest": "^4.1.10"
   },

@@ -21,13 +21,14 @@ describe("axiosBaseQuery", () => {
     });
 
     const baseQuery = axiosBaseQuery();
+    const signal = new AbortController().signal;
 
     const result = await baseQuery(
       {
         url: "/users/user-1",
         method: "GET",
       },
-      {} as never,
+      { signal } as never,
       {},
     );
 
@@ -35,6 +36,14 @@ describe("axiosBaseQuery", () => {
       data: {
         id: "user-1",
       },
+    });
+    expect(axiosClient).toHaveBeenCalledWith({
+      url: "/users/user-1",
+      method: "GET",
+      data: undefined,
+      params: undefined,
+      headers: undefined,
+      signal,
     });
   });
 
@@ -77,6 +86,7 @@ describe("axiosBaseQuery", () => {
       headers: {
         "X-Test-Header": "test-value",
       },
+      signal: undefined,
     });
   });
 

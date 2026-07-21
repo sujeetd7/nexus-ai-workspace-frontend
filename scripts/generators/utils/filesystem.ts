@@ -6,6 +6,8 @@ import { logger } from "./logger";
 export interface WriteOptions {
   force?: boolean;
   dryRun?: boolean;
+  /** Tracks files created during this generation for rollback. */
+  createdFiles?: string[];
 }
 
 export function ensureDir(dirPath: string, options: WriteOptions): void {
@@ -15,6 +17,36 @@ export function ensureDir(dirPath: string, options: WriteOptions): void {
   }
 
   fs.mkdirSync(dirPath, { recursive: true });
+}
+
+function toPosixNewlines(content: string): string {
+  return content.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+}
+
+function writeAtomically(filePath: string, content: string): void {
+  const directory = path.dirname(filePath);
+  fs.mkdirSync(directory, { recursive: true });
+
+  const tempPath = path.join(
+    directory,
+    `.${path.basename(filePath)}.${process.pid}.${Date.now()}.tmp`,
+  );
+
+  try {
+    fs.writeFileSync(tempPath, content, "utf8");
+
+    if (fs.existsSync(filePath)) {
+      fs.rmSync(filePath, { force: true });
+    }
+
+    fs.renameSync(tempPath, filePath);
+  } catch (error) {
+    if (fs.existsSync(tempPath)) {
+      fs.rmSync(tempPath, { force: true });
+    }
+
+    throw error;
+  }
 }
 
 export function writeFile(
@@ -30,15 +62,32 @@ export function writeFile(
     );
   }
 
+  const payload = toPosixNewlines(content);
+
   if (options.dryRun) {
     logger.info(`[dry-run] ${exists ? "overwrite" : "create"} ${filePath}`);
     return exists ? "overwritten" : "created";
   }
 
-  ensureDir(path.dirname(filePath), options);
-  fs.writeFileSync(filePath, content, "utf8");
+  writeAtomically(filePath, payload);
+
+  if (!exists) {
+    options.createdFiles?.push(filePath);
+  }
 
   return exists ? "overwritten" : "created";
+}
+
+export function rollbackCreatedFiles(filePaths: readonly string[]): void {
+  for (const filePath of [...filePaths].reverse()) {
+    if (fs.existsSync(filePath)) {
+      fs.rmSync(filePath, { force: true });
+    }
+  }
+}
+
+function isExportLine(line: string): boolean {
+  return /^\s*export\s/.test(line);
 }
 
 export function upsertIndexExport(
@@ -54,17 +103,42 @@ export function upsertIndexExport(
     return;
   }
 
-  const current = fs.readFileSync(indexPath, "utf8");
+  const current = toPosixNewlines(fs.readFileSync(indexPath, "utf8"));
+  const lines = current.split("\n");
 
-  if (
-    current.includes(line) ||
-    current.includes(`from "${exportPath}"`) ||
-    current.includes(`from '${exportPath}'`)
-  ) {
+  const alreadyPresent = lines.some((entry) => {
+    const trimmed = entry.trim();
+    return (
+      trimmed === line ||
+      trimmed === `export * from '${exportPath}';` ||
+      trimmed.includes(`from "${exportPath}"`) ||
+      trimmed.includes(`from '${exportPath}'`)
+    );
+  });
+
+  if (alreadyPresent) {
     logger.info(`Export already present in ${indexPath}`);
     return;
   }
 
-  const next = `${current.trimEnd()}\n${line}\n`;
+  const nonEmpty = lines.filter((entry, index) => {
+    if (entry.trim() !== "") {
+      return true;
+    }
+
+    // Keep blank lines that are not trailing.
+    return index < lines.length - 1 && lines.slice(index + 1).some((l) => l.trim());
+  });
+
+  const otherLines = nonEmpty.filter((entry) => !isExportLine(entry));
+  const exportLines = [
+    ...nonEmpty.filter((entry) => isExportLine(entry)),
+    line,
+  ].sort((left, right) => left.trim().localeCompare(right.trim(), "en"));
+
+  const next = `${[...otherLines, ...exportLines].join("\n")}\n`;
+
+  // Barrel updates are generator-owned metadata; allow write even when the
+  // caller did not pass --force. Never rewrite unrelated non-index files.
   writeFile(indexPath, next, { ...options, force: true });
 }

@@ -2,6 +2,8 @@ import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
+import { packageBoundaryConfigs } from "./configs/eslint/boundaries.mjs";
+
 export default tseslint.config(
   {
     ignores: [
@@ -12,6 +14,7 @@ export default tseslint.config(
       "**/.turbo/**",
       "apps/mobile/android/**",
       "apps/mobile/ios/**",
+      "tmp/**",
     ],
   },
 
@@ -52,4 +55,6 @@ export default tseslint.config(
       sourceType: "commonjs",
     },
   },
+
+  ...packageBoundaryConfigs,
 );

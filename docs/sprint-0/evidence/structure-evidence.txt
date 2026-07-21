@@ -1,0 +1,14 @@
+=== Applications ===
+C:\AgenticAI\nexus-ai-workspace-frontend\apps\mobile
+C:\AgenticAI\nexus-ai-workspace-frontend\apps\web
+
+=== Packages ===
+C:\AgenticAI\nexus-ai-workspace-frontend\packages\shared-types
+C:\AgenticAI\nexus-ai-workspace-frontend\packages\shared-ui
+C:\AgenticAI\nexus-ai-workspace-frontend\packages\shared-utils
+C:\AgenticAI\nexus-ai-workspace-frontend\packages\shared-validation
+
+=== Microfrontend candidates ===
+
+=== UI/theme candidates ===
+C:\AgenticAI\nexus-ai-workspace-frontend\packages\shared-ui

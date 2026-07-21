@@ -1,25 +1,20 @@
-import axios from "axios";
+import { createHttpClient } from "@nexus/shared-network";
 
 import { api } from "../../config";
-import {
-  authInterceptor,
-  errorInterceptor,
-  requestInterceptor,
-  responseInterceptor,
-} from "../interceptors";
+import { getAccessToken, logout } from "../auth";
 
-export const graphqlClient = axios.create({
+const managedGraphQLClient = createHttpClient({
   baseURL: api.graphql,
-  timeout: 30_000,
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
+  tokenProvider: {
+    getAccessToken,
+  },
+  unauthorizedHandler: {
+    onUnauthorized: logout,
   },
 });
 
-graphqlClient.interceptors.request.use(requestInterceptor);
+export const graphqlClient = managedGraphQLClient.client;
 
-graphqlClient.interceptors.request.use(authInterceptor);
-
-graphqlClient.interceptors.response.use(responseInterceptor, errorInterceptor);
+export function ejectGraphQLInterceptors(): void {
+  managedGraphQLClient.ejectInterceptors();
+}

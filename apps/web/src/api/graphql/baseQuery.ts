@@ -1,10 +1,13 @@
+import { createGraphQLBaseQuery } from "@nexus/shared-network";
+
 import { graphqlClient } from "./client";
-import type { GraphQLRequest, GraphQLResponse } from "./types";
+import type { GraphQLRequest } from "./types";
+
+const runGraphQLBaseQuery = createGraphQLBaseQuery(graphqlClient);
 
 export async function graphqlBaseQuery<T>(
   request: GraphQLRequest,
-): Promise<GraphQLResponse<T>> {
-  const response = await graphqlClient.post<GraphQLResponse<T>>("", request);
-
-  return response.data;
+  signal?: AbortSignal,
+): Promise<T> {
+  return runGraphQLBaseQuery<T>(request, signal);
 }

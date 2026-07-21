@@ -7,31 +7,86 @@
       "pinVersion": "workspace:*"
     },
     {
-      "label": "Keep platform toolchains independent",
+      "label": "Mobile React Native toolchain (intentionally independent)",
+      "packages": ["mobile"],
       "dependencies": [
         "react",
-        "react-dom",
         "react-native",
         "react-test-renderer",
         "@types/react",
-        "@types/react-dom",
+        "@types/react-test-renderer",
         "@types/jest",
         "eslint",
         "typescript",
-        "typescript-eslint",
-        "jest"
+        "jest",
+        "prettier",
+        "@babel/core",
+        "@babel/preset-env",
+        "@babel/runtime",
+        "@react-native/**",
+        "@react-native-community/**",
+        "react-native-safe-area-context",
+        "@testing-library/react-native"
       ],
       "isIgnored": true
     },
     {
-      "label": "Ignore remaining versions during initial setup",
+      "label": "shared-ui peer ranges stay broad for web and native consumers",
+      "packages": ["@nexus/shared-ui"],
+      "dependencies": ["react", "react-native"],
+      "dependencyTypes": ["peer"],
       "isIgnored": true
     }
   ],
   "semverGroups": [
     {
-      "label": "Do not enforce semver ranges during Sprint 0",
-      "isIgnored": true
+      "label": "Workspace protocol versions",
+      "dependencies": ["$LOCAL"],
+      "range": ""
+    },
+    {
+      "label": "Exact prettier across the workspace",
+      "dependencies": ["prettier"],
+      "range": ""
+    },
+    {
+      "label": "Exact versions for React Native packages",
+      "packages": ["mobile"],
+      "dependencies": [
+        "react",
+        "react-native",
+        "react-test-renderer",
+        "@react-native/**",
+        "@react-native-community/**"
+      ],
+      "range": ""
+    },
+    {
+      "label": "Exact versions for pinned root tooling",
+      "packages": ["nexus-ai-workspace-frontend"],
+      "dependencies": [
+        "@commitlint/cli",
+        "@commitlint/config-conventional",
+        "@types/jest",
+        "commander",
+        "jest",
+        "jest-environment-jsdom",
+        "lint-staged",
+        "react-test-renderer",
+        "syncpack",
+        "typescript"
+      ],
+      "range": ""
+    },
+    {
+      "label": "Exact TypeScript in shared-network until packages standardize on caret",
+      "packages": ["@nexus/shared-network"],
+      "dependencies": ["typescript"],
+      "range": ""
+    },
+    {
+      "label": "Caret ranges for remaining dependencies",
+      "range": "^"
     }
   ]
 }

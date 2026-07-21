@@ -5,8 +5,10 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
+import { webBoundaryConfigs } from "../../configs/eslint/boundaries.mjs";
+
 export default defineConfig([
-  globalIgnores(["dist"]),
+  globalIgnores(["dist", "coverage", "node_modules"]),
   {
     files: ["**/*.{ts,tsx}"],
     ignores: [
@@ -25,4 +27,5 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  ...webBoundaryConfigs,
 ]);

@@ -43,7 +43,9 @@
   "packageManager": "pnpm@9.15.9",
   "private": true,
   "scripts": {
+    "adr:check": "node scripts/check-adr-ids.mjs",
     "android": "pnpm --filter mobile android",
+    "boundaries:check": "node scripts/check-import-boundaries.mjs",
     "build": "turbo run build",
     "build:web": "pnpm --filter web build",
     "clean": "turbo run clean",
@@ -68,9 +70,9 @@
     "prepare": "husky",
     "start:mobile": "pnpm --filter mobile start",
     "test": "turbo run test && pnpm test:generators",
-    "test:generators": "node --import tsx --test scripts/generators/__tests__/naming.test.ts scripts/generators/__tests__/engine.test.ts",
+    "test:generators": "node --import tsx --test scripts/generators/__tests__/naming.test.ts scripts/generators/__tests__/engine.test.ts scripts/generators/__tests__/security.test.ts",
     "test:mobile": "pnpm --filter mobile test",
     "typecheck": "turbo run typecheck",
-    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+    "verify": "pnpm lint && pnpm typecheck && pnpm boundaries:check && pnpm adr:check && pnpm test && pnpm build"
   }
 }

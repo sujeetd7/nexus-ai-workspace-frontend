@@ -1,24 +1,20 @@
-import axios from "axios";
-import { api } from "../../config";
-import {
-  authInterceptor,
-  errorInterceptor,
-  requestInterceptor,
-  responseInterceptor,
-} from "../interceptors";
+import { createHttpClient } from "@nexus/shared-network";
 
-export const axiosClient = axios.create({
+import { api } from "../../config";
+import { getAccessToken, logout } from "../auth";
+
+const managedHttpClient = createHttpClient({
   baseURL: api.baseUrl,
-  timeout: 30000,
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
+  tokenProvider: {
+    getAccessToken,
+  },
+  unauthorizedHandler: {
+    onUnauthorized: logout,
   },
 });
 
-axiosClient.interceptors.request.use(requestInterceptor);
+export const axiosClient = managedHttpClient.client;
 
-axiosClient.interceptors.request.use(authInterceptor);
-
-axiosClient.interceptors.response.use(responseInterceptor, errorInterceptor);
+export function ejectHttpInterceptors(): void {
+  managedHttpClient.ejectInterceptors();
+}

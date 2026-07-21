@@ -32,6 +32,10 @@ describe("paths", () => {
   });
 
   it("rejects path traversal", () => {
-    assert.throws(() => resolveOutputPath("../outside"), /\.\./);
+    assert.throws(() => resolveOutputPath("../outside"), /\.\.|invalid/i);
+  });
+
+  it("rejects absolute paths", () => {
+    assert.throws(() => resolveOutputPath("/tmp/out"), /absolute/i);
   });
 });

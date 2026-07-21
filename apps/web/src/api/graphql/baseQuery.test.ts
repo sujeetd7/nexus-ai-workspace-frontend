@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { ApiError } from "../errors";
 import { graphqlBaseQuery } from "./baseQuery";
 import { graphqlClient } from "./client";
 
@@ -14,7 +15,7 @@ describe("graphqlBaseQuery", () => {
     vi.clearAllMocks();
   });
 
-  it("posts the GraphQL request and returns its response", async () => {
+  it("posts the GraphQL request and returns data", async () => {
     const request = {
       query: `
         query GetUser($id: ID!) {
@@ -47,15 +48,32 @@ describe("graphqlBaseQuery", () => {
       };
     }>(request);
 
-    expect(graphqlClient.post).toHaveBeenCalledWith("", request);
+    expect(graphqlClient.post).toHaveBeenCalledWith("", request, {
+      signal: undefined,
+    });
 
     expect(result).toEqual({
-      data: {
-        user: {
-          id: "user-1",
-          email: "user@nexus.ai",
-        },
+      user: {
+        id: "user-1",
+        email: "user@nexus.ai",
       },
     });
+  });
+
+  it("normalizes GraphQL errors[] into ApiError", async () => {
+    vi.mocked(graphqlClient.post).mockResolvedValue({
+      data: {
+        errors: [
+          {
+            message: "Forbidden",
+            extensions: { code: "FORBIDDEN" },
+          },
+        ],
+      },
+    });
+
+    await expect(
+      graphqlBaseQuery({ query: "{ secret }" }),
+    ).rejects.toBeInstanceOf(ApiError);
   });
 });

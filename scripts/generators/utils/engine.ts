@@ -1,6 +1,11 @@
 import path from "node:path";
 
-import { ensureDir, upsertIndexExport, writeFile } from "./filesystem";
+import {
+  ensureDir,
+  rollbackCreatedFiles,
+  upsertIndexExport,
+  writeFile,
+} from "./filesystem";
 import { logger } from "./logger";
 import {
   assertIdentifier,
@@ -30,6 +35,7 @@ const IMPLEMENTED: readonly GeneratorKind[] = ["component", "hook", "slice"];
 type WriteOpts = {
   force: boolean;
   dryRun: boolean;
+  createdFiles: string[];
 };
 
 export function runGenerator(
@@ -44,20 +50,41 @@ export function runGenerator(
 
   const rawName = validateName(options.name);
   const outRoot = resolveOutputPath(options.path ?? ".");
+  const createdFiles: string[] = [];
   const writeOpts: WriteOpts = {
     force: Boolean(options.force),
     dryRun: Boolean(options.dryRun),
+    createdFiles,
   };
 
-  switch (kind as GeneratorKind) {
-    case "component":
-      return generateComponent(rawName, outRoot, writeOpts);
-    case "hook":
-      return generateHook(rawName, outRoot, writeOpts);
-    case "slice":
-      return generateSlice(rawName, outRoot, writeOpts);
-    default:
-      throw new Error(`Unsupported generator: ${kind}`);
+  try {
+    let result: GeneratorResult;
+
+    switch (kind as GeneratorKind) {
+      case "component":
+        result = generateComponent(rawName, outRoot, writeOpts);
+        break;
+      case "hook":
+        result = generateHook(rawName, outRoot, writeOpts);
+        break;
+      case "slice":
+        result = generateSlice(rawName, outRoot, writeOpts);
+        break;
+      default:
+        throw new Error(`Unsupported generator: ${kind}`);
+    }
+
+    result.files = [...result.files].sort((left, right) =>
+      left.localeCompare(right, "en"),
+    );
+
+    return result;
+  } catch (error) {
+    if (!writeOpts.dryRun) {
+      rollbackCreatedFiles(createdFiles);
+    }
+
+    throw error;
   }
 }
 

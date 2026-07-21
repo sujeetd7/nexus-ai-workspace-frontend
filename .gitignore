@@ -12,6 +12,19 @@ dist
 dist-ssr
 *.local
 .turbo
+
+# SonarQube local scanner working directory
+.scannerwork
+
+# Local scratch (generator security tests, etc.)
+tmp/
+
+# Test coverage artifacts
+coverage
+*.lcov
+!testing/coverage/
+!testing/coverage/README.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

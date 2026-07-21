@@ -1,0 +1,26 @@
+
+G£ô dependabot/github_actions/master/actions/setup-node-7 Frontend Quality sujeetd7/nexus-ai-workspace-frontend#3 -+ 29857236805
+Triggered via pull_request about 38 minutes ago
+
+JOBS
+G£ô Install, Verify and Build in 1m16s (ID 88724503082)
+  G£ô Set up job
+  G£ô Checkout repository
+  G£ô Install pnpm
+  G£ô Set up Node.js
+  G£ô Print tool versions
+  G£ô Install dependencies
+  G£ô Validate dependency policy
+  G£ô Run quality pipeline
+  G£ô Post Set up Node.js
+  G£ô Post Install pnpm
+  G£ô Post Checkout repository
+  G£ô Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, pnpm/action-setup@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Install, Verify and Build: .github#2
+
+
+For more information about the job, try: gh run view --job=88724503082
+View this run on GitHub: https://github.com/sujeetd7/nexus-ai-workspace-frontend/actions/runs/29857236805
