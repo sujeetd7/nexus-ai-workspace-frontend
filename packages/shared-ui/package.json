@@ -1,22 +1,22 @@
 {
   "name": "@nexus/shared-ui",
   "version": "0.0.1",
-  "private": true,
-  "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "scripts": {
-    "build": "echo \"No build yet\"",
-    "lint": "echo \"No lint yet\"",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "jest --passWithNoTests --config jest.config.cjs",
-    "clean": "rimraf dist"
+  "devDependencies": {
+    "@types/react": "^19.2.17"
   },
+  "main": "./src/index.ts",
   "peerDependencies": {
     "react": "^19.1.0",
     "react-native": "*"
   },
-  "devDependencies": {
-    "@types/react": "^19.2.17"
-  }
+  "private": true,
+  "scripts": {
+    "build": "echo \"No build yet\"",
+    "clean": "rimraf dist",
+    "lint": "echo \"No lint yet\"",
+    "test": "jest --passWithNoTests --config jest.config.cjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "type": "module",
+  "types": "./src/index.ts"
 }

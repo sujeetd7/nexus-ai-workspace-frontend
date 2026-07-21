@@ -1,42 +1,14 @@
 {
   "name": "nexus-ai-workspace-frontend",
   "version": "1.0.0",
-  "private": true,
-  "packageManager": "pnpm@9.15.9",
-  "engines": {
-    "node": ">=20.19.0",
-    "pnpm": ">=9.15.9"
-  },
-  "scripts": {
-    "dev:web": "pnpm --filter web dev",
-    "build:web": "pnpm --filter web build",
-    "lint:web": "pnpm --filter web lint",
-    "start:mobile": "pnpm --filter mobile start",
-    "android": "pnpm --filter mobile android",
-    "ios": "pnpm --filter mobile ios",
-    "test:mobile": "pnpm --filter mobile test",
-    "install:all": "pnpm install",
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
-    "typecheck": "turbo run typecheck",
-    "clean": "turbo run clean",
-    "dev": "turbo run dev --parallel",
-    "prepare": "husky",
-    "lint-staged": "lint-staged --config configs/lint-staged/lint-staged.config.cjs",
-    "gen": "tsx scripts/generators/cli.ts",
-    "gen:component": "tsx scripts/generators/cli.ts component",
-    "gen:screen": "tsx scripts/generators/cli.ts screen",
-    "gen:feature": "tsx scripts/generators/cli.ts feature",
-    "gen:hook": "tsx scripts/generators/cli.ts hook",
-    "gen:slice": "tsx scripts/generators/cli.ts slice",
-    "gen:saga": "tsx scripts/generators/cli.ts saga",
-    "gen:api": "tsx scripts/generators/cli.ts api",
-    "gen:graphql": "tsx scripts/generators/cli.ts graphql"
+  "commitlint": {
+    "extends": [
+      "./configs/commitlint/commitlint.config.cjs"
+    ]
   },
   "devDependencies": {
-    "@commitlint/cli": "^21.2.1",
-    "@commitlint/config-conventional": "^21.2.0",
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
     "@eslint/js": "^10.0.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -58,14 +30,46 @@
     "react-dom": "^19.2.7",
     "react-test-renderer": "19.2.3",
     "rimraf": "^6.1.3",
+    "syncpack": "13.0.4",
     "tsx": "^4.23.1",
     "turbo": "^2.5.6",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.64.0"
   },
-  "commitlint": {
-    "extends": [
-      "./configs/commitlint/commitlint.config.cjs"
-    ]
+  "engines": {
+    "node": ">=20.19.0",
+    "pnpm": ">=9.15.9"
+  },
+  "packageManager": "pnpm@9.15.9",
+  "private": true,
+  "scripts": {
+    "android": "pnpm --filter mobile android",
+    "build": "turbo run build",
+    "build:web": "pnpm --filter web build",
+    "clean": "turbo run clean",
+    "deps:check": "syncpack lint",
+    "deps:fix": "syncpack fix-mismatches",
+    "dev": "turbo run dev --parallel",
+    "dev:web": "pnpm --filter web dev",
+    "gen": "tsx scripts/generators/cli.ts",
+    "gen:api": "tsx scripts/generators/cli.ts api",
+    "gen:component": "tsx scripts/generators/cli.ts component",
+    "gen:feature": "tsx scripts/generators/cli.ts feature",
+    "gen:graphql": "tsx scripts/generators/cli.ts graphql",
+    "gen:hook": "tsx scripts/generators/cli.ts hook",
+    "gen:saga": "tsx scripts/generators/cli.ts saga",
+    "gen:screen": "tsx scripts/generators/cli.ts screen",
+    "gen:slice": "tsx scripts/generators/cli.ts slice",
+    "install:all": "pnpm install",
+    "ios": "pnpm --filter mobile ios",
+    "lint": "turbo run lint",
+    "lint-staged": "lint-staged --config configs/lint-staged/lint-staged.config.cjs",
+    "lint:web": "pnpm --filter web lint",
+    "prepare": "husky",
+    "start:mobile": "pnpm --filter mobile start",
+    "test": "turbo run test",
+    "test:mobile": "pnpm --filter mobile test",
+    "typecheck": "turbo run typecheck",
+    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   }
 }

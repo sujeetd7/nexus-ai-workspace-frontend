@@ -1,0 +1,37 @@
+{
+  "versionGroups": [
+    {
+      "label": "Use workspace protocol for local packages",
+      "dependencies": ["$LOCAL"],
+      "dependencyTypes": ["prod", "dev"],
+      "pinVersion": "workspace:*"
+    },
+    {
+      "label": "Keep platform toolchains independent",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "react-native",
+        "react-test-renderer",
+        "@types/react",
+        "@types/react-dom",
+        "@types/jest",
+        "eslint",
+        "typescript",
+        "typescript-eslint",
+        "jest"
+      ],
+      "isIgnored": true
+    },
+    {
+      "label": "Ignore remaining versions during initial setup",
+      "isIgnored": true
+    }
+  ],
+  "semverGroups": [
+    {
+      "label": "Do not enforce semver ranges during Sprint 0",
+      "isIgnored": true
+    }
+  ]
+}

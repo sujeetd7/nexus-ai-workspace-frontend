@@ -1,17 +1,6 @@
 {
   "name": "web",
-  "private": true,
   "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "preview": "vite preview",
-    "clean": "rimraf dist",
-    "test": "vitest run --passWithNoTests"
-  },
   "dependencies": {
     "@nexus/shared-types": "workspace:*",
     "@nexus/shared-ui": "workspace:*",
@@ -44,5 +33,16 @@
     "typescript-eslint": "^8.62.0",
     "vite": "^8.1.1",
     "vitest": "^4.1.10"
-  }
+  },
+  "private": true,
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "clean": "rimraf dist",
+    "dev": "vite",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc --noEmit"
+  },
+  "type": "module"
 }
