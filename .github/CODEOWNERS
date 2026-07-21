@@ -1,0 +1,21 @@
+@'
+# Default repository owner
+* @sujeetd7
+
+# Protect repository governance and CI
+/.github/ @sujeetd7
+
+# Application ownership
+/apps/web/ @sujeetd7
+/apps/mobile/ @sujeetd7
+
+# Shared platform ownership
+/packages/ @sujeetd7
+
+# Tooling and generators
+/scripts/ @sujeetd7
+/configs/ @sujeetd7
+
+# Documentation
+/docs/ @sujeetd7
+'@ | Set-Content .github\CODEOWNERS

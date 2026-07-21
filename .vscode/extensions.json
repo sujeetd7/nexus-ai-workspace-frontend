@@ -2,8 +2,9 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "editorconfig.editorconfig",
+    "bradlc.vscode-tailwindcss",
     "eamodio.gitlens",
+    "streetsidesoftware.code-spell-checker",
     "usernamehw.errorlens"
   ]
 }
