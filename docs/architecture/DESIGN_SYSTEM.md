@@ -43,7 +43,7 @@ Do not create `shared-theme` or `ui-kit` packages. Tokens and themes stay in `sh
 
 ### Token governance (Batch 2.2 audit)
 
-Stub components under `src/components/**` still contain non-token numeric defaults (Loader `size=24`, Divider hairline `1`). Tracked as TD-047 — migration is out of scope for Batch 2.2. No hard-coded hex/rgba found in components.
+Batch 2.2 recorded stub numeric defaults (Loader size, Divider hairline). Those stubs were migrated in Batch 2.4 (TD-047 closed). Components must consume tokens/theme context; no hard-coded hex/rgba in shared-ui components.
 
 ## Theme engine
 

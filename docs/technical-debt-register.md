@@ -60,15 +60,24 @@
 | TD-056 | Tooltip / overlays     | Batch 2.5 deferred Tooltip (and evaluated Popover/Dialog/Sheet/Select). Production overlays need portal/positioning/focus management; Tamagui full-kit plus likely native gesture peers are not approved. Remain on `@tamagui/core` until an overlay batch + dependency approval. | Medium | Medium   | Overlay / Tamagui kit approval batch               |
 | TD-057 | RN Storybook           | React Native Storybook not configured. Web Storybook covers shared-ui via RNW in Batch 2.6; native device Storybook awaits explicit approval and toolchain setup.                                                                                                                 | Low    | Low      | When RN Storybook is approved                      |
 
-## Sprint 2 debt review (Batch 2.7)
+## Sprint 2 debt review (Batch 2.7 / finalized Batch 2.8)
 
-| Status                               | IDs                                                                                                                          |
-| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| Closed in Sprint 2                   | TD-013, TD-002 (web), TD-047, TD-054, TD-055                                                                                 |
-| Open — concrete / tooling            | TD-048, TD-049, TD-050, TD-051, TD-052, TD-053, TD-056, TD-057                                                               |
-| Not debt (roadmap / future features) | Pattern/Screen implementation, Design System generator implementation — tracked in governance docs, **not** registered as TD |
+| Status                                    | IDs                                                                                          |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Closed in Sprint 2                        | TD-013, TD-002 (web), TD-047, TD-054, TD-055                                                 |
+| Remaining — carry to Sprint 3             | TD-048, TD-049, TD-050, TD-051, TD-052, TD-053, TD-056, TD-057                               |
+| Requires architectural review before work | TD-056 (Tamagui full-kit / native peers), TD-051 (depends on TD-032 ADR)                     |
+| Not debt (roadmap / future features)      | Pattern/Screen implementation, Design System generator implementation — governance docs only |
 
-No new roadmap debt created in Batch 2.7.
+### Recommended Sprint 3 priorities (not registered as debt)
+
+1. Overlay batch when dependencies approved (TD-056)
+2. Scoped web `jsx-a11y` (TD-052)
+3. Contrast follow-up if Patterns need status-as-text (TD-053)
+4. Mobile TamaguiProvider ESLint parity (TD-049)
+5. Shared Patterns only after ≥2 real consumers (Hybrid promotion)
+
+No new roadmap debt created in Batch 2.7/2.8.
 
 ## Review Policy
 

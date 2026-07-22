@@ -2,8 +2,8 @@
 
 ## Current Phase
 
-Sprint 2 — Design System Foundation: Complete (governance Batch 2.7)
-Batch 2.7 — Design System Governance: Complete
+Sprint 2 — Design System Foundation: **Complete** (closeout Batch 2.8)
+Batch 2.8 — Sprint 2 Closeout: Complete
 
 ## Sprint 0 Status
 
@@ -11,7 +11,7 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 
 ## Sprint 2 batch map
 
-See `docs/sprint-2/BATCH_MAP.md`.
+See `docs/sprint-2/BATCH_MAP.md` and `docs/sprint-2/SPRINT_2_COMPLETION_REPORT.md`.
 
 - **2.1** Tamagui foundation — complete
 - **2.2** Tokens + theme engine (incl. system preference + optional persistence) — complete
@@ -20,6 +20,16 @@ See `docs/sprint-2/BATCH_MAP.md`.
 - **2.5** Level 2 composites — complete (Tooltip deferred)
 - **2.6** Motion foundation + Web Storybook + quality — complete
 - **2.7** Hybrid Enterprise Atomic + Design System governance — complete
+- **2.8** Sprint 2 engineering closeout — complete
+
+## Sprint 2 — Batch 2.8 (Closeout)
+
+- Audits: repository, components, Design System ownership, packages, Storybook, a11y, documentation
+- Final component inventory: 8 primitives (+ Stack aliases) + 8 composites; Tooltip deferred; Patterns/Screens not implemented
+- `pnpm verify` green; web production bundle **776.79 kB** (gzip **240.69 kB**) — stable vs Batch 2.4–2.6 baselines
+- Technical debt finalized for Sprint 3 carryover (TD-048–053, TD-056, TD-057); no roadmap debt added
+- Sprint 2 Closeout Report published
+- No production features, UI components, or architecture changes
 
 ## Sprint 2 — Batch 2.7 (Governance)
 
@@ -242,7 +252,11 @@ See `docs/sprint-2/BATCH_MAP.md`.
 
 ## Deferred
 
-- React Native Storybook (TD-057; web Storybook complete via ADR-0013)
+- Sprint 3+ feature work (not started)
+- React Native Storybook (TD-057)
+- Overlay composites / Tooltip (TD-056)
+- Design System generator implementation (specs only)
+- Level 3 Patterns / Level 4 shared Screen catalog
 - APK/AAB release automation
 - web deployment automation
 - production SonarQube integration (root baseline config present; hosted scan deferred)

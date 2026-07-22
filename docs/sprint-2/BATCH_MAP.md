@@ -77,9 +77,13 @@ Completed in commits through Batch 2.2 finalization:
 
 **Out of Batch 2.7:** Pattern/Screen implementation, Design System generator implementation, RN Storybook, overlays, architecture redesign.
 
-## Batch 2.8+ (not started)
+## Batch 2.8 — Complete (Sprint 2 closeout)
 
-- Remaining work per sprint plan (overlays / patterns when approved)
+- Repository / Design System / package / Storybook / a11y / documentation audits
+- Technical debt classified for Sprint 3 (no new roadmap debt)
+- Full `pnpm verify` green (lint, typecheck, boundaries, ADR, test, build, storybook:build)
+- Sprint 2 Closeout Report: `docs/sprint-2/SPRINT_2_COMPLETION_REPORT.md`
+- No production features, UI components, or architecture changes
 
 ## Related docs
 
@@ -94,5 +98,6 @@ Completed in commits through Batch 2.2 finalization:
 - `docs/architecture/STORYBOOK.md`
 - `docs/architecture/GENERATOR_GOVERNANCE.md`
 - `docs/architecture/PUBLIC_API_GOVERNANCE.md`
+- `docs/sprint-2/SPRINT_2_COMPLETION_REPORT.md`
 - `IMPLEMENTATION_STATUS.md`
 - ADR-0012, ADR-0013, ADR-0014
