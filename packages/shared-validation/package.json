@@ -1,6 +1,13 @@
 {
   "name": "@nexus/shared-validation",
   "version": "0.0.0",
+  "dependencies": {
+    "@nexus/shared-types": "workspace:*",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.10"
+  },
   "exports": {
     ".": {
       "types": "./src/index.ts",
@@ -14,7 +21,7 @@
     "build": "tsc -p tsconfig.json",
     "clean": "rimraf dist",
     "lint": "eslint src",
-    "test": "jest --passWithNoTests --config jest.config.cjs",
+    "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "types": "src/index.ts"

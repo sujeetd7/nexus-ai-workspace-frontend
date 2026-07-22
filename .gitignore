@@ -13,6 +13,12 @@ dist-ssr
 *.local
 .turbo
 
+# Local environment files (keep tracked examples)
+.env
+.env.*
+!.env.example
+!**/.env.example
+
 # SonarQube local scanner working directory
 .scannerwork
 

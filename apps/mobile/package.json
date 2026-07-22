@@ -2,6 +2,8 @@
   "name": "mobile",
   "version": "0.0.1",
   "dependencies": {
+    "@nexus/shared-types": "workspace:*",
+    "@nexus/shared-validation": "workspace:*",
     "@react-native/new-app-screen": "0.85.3",
     "react": "19.2.3",
     "react-native": "0.85.3",

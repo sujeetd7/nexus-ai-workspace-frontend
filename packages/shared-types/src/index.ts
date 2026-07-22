@@ -2,6 +2,7 @@ export type {
   Awaitable,
   MaybePromise,
 } from "./async";
+export type { BuildMode, PublicClientConfig } from "./config";
 export type { Logger, StorageAdapter } from "./contracts";
 export type { ISODateString, ISODateTimeString } from "./datetime";
 export {

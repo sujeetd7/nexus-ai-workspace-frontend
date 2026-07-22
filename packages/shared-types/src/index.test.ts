@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import type {
   AppError,
+  BuildMode,
   CursorPageRequest,
   CursorPageResponse,
   Err,
@@ -15,6 +16,7 @@ import type {
   Optional,
   PageRequest,
   PageResponse,
+  PublicClientConfig,
   Result,
   StorageAdapter,
 } from "./index";
@@ -104,5 +106,20 @@ describe("@nexus/shared-types public contracts", () => {
     expect(userId).toBe("user-1");
     expect(date).toBe("2026-07-22");
     expect(dateTime).toContain("2026-07-22");
+  });
+
+  it("supports PublicClientConfig and BuildMode contracts", () => {
+    const buildMode: BuildMode = "development";
+    const config: PublicClientConfig = {
+      buildMode,
+      apiBaseUrl: "http://localhost:3000/api",
+      graphqlUrl: "http://localhost:3000/graphql",
+      appName: "Nexus AI Workspace",
+      isDevelopment: true,
+      isProduction: false,
+    };
+
+    expect(config.buildMode).toBe("development");
+    expect(config.isDevelopment).toBe(true);
   });
 });

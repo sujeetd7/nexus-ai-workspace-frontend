@@ -85,8 +85,16 @@ Excluded by default:
 
 ## Deferred
 
-- Zod validation error mapping (`shared-validation`)
+- Zod validation error mapping for feature/form schemas (`shared-validation` beyond public client config)
 - Refresh-token orchestration mapping
 - Telemetry / remote logging sinks
 - Secure mobile storage adapters
 - Automatic interceptor conversion of all Axios failures to `AppError`
+
+## Environment configuration errors (Batch 1.3)
+
+Invalid public client configuration uses `ERROR_CODES.CONFIGURATION` via `parsePublicClientConfig`.
+
+Safe metadata may include field names, issue categories, and issue counts only.
+
+Do not place URLs, raw input objects, tokens, secrets, stack traces, or Zod issue objects that echo original values into `AppError` message/metadata.

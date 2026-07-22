@@ -46,11 +46,15 @@ apps/web, apps/mobile
         ▼
 @nexus/shared-ui ──────────► @nexus/shared-types
 @nexus/shared-validation ──► @nexus/shared-types
-@nexus/shared-utils ───────► @nexus/shared-types (optional)
-@nexus/shared-network ─────► @nexus/shared-types (optional)
+@nexus/shared-utils ───────► @nexus/shared-types
+@nexus/shared-network ─────► @nexus/shared-types
         │
         └── Axios / HTTP / GraphQL helpers only in shared-network
 ```
+
+Batch 1.3: `@nexus/shared-validation` validates plain objects with Zod and returns `Result` / `AppError` shapes from `@nexus/shared-types` without importing `@nexus/shared-utils` (avoids pulling utils sources into app `tsc -b` graphs). It must not read environment globals or depend on apps / `@nexus/shared-network`.
+
+Do not reverse boundaries (`shared-types` must not import validation or utils; `shared-utils` must not import validation).
 
 ## Verification
 

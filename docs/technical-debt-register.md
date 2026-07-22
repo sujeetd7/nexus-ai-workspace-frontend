@@ -17,6 +17,10 @@
 | TD-013 | Package ownership | `shared-theme`, `shared-ui`, and `ui-kit` ownership may overlap                                                                     | High   | High     | Sprint 0 closure                       |
 | TD-014 | Empty scaffolding | `.gitkeep`-only directories may communicate speculative architecture                                                                | Low    | Medium   | Sprint 0 closure                       |
 | TD-015 | Branch protection | Private-repo GitHub plan returns HTTP 403 for rulesets/branch protection APIs; in-repo ruleset JSON is ready to apply               | High   | High     | Enable when plan allows / org rulesets |
+| TD-016 | Mobile env inject | React Native has no approved native env injection (`react-native-config` / Gradle / Xcode); typed `publicConfig.ts` is temporary    | Medium | Medium   | Requires ADR before native injector    |
+| TD-017 | Deploy env names  | Deployment stages (local/staging/preproduction) are not modeled; only Vite/RN build modes exist                                     | Low    | Low      | When multi-stage deploy lands          |
+| TD-018 | CI runtime env    | Quality CI does not smoke-test runtime public configuration with injected `VITE_*` values                                           | Low    | Low      | Release / e2e hardening                |
+| TD-019 | App version src   | Web `APP.VERSION` remains hardcoded in `constants.ts` rather than a single shared version source                                    | Low    | Low      | Versioning / release batch             |
 
 ## Review Policy
 

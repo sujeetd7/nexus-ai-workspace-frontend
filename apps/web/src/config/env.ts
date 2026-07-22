@@ -1,25 +1,39 @@
-type EnvironmentMode = "development" | "test" | "production";
+import type { PublicClientConfig } from "@nexus/shared-types";
+import { parsePublicClientConfig } from "@nexus/shared-validation";
 
-function readRequiredEnv(name: keyof ImportMetaEnv): string {
-  const value = import.meta.env[name];
+/**
+ * Vite env surface consumed by the Web adapter only.
+ * Do not export or pass this object to feature code.
+ */
+export type ViteEnvSource = {
+  readonly VITE_API_URL?: string;
+  readonly VITE_GRAPHQL_URL?: string;
+  readonly VITE_APP_NAME?: string;
+  readonly MODE: string;
+};
 
-  if (typeof value !== "string" || value.trim().length === 0) {
-    throw new Error(`Missing required environment variable: ${name}`);
+/**
+ * Maps Vite variables into the shared plain input shape and parses once.
+ * The only approved Web runtime reader of `import.meta.env` for app config.
+ */
+export function createWebEnv(viteEnv: ViteEnvSource): PublicClientConfig {
+  const result = parsePublicClientConfig({
+    buildMode: viteEnv.MODE,
+    apiBaseUrl: viteEnv.VITE_API_URL,
+    graphqlUrl: viteEnv.VITE_GRAPHQL_URL,
+    appName: viteEnv.VITE_APP_NAME,
+  });
+
+  if (result.ok === true) {
+    return result.value;
   }
 
-  return value.trim();
+  throw new Error(result.error.message);
 }
 
-export const env = {
-  appName: import.meta.env.VITE_APP_NAME?.trim() || "Nexus AI Workspace",
-
-  apiUrl: readRequiredEnv("VITE_API_URL"),
-
-  graphqlUrl: readRequiredEnv("VITE_GRAPHQL_URL"),
-
-  environment: import.meta.env.MODE as EnvironmentMode,
-
-  isDevelopment: import.meta.env.DEV,
-
-  isProduction: import.meta.env.PROD,
-} as const;
+export const env: PublicClientConfig = createWebEnv({
+  VITE_API_URL: import.meta.env.VITE_API_URL,
+  VITE_GRAPHQL_URL: import.meta.env.VITE_GRAPHQL_URL,
+  VITE_APP_NAME: import.meta.env.VITE_APP_NAME,
+  MODE: import.meta.env.MODE,
+});

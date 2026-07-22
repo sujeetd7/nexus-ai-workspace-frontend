@@ -1,12 +1,14 @@
+import { env } from "../../config/env";
+
 export const logger = {
   debug: (...args: unknown[]) => {
-    if (import.meta.env.DEV) {
+    if (env.isDevelopment) {
       console.debug(...args);
     }
   },
 
   info: (...args: unknown[]) => {
-    if (import.meta.env.DEV) {
+    if (env.isDevelopment) {
       console.info(...args);
     }
   },

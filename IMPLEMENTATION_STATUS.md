@@ -3,7 +3,7 @@
 ## Current Phase
 
 Sprint 1 — Shared Platform Foundation
-Batch 1.2 — Complete
+Batch 1.3 — Complete
 
 ## Sprint 0 Status
 
@@ -23,6 +23,16 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - Added shared-utils normalization, serialization, factories, and Result composition helpers
 - Kept `ApiError` network-specific with explicit `apiErrorToAppError` conversion
 - Documented in `docs/architecture/RESULT_AND_ERRORS.md`
+- Validated with `pnpm verify`
+
+## Sprint 1 — Batch 1.3 (Environment Platform)
+
+- Added `BuildMode` / `PublicClientConfig` to `@nexus/shared-types`
+- Populated `@nexus/shared-validation` with Zod 4 `parsePublicClientConfig` (plain objects only)
+- Thin Web adapter in `apps/web/src/config/env.ts`; migrated logger off `import.meta.env.DEV`
+- Thin React Native adapter over typed `publicConfig.ts` (no native env library)
+- Canonical app `.env.example` files; root example is guidance-only; `.env` gitignored
+- Documented in `docs/setup/ENVIRONMENT.md`
 - Validated with `pnpm verify`
 
 ## Completed (Sprint 0)
@@ -75,7 +85,7 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - secure mobile credential storage
 - streaming transport
 - complete offline transport
-- Zod / `@nexus/shared-validation` population (later Sprint 1 batch)
+- Feature/form Zod schema expansion beyond public client config
 - Automatic Axios interceptor conversion to `AppError`
 - Sprint 1 authentication UI and product features
 
