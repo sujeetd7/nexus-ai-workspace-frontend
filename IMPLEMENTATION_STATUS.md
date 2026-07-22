@@ -1,14 +1,22 @@
-﻿# Nexus AI Workspace Frontend â€” Implementation Status
+﻿# Nexus AI Workspace Frontend — Implementation Status
 
 ## Current Phase
 
-Sprint 0 â€” Engineering Foundation & Developer Experience
+Sprint 1 — Shared Platform Foundation (Batch 1.1 complete)
 
 ## Sprint 0 Status
 
-Status: Remediation batches 1–10 complete; pending CTO re-review / sign-off
+Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 Batch 1.1 start
 
-## Completed
+## Sprint 1 — Batch 1.1 (Shared Core Foundation)
+
+- Extended `@nexus/shared-types` with type-only core primitives (Brand/Opaque, Result, pagination, datetime brands, `AppError`, `Logger`, `StorageAdapter`)
+- Extended `@nexus/shared-utils` with `assertNever`, Result helpers, and `createId` tests
+- No `@nexus/shared-core` package (Option B — reuse approved packages)
+- Package tests run via Vitest (aligned with `@nexus/shared-network`; package Jest presets lacked TypeScript transform)
+- Validated with `pnpm verify`
+
+## Completed (Sprint 0)
 
 - pnpm workspace configuration
 - TurboRepo task orchestration
@@ -48,17 +56,6 @@ Status: Remediation batches 1–10 complete; pending CTO re-review / sign-off
 - repository governance templates
 - Sprint 0 documentation foundation
 
-## Pending CTO Validation
-
-- tracked repository evidence validation
-- speculative `.gitkeep` cleanup
-- overlapping UI/theme package responsibility review
-- microfrontend justification review
-- generator security approval
-- networking security approval
-- GitHub Actions security approval
-- final Sprint 0 sign-off
-
 ## Deferred
 
 - Storybook implementation
@@ -69,6 +66,7 @@ Status: Remediation batches 1–10 complete; pending CTO re-review / sign-off
 - secure mobile credential storage
 - streaming transport
 - complete offline transport
+- Zod / `@nexus/shared-validation` population (later Sprint 1 batch)
 - Sprint 1 authentication UI and product features
 
 ## Quality Commands
@@ -78,7 +76,3 @@ pnpm install --frozen-lockfile
 pnpm deps:check
 pnpm verify
 ```
-
-## Rule
-
-Sprint 1 must not begin until CTO approval is issued.

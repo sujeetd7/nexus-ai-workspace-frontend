@@ -1,14 +1,14 @@
 ﻿# Package Ownership Matrix
 
-| Package             | Primary Responsibility                    | Allowed Contents                                                   | Must Not Contain                           |
-| ------------------- | ----------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------ |
-| `shared-types`      | Shared TypeScript contracts               | domain types, API types, common interfaces                         | runtime business logic, UI                 |
-| `shared-utils`      | Platform-safe helpers                     | pure utilities, test builders                                      | browser-only or React-specific logic       |
-| `shared-validation` | Shared validation contracts               | Zod schemas, validation helpers                                    | API transport or UI                        |
-| `shared-network`    | Platform-neutral HTTP/GraphQL transport   | Axios client helpers, RTK/GraphQL base queries, retries, redaction | UI, feature modules, app-specific storage  |
-| `shared-ui`         | Cross-platform UI foundation              | components, tokens, themes, responsive helpers                     | product features, application state, Axios |
-| `shared-theme`      | Candidate: theme-only package             | tokens and theme composition only                                  | duplicate UI components                    |
-| `ui-kit`            | Candidate: presentation component library | design-system components only                                      | duplicate theme ownership                  |
+| Package             | Primary Responsibility                    | Allowed Contents                                                                                                                                                               | Must Not Contain                            |
+| ------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
+| `shared-types`      | Shared TypeScript contracts               | domain types, API types, common interfaces; Batch 1.1 type primitives (`Brand`/`Opaque`, Result, pagination, datetime brands, `Logger`/`StorageAdapter` contracts, `AppError`) | runtime business logic, UI, HTTP `ApiError` |
+| `shared-utils`      | Platform-safe helpers                     | pure utilities, test builders; Batch 1.1 runtime helpers (`assertNever`, Result helpers, `createId`)                                                                           | browser-only or React-specific logic        |
+| `shared-validation` | Shared validation contracts               | Zod schemas, validation helpers                                                                                                                                                | API transport or UI                         |
+| `shared-network`    | Platform-neutral HTTP/GraphQL transport   | Axios client helpers, RTK/GraphQL base queries, retries, redaction                                                                                                             | UI, feature modules, app-specific storage   |
+| `shared-ui`         | Cross-platform UI foundation              | components, tokens, themes, responsive helpers                                                                                                                                 | product features, application state, Axios  |
+| `shared-theme`      | Candidate: theme-only package             | tokens and theme composition only                                                                                                                                              | duplicate UI components                     |
+| `ui-kit`            | Candidate: presentation component library | design-system components only                                                                                                                                                  | duplicate theme ownership                   |
 
 ## Overlap Decision
 
