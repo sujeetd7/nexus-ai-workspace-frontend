@@ -1,12 +1,7 @@
 import type { PropsWithChildren } from "react";
 
 import { SharedUIProvider } from "@nexus/shared-ui";
-import { ReduxProvider } from "./redux";
 
 export function AppProviders({ children }: PropsWithChildren) {
-  return (
-    <SharedUIProvider>
-      <ReduxProvider>{children}</ReduxProvider>
-    </SharedUIProvider>
-  );
+  return <SharedUIProvider>{children}</SharedUIProvider>;
 }

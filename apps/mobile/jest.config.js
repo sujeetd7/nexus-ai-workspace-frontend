@@ -5,6 +5,6 @@ module.exports = {
   // so setup.js (ESM in 0.85) is skipped and blows up on `import`.
   // Also transform workspace @nexus packages and zod (TypeScript / ESM sources).
   transformIgnorePatterns: [
-    'node_modules/(?!(?:\\.pnpm/[^/]+/node_modules/)?((jest-)?react-native|@react-native(-community)?|@nexus|zod)/)',
+    'node_modules/(?!(?:\\.pnpm/[^/]+/node_modules/)?((jest-)?react-native|@react-native(-community)?|@nexus|@tamagui|zod)/)',
   ],
 };

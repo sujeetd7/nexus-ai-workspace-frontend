@@ -2,12 +2,23 @@
 
 ## Current Phase
 
-Sprint 1 — Shared Platform Foundation: Complete
-Batch 1.10 — Sprint Validation: Complete
+Sprint 2 — Design System Foundation: In progress
+Batch 2.1 — Design System Foundation and Tamagui Setup: Complete
 
 ## Sprint 0 Status
 
 Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 start
+
+## Sprint 2 — Batch 2.1 (Design System Foundation and Tamagui Setup)
+
+- Adopted Tamagui `@tamagui/core@2.4.6` inside `@nexus/shared-ui` (ADR-0012)
+- Mapped existing theme tokens into Tamagui config without duplicating literals
+- Added centralized `SharedUIProvider` wrapping `TamaguiProvider` + existing `ThemeProvider`
+- Wired web (`SharedUIProvider` → Redux) with `react-native-web` + Vite plugin (`disableExtraction: true`)
+- Wired mobile (`SafeAreaProvider` → `SharedUIProvider`); no Metro plugin required
+- Documented design system, TECH_STACK, DEPENDENCIES; closed TD-013 ownership overlap
+- Left stub components and Storybook untouched
+- Validated with repository quality gates
 
 ## Sprint 1 — Batch 1.1 (Shared Core Foundation)
 
@@ -148,7 +159,7 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 
 ## Deferred
 
-- Storybook implementation
+- Storybook implementation (ADR-0010; React Native Storybook also deferred)
 - APK/AAB release automation
 - web deployment automation
 - production SonarQube integration (root baseline config present; hosted scan deferred)
@@ -172,7 +183,9 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - Shared audit metadata / soft-delete / optimistic versioning (see technical debt)
 - API response runtime validation at DTO boundaries
 - Automatic Axios interceptor conversion to `AppError`
-- Sprint 1 authentication UI and product features
+- Sprint 2 authentication UI and product features
+- Tamagui stub-component migration (TD-047)
+- Tamagui compiler extraction / Metro plugin (TD-048)
 
 ## Quality Commands
 

@@ -1,14 +1,14 @@
 ﻿# Package Ownership Matrix
 
-| Package             | Primary Responsibility                    | Allowed Contents                                                                                                                                                               | Must Not Contain                                                                         |
-| ------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| `shared-types`      | Shared TypeScript contracts               | Batch 1.1 primitives (`Brand`/`EntityId`/pagination/ISO); Batch 1.2 errors; Batch 1.3 config; justified shared domain contracts only (see `DOMAIN_MODELS.md`)                  | runtime logic, UI, feature entities, HTTP `ApiError`, env globals, Zod                   |
-| `shared-utils`      | Platform-safe helpers                     | Batch 1.1 helpers; Batch 1.2 Result / AppError runtime helpers; Batch 1.6 storage helpers; Batch 1.7 logging helpers (console/noop/memory/scoped, `logAppError`, level policy) | browser-only or React-specific logic; environment readers; `localStorage`; remote sinks  |
-| `shared-validation` | Shared validation contracts               | Zod primitives; `parseWithSchema`; Batch 1.3 `parsePublicClientConfig` for **plain objects**; returns `Result`/`AppError` from `shared-types`                                  | API transport, UI, feature schemas, RHF, `import.meta.env`, `process.env`, platform APIs |
-| `shared-network`    | Platform-neutral HTTP/GraphQL transport   | Axios/RTK/GraphQL helpers; `ApiError`; explicit `apiErrorToAppError` conversion                                                                                                | UI, feature modules, app-specific storage, env globals                                   |
-| `shared-ui`         | Cross-platform UI foundation              | components, tokens, themes, responsive helpers                                                                                                                                 | product features, application state, Axios                                               |
-| `shared-theme`      | Candidate: theme-only package             | tokens and theme composition only                                                                                                                                              | duplicate UI components                                                                  |
-| `ui-kit`            | Candidate: presentation component library | design-system components only                                                                                                                                                  | duplicate theme ownership                                                                |
+| Package             | Primary Responsibility                   | Allowed Contents                                                                                                                                                               | Must Not Contain                                                                         |
+| ------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `shared-types`      | Shared TypeScript contracts              | Batch 1.1 primitives (`Brand`/`EntityId`/pagination/ISO); Batch 1.2 errors; Batch 1.3 config; justified shared domain contracts only (see `DOMAIN_MODELS.md`)                  | runtime logic, UI, feature entities, HTTP `ApiError`, env globals, Zod                   |
+| `shared-utils`      | Platform-safe helpers                    | Batch 1.1 helpers; Batch 1.2 Result / AppError runtime helpers; Batch 1.6 storage helpers; Batch 1.7 logging helpers (console/noop/memory/scoped, `logAppError`, level policy) | browser-only or React-specific logic; environment readers; `localStorage`; remote sinks  |
+| `shared-validation` | Shared validation contracts              | Zod primitives; `parseWithSchema`; Batch 1.3 `parsePublicClientConfig` for **plain objects**; returns `Result`/`AppError` from `shared-types`                                  | API transport, UI, feature schemas, RHF, `import.meta.env`, `process.env`, platform APIs |
+| `shared-network`    | Platform-neutral HTTP/GraphQL transport  | Axios/RTK/GraphQL helpers; `ApiError`; explicit `apiErrorToAppError` conversion                                                                                                | UI, feature modules, app-specific storage, env globals                                   |
+| `shared-ui`         | Cross-platform UI foundation             | components, tokens, themes, Tamagui config/mapping, `SharedUIProvider`, responsive helpers                                                                                     | product features, application state, Axios; direct app `TamaguiProvider` usage           |
+| `shared-theme`      | Not used — consolidated into `shared-ui` | —                                                                                                                                                                              | Do not recreate                                                                          |
+| `ui-kit`            | Not used — consolidated into `shared-ui` | —                                                                                                                                                                              | Do not recreate; Tailwind/Radix ui-kit is excluded (ADR-0012)                            |
 
 ## Environment platform ownership (Batch 1.3)
 
@@ -95,19 +95,32 @@ Do not wrap existing platform utilities in service classes for Batch 1.9 complet
 
 The preferred target is:
 
-- `shared-ui` owns cross-platform UI components and consumes a single theme source.
-- Only one package should own design tokens and theme construction.
-- `ui-kit` should exist only if it has a distinct consumer contract and release boundary.
-- `shared-theme` should exist only if theme assets are consumed independently by multiple UI implementations.
+- `shared-ui` owns cross-platform UI components, design tokens, theme construction, Tamagui configuration, and `SharedUIProvider`.
+- Only one package owns design tokens and theme construction (`shared-ui`).
+- `ui-kit` and `shared-theme` are **not** created; Sprint 2 adopts Tamagui inside `shared-ui` (ADR-0012).
+- Tailwind CSS / Radix are excluded as foundations for this frontend repository.
 
 ## Consolidation Recommendation
 
 Unless repository evidence proves independent consumers:
 
-1. consolidate tokens and themes into `shared-ui`;
-2. remove duplicate `shared-theme` and `ui-kit` scaffolding;
+1. keep tokens and themes in `shared-ui` (done);
+2. do not scaffold `shared-theme` or `ui-kit`;
 3. preserve internal folders to keep future extraction possible;
-4. avoid publishing three overlapping packages during Sprint 0.
+4. avoid publishing overlapping UI packages.
+
+## Design system ownership (Batch 2.1)
+
+| Concern                                      | Owner                              |
+| -------------------------------------------- | ---------------------------------- |
+| Token source of truth                        | `@nexus/shared-ui` `src/theme/*`   |
+| Tamagui config / mapping                     | `@nexus/shared-ui` `src/tamagui/*` |
+| `SharedUIProvider`                           | `@nexus/shared-ui`                 |
+| Web RNW + Vite Tamagui plugin                | `apps/web`                         |
+| Mobile composition (`SafeAreaProvider` root) | `apps/mobile`                      |
+| Direct `TamaguiProvider` in apps             | Forbidden — use `SharedUIProvider` |
+
+See `docs/architecture/DESIGN_SYSTEM.md` and ADR-0012.
 
 ## Required Evidence Before Keeping Separate Packages
 

@@ -14,7 +14,7 @@
 | TD-010 | Offline                | Offline manager remains incomplete                                                                                                     | Medium | Low      | Mobile resilience sprint                           |
 | TD-011 | CI supply chain        | GitHub Actions use version tags instead of immutable commit SHAs                                                                       | Medium | Medium   | CI security hardening                              |
 | TD-012 | Microfrontends         | Existing `*-mf` applications require evidence-based justification                                                                      | High   | High     | Sprint 0 closure                                   |
-| TD-013 | Package ownership      | `shared-theme`, `shared-ui`, and `ui-kit` ownership may overlap                                                                        | High   | High     | Sprint 0 closure                                   |
+| TD-013 | Package ownership      | Resolved in Batch 2.1 — tokens/themes/Tamagui owned solely by `shared-ui`; `shared-theme`/`ui-kit` not created (ADR-0012)              | —      | —        | Closed Batch 2.1                                   |
 | TD-014 | Empty scaffolding      | `.gitkeep`-only directories may communicate speculative architecture                                                                   | Low    | Medium   | Sprint 0 closure                                   |
 | TD-015 | Branch protection      | Private-repo GitHub plan returns HTTP 403 for rulesets/branch protection APIs; in-repo ruleset JSON is ready to apply                  | High   | High     | Enable when plan allows / org rulesets             |
 | TD-016 | Mobile env inject      | React Native has no approved native env injection (`react-native-config` / Gradle / Xcode); typed `publicConfig.ts` is temporary       | Medium | Medium   | Requires ADR before native injector                |
@@ -48,6 +48,10 @@
 | TD-044 | Shared services        | Shared application services deferred until demonstrated cross-platform orchestration not owned by env/storage/logging/network/RTK/Saga | Medium | Medium   | When eligibility in SHARED_SERVICES.md is met      |
 | TD-045 | Service DI container   | No DI container / service locator; factories only. Container introduction requires ADR                                                 | Low    | Low      | Requires ADR if product mandates container         |
 | TD-046 | gen:service            | Service generator deferred until repeated approved service bundles (contract/factory/tests/exports/docs) exist                         | Low    | Low      | After proven shared-service bundle pattern         |
+| TD-047 | Stub UI migration      | Existing shared-ui stub components (Button/Text/View/Divider/Loader) are not yet Tamagui-backed                                        | Medium | Medium   | Later Sprint 2 Level 1 batch                       |
+| TD-048 | Tamagui compiler       | Vite/Metro optimizing extraction and Metro plugin deferred; foundation uses `disableExtraction: true`                                  | Low    | Low      | When extraction is justified                       |
+| TD-049 | Mobile Tamagui lint    | Web ESLint blocks direct `TamaguiProvider`; mobile RN ESLint isolation does not yet encode the same restriction                        | Low    | Low      | Governance / RN ESLint batch                       |
+| TD-050 | Sibling UI docs        | Sibling `nexus-ai-workspace` docs may still mention Tailwind/Radix `@nexus/ui-kit`; this frontend repo excludes that stack (ADR-0012)  | Low    | Low      | Cross-repo documentation sync                      |
 
 ## Review Policy
 

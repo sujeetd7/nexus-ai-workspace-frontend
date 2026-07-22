@@ -150,6 +150,18 @@ export const webBoundaryConfigs = [
               message:
                 "Axios is confined to apps/web/src/api (platform adapters) and @nexus/shared-network.",
             },
+            {
+              name: "@tamagui/core",
+              importNames: ["TamaguiProvider"],
+              message:
+                "Use SharedUIProvider from @nexus/shared-ui. Applications must not instantiate TamaguiProvider.",
+            },
+            {
+              name: "tamagui",
+              importNames: ["TamaguiProvider"],
+              message:
+                "Use SharedUIProvider from @nexus/shared-ui. Applications must not instantiate TamaguiProvider.",
+            },
           ],
           patterns: [
             {

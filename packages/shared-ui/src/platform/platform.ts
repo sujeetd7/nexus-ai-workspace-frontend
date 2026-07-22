@@ -7,5 +7,15 @@ export const PlatformType = {
 export type PlatformName = (typeof PlatformType)[keyof typeof PlatformType];
 
 export function getPlatform(): PlatformName {
-  return typeof window === "undefined" ? PlatformType.Mobile : PlatformType.Web;
+  const host = globalThis as typeof globalThis & {
+    document?: unknown;
+    navigator?: { product?: string };
+  };
+
+  // Prefer document presence over navigator heuristics for web detection.
+  if (typeof host.document !== "undefined") {
+    return PlatformType.Web;
+  }
+
+  return PlatformType.Mobile;
 }

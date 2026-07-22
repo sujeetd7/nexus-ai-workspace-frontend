@@ -1,7 +1,17 @@
+type MediaQueryListLike = {
+  matches: boolean;
+};
+
+type MatchMediaHost = {
+  matchMedia?: (query: string) => MediaQueryListLike;
+};
+
 export function prefersDarkMode() {
-  if (typeof window === "undefined") {
+  const host = globalThis as typeof globalThis & MatchMediaHost;
+
+  if (typeof host.matchMedia !== "function") {
     return false;
   }
 
-  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  return host.matchMedia("(prefers-color-scheme: dark)").matches;
 }

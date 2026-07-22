@@ -33,9 +33,14 @@
     {
       "label": "shared-ui peer ranges stay broad for web and native consumers",
       "packages": ["@nexus/shared-ui"],
-      "dependencies": ["react", "react-native"],
+      "dependencies": ["react", "react-native", "react-native-web"],
       "dependencyTypes": ["peer"],
       "isIgnored": true
+    },
+    {
+      "label": "Tamagui packages share one pinned version",
+      "dependencies": ["tamagui", "@tamagui/**"],
+      "pinVersion": "2.4.6"
     }
   ],
   "semverGroups": [

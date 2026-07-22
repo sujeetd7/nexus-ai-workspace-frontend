@@ -13,6 +13,10 @@ dist-ssr
 *.local
 .turbo
 
+# Tamagui Vite plugin local cache
+.tamagui
+**/.tamagui/
+
 # Local environment files (keep tracked examples)
 .env
 .env.*

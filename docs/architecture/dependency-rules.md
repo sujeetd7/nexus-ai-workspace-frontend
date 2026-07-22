@@ -66,6 +66,8 @@ Batch 1.8: shared repository capability contracts are deferred. When later justi
 
 Batch 1.9: shared application services are deferred. When later justified, place minimal factories in an existing approved package; do not create `@nexus/shared-services` without an approved ADR. Shared services must not import React, React Native, Redux, RTK Query, Saga, Axios, GraphQL clients, apps, or features. Do not invent repository contracts to support services while Batch 1.8 remains deferred. Prefer explicit factory parameters over a DI container. See `docs/architecture/SHARED_SERVICES.md`.
 
+Batch 2.1: Tamagui configuration, token mapping, and `SharedUIProvider` live only in `@nexus/shared-ui` (ADR-0012). Applications import `SharedUIProvider` from `@nexus/shared-ui` and must not import `TamaguiProvider` from `@tamagui/core` or `tamagui`. Do not deep-import `@nexus/shared-ui/src/**`. See `docs/architecture/DESIGN_SYSTEM.md`.
+
 Do not reverse boundaries (`shared-types` must not import validation or utils; `shared-utils` must not import validation).
 
 ## Verification

@@ -17,6 +17,7 @@ Do not add ADRs under `docs/architecture/adr/` — that path is a pointer only.
 | ADR-0009 | Package and import boundaries   | Accepted | [ADR-0009-package-boundaries.md](./ADR-0009-package-boundaries.md)   |
 | ADR-0010 | Defer Storybook                 | Accepted | [ADR-0010-storybook-deferred.md](./ADR-0010-storybook-deferred.md)   |
 | ADR-0011 | Isolate React Native ESLint     | Accepted | [ADR-0011-react-native-eslint.md](./ADR-0011-react-native-eslint.md) |
+| ADR-0012 | Tamagui UI foundation           | Accepted | [ADR-0012-tamagui.md](./ADR-0012-tamagui.md)                         |
 
 ## ADR Rules
 
