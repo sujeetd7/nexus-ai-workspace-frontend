@@ -63,6 +63,9 @@ Use `parseWithSchema(schema, input, options?)`:
 - Feature schemas remain with feature/domain owners.
 - Do not dump miscellaneous product schemas into shared-validation.
 - Breaking schema behavior requires review.
+- Shared **domain entity** schemas are not added until a contract is approved under `docs/architecture/DOMAIN_MODELS.md`.
+- Batch 1.5 adds no new domain schemas; reuse existing ID, ISO, and pagination **request** primitives only.
+- Page/cursor **response** schemas remain deferred with API DTO validation.
 
 ## Validation versus business rules
 
@@ -123,3 +126,7 @@ A generator is deferred until the repository repeatedly creates standard schema 
 ## Deferred React Hook Form integration
 
 Form adapters belong to a future approved adapter layer. They are intentionally out of scope for the validation platform package.
+
+## Related domain governance
+
+Domain eligibility, anti-patterns, and deferred shared entity contracts are documented in `docs/architecture/DOMAIN_MODELS.md`. Validation must not invent schemas for contracts that document has deferred.

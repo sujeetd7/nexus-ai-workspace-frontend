@@ -56,6 +56,8 @@ Batch 1.3: `@nexus/shared-validation` validates plain objects with Zod and retur
 
 Batch 1.4: shared-validation may export reusable primitives and `parseWithSchema` while remaining dependent only on `zod` and `@nexus/shared-types`. Do not add `@nexus/shared-utils` to shared-validation.
 
+Batch 1.5: justified shared domain contracts (when any exist) live only in `@nexus/shared-types`. Feature entities, API envelopes, and GraphQL-generated types must not be placed in shared-types to “centralize” them. Runtime schemas for approved shared contracts stay in `@nexus/shared-validation` → `@nexus/shared-types`. See `docs/architecture/DOMAIN_MODELS.md`.
+
 Do not reverse boundaries (`shared-types` must not import validation or utils; `shared-utils` must not import validation).
 
 ## Verification

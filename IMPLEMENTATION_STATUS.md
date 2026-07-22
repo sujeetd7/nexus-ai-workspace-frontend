@@ -3,7 +3,7 @@
 ## Current Phase
 
 Sprint 1 — Shared Platform Foundation
-Batch 1.4 — Complete
+Batch 1.5 — Governance complete; new shared domain models deferred pending demonstrated cross-platform or multi-layer consumers.
 
 ## Sprint 0 Status
 
@@ -43,6 +43,15 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - Kept dependency direction `shared-validation → shared-types` (no `shared-utils`)
 - Documented in `docs/architecture/VALIDATION_PLATFORM.md`
 - No React Hook Form / UI / feature schemas; no validation generator
+- Validated with `pnpm verify`
+
+## Sprint 1 — Batch 1.5 (Shared Domain Models)
+
+- Governance complete; new shared domain models deferred pending demonstrated cross-platform or multi-layer consumers
+- Audited existing foundations: `Brand`, `Opaque`, `EntityId`, ISO date brands, page/cursor request and response contracts
+- Documented eligibility, separation rules, and anti-patterns in `docs/architecture/DOMAIN_MODELS.md`
+- No new shared entity types, schemas, feature IDs, API envelopes, or `gen:model`
+- Auth and other feature models remain feature-owned
 - Validated with `pnpm verify`
 
 ## Completed (Sprint 0)
@@ -97,6 +106,8 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - complete offline transport
 - React Hook Form ↔ Zod adapter (outside shared-validation)
 - Feature/form/auth/AI schema placement with feature owners
+- Shared domain entity contracts pending cross-platform or multi-layer consumers
+- Shared audit metadata / soft-delete / optimistic versioning (see technical debt)
 - API response runtime validation at DTO boundaries
 - Automatic Axios interceptor conversion to `AppError`
 - Sprint 1 authentication UI and product features
