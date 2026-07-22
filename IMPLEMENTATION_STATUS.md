@@ -2,8 +2,8 @@
 
 ## Current Phase
 
-Sprint 1 — Shared Platform Foundation
-Batch 1.9 — Complete
+Sprint 1 — Shared Platform Foundation: Complete
+Batch 1.10 — Sprint Validation: Complete
 
 ## Sprint 0 Status
 
@@ -95,6 +95,16 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - No `@nexus/shared-services`, no DI container, no `BaseService`, no `gen:service`
 - Feature business services remain feature-owned; Batch 1.8 repository deferral respected (no invented repository contracts)
 - Validated with `pnpm verify`
+
+## Sprint 1 — Batch 1.10 (Sprint Validation)
+
+- Sprint 1 Shared Platform Foundation validated and closed
+- Confirmed Batches 1.1–1.9 outcomes (implementation or governance-only as documented)
+- Verified package ownership, dependency boundaries, public exports, security controls, and technical-debt accuracy
+- Corrected generator README to distinguish Sprint 0 CLI placeholders from Sprint 1 deferred generators
+- Documented closeout in `docs/sprint-1/SPRINT_1_COMPLETION_REPORT.md`
+- No new platform features; Sprint 2 not started
+- Validated with full quality gates (`pnpm verify`, `pnpm deps:check`, package/app/generator tests)
 
 ## Completed (Sprint 0)
 

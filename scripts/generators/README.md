@@ -8,16 +8,23 @@ Implemented generators:
 - hook
 - slice
 
-Future generators (not implemented; no CLI placeholders):
+CLI placeholders (registered; runtime rejects until implemented):
 
 - screen
 - feature
 - api
 - graphql
 - saga
-- repository — deferred (Batch 1.8); see `docs/architecture/REPOSITORY_CONTRACTS.md`
-- service — deferred (Batch 1.9); see `docs/architecture/SHARED_SERVICES.md`
-- zod
+
+These placeholders predate Sprint 1 (Sprint 0 generator CLI surface). They are not production generators.
+
+Deferred without CLI placeholders (Sprint 1 decisions):
+
+- repository — Batch 1.8; see `docs/architecture/REPOSITORY_CONTRACTS.md`
+- service — Batch 1.9; see `docs/architecture/SHARED_SERVICES.md`
+- model — Batch 1.5; see `docs/architecture/DOMAIN_MODELS.md`
+- zod / validation schema generator
+- logger
 - story
 - test
 
