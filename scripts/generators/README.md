@@ -28,6 +28,11 @@ Deferred without CLI placeholders (Sprint 1 decisions):
 - story
 - test
 
+Design System generators (Batch 2.7 — **governance only**, not implemented):
+
+- primitive / composite / pattern — required later; see `docs/architecture/GENERATOR_GOVERNANCE.md`
+- screen (Design System catalog) — deferred; screens remain app-owned
+
 Templates are stored under templates/.
 
 ## Safety

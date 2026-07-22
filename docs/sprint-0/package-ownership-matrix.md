@@ -122,6 +122,19 @@ Unless repository evidence proves independent consumers:
 
 See `docs/architecture/DESIGN_SYSTEM.md` and ADR-0012.
 
+## Design system organization (Batch 2.7)
+
+| Concern                                                                  | Owner                                                               |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| Hybrid Enterprise Atomic levels (Primitives/Composites/Patterns/Screens) | Docs + Storybook titles — **organizational only** (ADR-0014)        |
+| Level 1–2 shared components                                              | `@nexus/shared-ui`                                                  |
+| Level 3 Patterns (when promoted)                                         | `@nexus/shared-ui` after governance promotion                       |
+| Level 4 Screens                                                          | `apps/web` / `apps/mobile` feature owners — never shared-ui exports |
+| Design System generators                                                 | Specs in `GENERATOR_GOVERNANCE.md` — not implemented in Batch 2.7   |
+| Public API / no deep imports                                             | `PUBLIC_API_GOVERNANCE.md`                                          |
+
+**Architecture confirmation:** Batch 2.7 does not change package boundaries, dependency rules, providers, tokens, theme, Tamagui, responsive, or accessibility ownership.
+
 ## Required Evidence Before Keeping Separate Packages
 
 - independent consumers

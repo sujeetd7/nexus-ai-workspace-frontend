@@ -5,7 +5,7 @@ Accessibility foundation for `@nexus/shared-ui` (Batch 2.3).
 **Web target:** WCAG 2.2 Level AA  
 **React Native:** Equivalent accessible interaction principles via platform APIs (WCAG techniques do not map 1:1).
 
-See also: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md), [`RESPONSIVE_DESIGN.md`](./RESPONSIVE_DESIGN.md), [`../sprint-2/BATCH_MAP.md`](../sprint-2/BATCH_MAP.md).
+See also: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md), [`DESIGN_SYSTEM_GOVERNANCE.md`](./DESIGN_SYSTEM_GOVERNANCE.md), [`RESPONSIVE_DESIGN.md`](./RESPONSIVE_DESIGN.md), [`../sprint-2/BATCH_MAP.md`](../sprint-2/BATCH_MAP.md).
 
 ## What Batch 2.3 completed
 

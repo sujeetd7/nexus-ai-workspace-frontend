@@ -144,10 +144,20 @@ Approved export subpaths:
 
 Build tooling may resolve Tamagui config via `@nexus/shared-ui/tamagui-config`.
 
-## Sprint 2 component levels
+## Sprint 2 component levels (Hybrid Enterprise Atomic)
 
-- **Level 1** — primitives
-- **Level 2** — composites
+Organizational classification only — see [`HYBRID_ENTERPRISE_ATOMIC.md`](./HYBRID_ENTERPRISE_ATOMIC.md) and [ADR-0014](../adr/ADR-0014-hybrid-enterprise-atomic.md).
+
+| Level | Name       | Sprint 2 status                          |
+| ----- | ---------- | ---------------------------------------- |
+| 1     | Primitives | Shipped                                  |
+| 2     | Composites | Shipped (Tooltip deferred)               |
+| 3     | Patterns   | None implemented — examples in docs only |
+| 4     | Screens    | Deferred — app-owned                     |
+
+Process, lifecycle, and checklists: [`DESIGN_SYSTEM_GOVERNANCE.md`](./DESIGN_SYSTEM_GOVERNANCE.md).  
+Public API: [`PUBLIC_API_GOVERNANCE.md`](./PUBLIC_API_GOVERNANCE.md).  
+Generators (define only): [`GENERATOR_GOVERNANCE.md`](./GENERATOR_GOVERNANCE.md).
 
 ### Component maturity checklist
 
@@ -164,8 +174,9 @@ A Level 1 or Level 2 component is **not complete** until all applicable items ar
 - [ ] Mobile verification
 - [ ] Tests
 - [ ] Documentation
+- [ ] Storybook (web shared components)
 
-Stub components must not be marked mature solely because this policy exists (TD-047).
+Stub components must not be marked mature solely because this policy exists (TD-047 closed for L1).
 
 Batch 2.2 completed tokens + theme engine (including preference/persistence/Tamagui sync). That work must not be repeated.
 
@@ -177,17 +188,23 @@ Batch 2.5 completed Level 2 composites (FormField, HelperText, ErrorText, Badge,
 
 Batch 2.6 completed motion helpers + Web Storybook + quality layer — see `MOTION.md`, `STORYBOOK.md`, ADR-0013.
 
+Batch 2.7 completed Hybrid Enterprise Atomic governance + Design System / Storybook / generator / public-API docs — no production UI changes.
+
 ## Deferred
 
+- Level 3 Patterns implementation (examples only until promotion)
+- Level 4 shared Screen catalog
 - React Native Storybook (TD-057)
 - Overlay composites (Tooltip, Dialog, Sheet, Drawer, Toast, Popover, Menu, Select)
-- Animation drivers (Framer Motion / Reanimated / Tamagui `createAnimations`) — not required for Batch 2.6 helpers
+- Animation drivers (Framer Motion / Reanimated / Tamagui `createAnimations`)
 - Native durable theme persistence (TD-032 / TD-051)
 - Optimizing compiler extraction / Metro plugin (TD-048)
 - ESLint `jsx-a11y` enforcement (TD-052)
+- Design System generators implementation (specs only — `GENERATOR_GOVERNANCE.md`)
 
 ## Related ADRs
 
 - ADR-0010 — Storybook deferred (superseded for web by ADR-0013)
 - ADR-0012 — Tamagui foundation
 - ADR-0013 — Web Storybook
+- ADR-0014 — Hybrid Enterprise Atomic organization

@@ -2,8 +2,8 @@
 
 ## Current Phase
 
-Sprint 2 — Design System Foundation: In progress
-Batch 2.6 — Motion + Web Storybook + Quality: Complete
+Sprint 2 — Design System Foundation: Complete (governance Batch 2.7)
+Batch 2.7 — Design System Governance: Complete
 
 ## Sprint 0 Status
 
@@ -19,6 +19,17 @@ See `docs/sprint-2/BATCH_MAP.md`.
 - **2.4** Level 1 primitives — complete
 - **2.5** Level 2 composites — complete (Tooltip deferred)
 - **2.6** Motion foundation + Web Storybook + quality — complete
+- **2.7** Hybrid Enterprise Atomic + Design System governance — complete
+
+## Sprint 2 — Batch 2.7 (Governance)
+
+- Hybrid Enterprise Atomic levels documented (ADR-0014) — organizational only; **no** package/provider/token/theme boundary changes
+- Governance: lifecycle, contribution, review, checklists (`DESIGN_SYSTEM_GOVERNANCE.md`)
+- Generator governance specs only (`GENERATOR_GOVERNANCE.md`) — not implemented
+- Storybook + public API governance updated; Patterns/Screens placeholders
+- Component classification inventory in `COMPONENTS.md`
+- Sprint 2 technical-debt review recorded (no roadmap debt added)
+- Documentation-only batch; `pnpm verify` green
 
 ## Sprint 2 — Batch 2.6 (Motion, Storybook, Quality)
 

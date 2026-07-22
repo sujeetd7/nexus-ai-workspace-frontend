@@ -5,7 +5,7 @@ Motion foundation for `@nexus/shared-ui` (Batch 2.6).
 **Runtime stance:** Duration tokens + reduced-motion-aware CSS transition helpers only.  
 **No** Framer Motion, Reanimated, Tamagui animation drivers, or extra providers.
 
-See also: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md), [`ACCESSIBILITY.md`](./ACCESSIBILITY.md).
+See also: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md), [`DESIGN_SYSTEM_GOVERNANCE.md`](./DESIGN_SYSTEM_GOVERNANCE.md), [`ACCESSIBILITY.md`](./ACCESSIBILITY.md).
 
 ---
 

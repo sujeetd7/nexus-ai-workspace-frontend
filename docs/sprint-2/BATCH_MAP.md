@@ -66,18 +66,33 @@ Completed in commits through Batch 2.2 finalization:
 
 **Out of Batch 2.6:** React Native Storybook, new UI components, patterns/screens, overlays, product UI, animation drivers.
 
-## Batch 2.7+ (not started)
+## Batch 2.7 — Complete (Design System governance)
 
-- Remaining design-system batches per sprint plan (overlays when approved)
+- Adopted Hybrid Enterprise Atomic organization (Primitives → Composites → Patterns → Screens) — **organizational only** (ADR-0014)
+- Governance docs: `HYBRID_ENTERPRISE_ATOMIC.md`, `DESIGN_SYSTEM_GOVERNANCE.md`, `GENERATOR_GOVERNANCE.md`, `PUBLIC_API_GOVERNANCE.md`
+- Storybook hierarchy extended with Patterns/Screens placeholders; review + naming standards in `STORYBOOK.md`
+- Generator standards defined (Primitive/Composite/Pattern required later; Screen deferred) — **not implemented**
+- Component classification inventory in `COMPONENTS.md`
+- No production UI components, export changes, dependency changes, or provider changes
+
+**Out of Batch 2.7:** Pattern/Screen implementation, Design System generator implementation, RN Storybook, overlays, architecture redesign.
+
+## Batch 2.8+ (not started)
+
+- Remaining work per sprint plan (overlays / patterns when approved)
 
 ## Related docs
 
 - `docs/architecture/DESIGN_SYSTEM.md`
+- `docs/architecture/DESIGN_SYSTEM_GOVERNANCE.md`
+- `docs/architecture/HYBRID_ENTERPRISE_ATOMIC.md`
 - `docs/architecture/THEME_ENGINE.md`
 - `docs/architecture/RESPONSIVE_DESIGN.md`
 - `docs/architecture/ACCESSIBILITY.md`
 - `docs/architecture/COMPONENTS.md`
 - `docs/architecture/MOTION.md`
 - `docs/architecture/STORYBOOK.md`
+- `docs/architecture/GENERATOR_GOVERNANCE.md`
+- `docs/architecture/PUBLIC_API_GOVERNANCE.md`
 - `IMPLEMENTATION_STATUS.md`
-- ADR-0012, ADR-0013
+- ADR-0012, ADR-0013, ADR-0014

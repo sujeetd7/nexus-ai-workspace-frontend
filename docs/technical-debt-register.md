@@ -55,10 +55,20 @@
 | TD-050 | Sibling UI docs        | Sibling `nexus-ai-workspace` docs may still mention Tailwind/Radix `@nexus/ui-kit`; this frontend repo excludes that stack (ADR-0012)                                                                                                                                             | Low    | Low      | Cross-repo documentation sync                      |
 | TD-052 | ESLint jsx-a11y        | Web ESLint does not yet include `eslint-plugin-jsx-a11y`; Batch 2.4 relies on component tests + maturity checklist. Plugin deferred to avoid RN/Tamagui noise until scoped web-only config is designed.                                                                           | Low    | Medium   | Governance / web ESLint batch                      |
 | TD-053 | Contrast token gaps    | Partially addressed Batch 2.4: `onPrimary`, `onDanger`, and `focusRing` added with AA tests. Remaining exclusions: border-on-background non-text contrast; status colors as body text (no onSuccess/…).                                                                           | Low    | Medium   | Token review with status/text composites           |
-| TD-054 | Stub a11y coverage     | Closed Batch 2.4 for Level 1 primitives (keyboard/press, labels, roles, touch targets, reduced-motion Loader, contrast). Composite/form a11y remains future work.                                                                                                                 | —      | —        | Closed Batch 2.4                                   |
+| TD-054 | Stub a11y coverage     | Closed Batch 2.4 for Level 1. Batch 2.5 added composite FormField/Chip/Badge a11y coverage; Pattern-level a11y remains N/A until Patterns ship.                                                                                                                                   | —      | —        | Closed Batch 2.4 (+ 2.5 composites)                |
 | TD-055 | Button native element  | Closed Batch 2.4 correction — Web Button is native `<button>`; RN Button is `Pressable` with shared public API. Disabled uses native disabled; loading uses busy semantics without forcing disabled (focus preserved on web).                                                     | —      | —        | Closed Batch 2.4 correction                        |
 | TD-056 | Tooltip / overlays     | Batch 2.5 deferred Tooltip (and evaluated Popover/Dialog/Sheet/Select). Production overlays need portal/positioning/focus management; Tamagui full-kit plus likely native gesture peers are not approved. Remain on `@tamagui/core` until an overlay batch + dependency approval. | Medium | Medium   | Overlay / Tamagui kit approval batch               |
 | TD-057 | RN Storybook           | React Native Storybook not configured. Web Storybook covers shared-ui via RNW in Batch 2.6; native device Storybook awaits explicit approval and toolchain setup.                                                                                                                 | Low    | Low      | When RN Storybook is approved                      |
+
+## Sprint 2 debt review (Batch 2.7)
+
+| Status                               | IDs                                                                                                                          |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| Closed in Sprint 2                   | TD-013, TD-002 (web), TD-047, TD-054, TD-055                                                                                 |
+| Open — concrete / tooling            | TD-048, TD-049, TD-050, TD-051, TD-052, TD-053, TD-056, TD-057                                                               |
+| Not debt (roadmap / future features) | Pattern/Screen implementation, Design System generator implementation — tracked in governance docs, **not** registered as TD |
+
+No new roadmap debt created in Batch 2.7.
 
 ## Review Policy
 

@@ -2,9 +2,13 @@
 
 Production primitives (Batch 2.4) and composites (Batch 2.5) in `@nexus/shared-ui`.
 
+Organization: **Hybrid Enterprise Atomic** — [`HYBRID_ENTERPRISE_ATOMIC.md`](./HYBRID_ENTERPRISE_ATOMIC.md) (ADR-0014).  
+Governance: [`DESIGN_SYSTEM_GOVERNANCE.md`](./DESIGN_SYSTEM_GOVERNANCE.md).  
+Public API: [`PUBLIC_API_GOVERNANCE.md`](./PUBLIC_API_GOVERNANCE.md).
+
 ```ts
 import {
-  // Level 1
+  // Level 1 — Primitives
   View,
   Text,
   Stack,
@@ -15,7 +19,7 @@ import {
   Label,
   Divider,
   Loader,
-  // Level 2
+  // Level 2 — Composites
   FormField,
   HelperText,
   ErrorText,
@@ -29,9 +33,50 @@ import {
 
 All components require `SharedUIProvider` (already used by web/mobile apps).
 
-**Not exported in Batch 2.5:** `Tooltip` (deferred — see Tamagui full-kit evaluation below).
+**Not exported:** `Tooltip` (deferred — see Tamagui full-kit evaluation below).
 
-**Storybook (Batch 2.6):** Web stories under `apps/web/src/stories` — see `STORYBOOK.md` / ADR-0013. React Native Storybook remains deferred (TD-057).
+**Storybook (Batch 2.6+):** Web stories under `apps/web/src/stories` — see `STORYBOOK.md` / ADR-0013. React Native Storybook remains deferred (TD-057).
+
+---
+
+## Classification inventory
+
+| Component               | Level | Name                       | Maturity          |
+| ----------------------- | ----- | -------------------------- | ----------------- |
+| View                    | 1     | Primitive                  | Ready             |
+| Text                    | 1     | Primitive                  | Ready             |
+| Stack / XStack / YStack | 1     | Primitive                  | Ready             |
+| Button                  | 1     | Primitive                  | Ready             |
+| Input                   | 1     | Primitive                  | Ready             |
+| Label                   | 1     | Primitive                  | Ready             |
+| Divider                 | 1     | Primitive                  | Ready             |
+| Loader                  | 1     | Primitive                  | Ready             |
+| FormField               | 2     | Composite                  | Ready             |
+| HelperText              | 2     | Composite                  | Ready             |
+| ErrorText               | 2     | Composite                  | Ready             |
+| Badge                   | 2     | Composite                  | Ready             |
+| Chip                    | 2     | Composite                  | Ready             |
+| Card                    | 2     | Composite                  | Ready             |
+| Surface                 | 2     | Composite                  | Ready             |
+| Section                 | 2     | Composite                  | Ready             |
+| Tooltip                 | —     | Overlay (future Composite) | Deferred (TD-056) |
+
+### Level 3 — Patterns (not implemented)
+
+Documented examples only — **do not implement in Sprint 2:**
+
+- SearchBar
+- EmptyState
+- FilterBar
+- SettingsSection
+- ListHeader
+- SearchPanel
+
+Patterns require promotion evidence before entering `@nexus/shared-ui` (see Hybrid doc).
+
+### Level 4 — Screens (deferred)
+
+Examples only (app-owned): feature route screens, settings pages, auth flows. Not shared-ui exports. No Screen Storybook category content in Sprint 2.
 
 ---
 
@@ -321,4 +366,6 @@ See **Tamagui full-kit evaluation** below. Not exported.
 
 - Add variants only with token backing and tests.
 - No business logic, networking, storage, or Redux.
+- Classify new shared components under Hybrid levels (Primitives / Composites / Patterns) — see `HYBRID_ENTERPRISE_ATOMIC.md`.
 - Overlay composites (Dialog, Sheet, Toast, Popover, Menu, Select, Tooltip) belong in later batches after dependency approval.
+- Patterns/Screens: examples only until promotion / app ownership rules are followed.

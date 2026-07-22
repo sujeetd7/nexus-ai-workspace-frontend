@@ -2,7 +2,7 @@
 
 Canonical responsive rules for `@nexus/shared-ui` (Batch 2.3).
 
-See also: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md), [`ACCESSIBILITY.md`](./ACCESSIBILITY.md), [`../sprint-2/BATCH_MAP.md`](../sprint-2/BATCH_MAP.md).
+See also: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md), [`DESIGN_SYSTEM_GOVERNANCE.md`](./DESIGN_SYSTEM_GOVERNANCE.md), [`ACCESSIBILITY.md`](./ACCESSIBILITY.md), [`../sprint-2/BATCH_MAP.md`](../sprint-2/BATCH_MAP.md).
 
 ## Ownership
 
