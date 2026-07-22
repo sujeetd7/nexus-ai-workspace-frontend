@@ -9,37 +9,44 @@ export function err<E>(error: E): Err<E> {
 }
 
 export function isOk<T, E>(result: Result<T, E>): result is Ok<T> {
-  return result.ok;
+  return result.ok === true;
 }
 
 export function isErr<T, E>(result: Result<T, E>): result is Err<E> {
-  return !result.ok;
+  return result.ok === false;
 }
 
 export function unwrap<T, E>(result: Result<T, E>): T {
-  if (result.ok) {
+  if (isOk(result)) {
     return result.value;
   }
 
-  throw result.error instanceof Error
-    ? result.error
-    : new Error(String(result.error));
+  const error = result.error;
+  throw error instanceof Error ? error : new Error(String(error));
 }
 
 export function unwrapOr<T, E>(result: Result<T, E>, fallback: T): T {
-  return result.ok ? result.value : fallback;
+  return isOk(result) ? result.value : fallback;
 }
 
 export function mapResult<T, U, E>(
   result: Result<T, E>,
   mapFn: (value: T) => U,
 ): Result<U, E> {
-  return result.ok ? ok(mapFn(result.value)) : result;
+  if (isOk(result)) {
+    return ok(mapFn(result.value));
+  }
+
+  return err(result.error);
 }
 
 export function mapErr<T, E, F>(
   result: Result<T, E>,
   mapFn: (error: E) => F,
 ): Result<T, F> {
-  return result.ok ? result : err(mapFn(result.error));
+  if (isOk(result)) {
+    return result;
+  }
+
+  return err(mapFn(result.error));
 }

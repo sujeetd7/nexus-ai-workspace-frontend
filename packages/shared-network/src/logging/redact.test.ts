@@ -34,4 +34,18 @@ describe("redactSensitive", () => {
       redactSensitive([{ token: "secret" }, { name: "nexus" }]),
     ).toEqual([{ token: "[REDACTED]" }, { name: "nexus" }]);
   });
+
+  it("handles circular references without throwing", () => {
+    const circular: Record<string, unknown> = {
+      Authorization: "Bearer secret",
+      safe: "ok",
+    };
+    circular.self = circular;
+
+    expect(redactSensitive(circular)).toEqual({
+      Authorization: "[REDACTED]",
+      safe: "ok",
+      self: "[Circular]",
+    });
+  });
 });

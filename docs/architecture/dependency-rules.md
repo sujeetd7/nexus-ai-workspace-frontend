@@ -60,6 +60,8 @@ Batch 1.5: justified shared domain contracts (when any exist) live only in `@nex
 
 Batch 1.6: `@nexus/shared-utils` may own framework-independent storage helpers and an in-memory `StorageAdapter`. Browser `localStorage` adapters live in `apps/web`. Shared packages must not import `window` / `localStorage` / native storage modules. Auth token persistence remains feature-owned. See `docs/architecture/STORAGE_PLATFORM.md`.
 
+Batch 1.7: `@nexus/shared-utils` may own framework-independent logging helpers (`createConsoleLogger`, noop/memory/scoped, `logAppError`, metadata sanitization, level policy). Web/Mobile adapters live under `apps/*/src/platform/logging`. `NetworkLogger` and `redactSensitive` remain in `@nexus/shared-network`. Do not add `@nexus/shared-utils` to `@nexus/shared-network`. `Logger → NetworkLogger` adapters are application-local. See `docs/architecture/LOGGING_PLATFORM.md`.
+
 Do not reverse boundaries (`shared-types` must not import validation or utils; `shared-utils` must not import validation).
 
 ## Verification

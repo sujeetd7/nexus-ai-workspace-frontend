@@ -92,6 +92,15 @@ Use `parseWithSchema` from `@nexus/shared-validation` for Zod → `Result<T, App
 - Safe metadata only: field path heads, issue categories, issue counts
 - See `docs/architecture/VALIDATION_PLATFORM.md`
 
+## Logging serialized errors (Batch 1.7)
+
+Prefer `logAppError` from `@nexus/shared-utils` when writing AppErrors to a `Logger`.
+
+- Uses `toAppError` + `serializeAppError`
+- Never logs `cause`, stack traces, or raw payloads
+- Application log metadata sanitization is separate from network `redactSensitive`
+- See `docs/architecture/LOGGING_PLATFORM.md`
+
 ## Deferred
 
 - React Hook Form ↔ Zod adapter (outside shared-validation)

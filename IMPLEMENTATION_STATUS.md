@@ -3,7 +3,7 @@
 ## Current Phase
 
 Sprint 1 — Shared Platform Foundation
-Batch 1.6 — Complete
+Batch 1.7 — Complete
 
 ## Sprint 0 Status
 
@@ -64,6 +64,18 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - Documented in `docs/architecture/STORAGE_PLATFORM.md`
 - Validated with `pnpm verify`
 
+## Sprint 1 — Batch 1.7 (Logging Platform)
+
+- Kept existing `Logger` contract unchanged in `@nexus/shared-types`
+- Added `@nexus/shared-utils` helpers: console/noop/memory/scoped loggers, `logAppError`, shared level policy, metadata sanitization
+- Added Web `platform/logging` adapter, NetworkLogger adapters, REST/GraphQL client wiring, ErrorBoundary safe logging
+- Added Mobile `platform/logging` adapter (no HTTP client wiring)
+- Preserved `api/observability/logger` as a thin compatibility re-export
+- Kept network `redactSensitive` ownership in `@nexus/shared-network` (circular-safe)
+- Documented in `docs/architecture/LOGGING_PLATFORM.md`
+- No `gen:logger`; no remote sinks / telemetry dependencies
+- Validated with `pnpm verify`
+
 ## Completed (Sprint 0)
 
 - pnpm workspace configuration
@@ -114,6 +126,12 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - secure mobile credential storage
 - durable native StorageAdapter (AsyncStorage/MMKV — requires ADR)
 - browser auth-token migration onto platform storage adapter
+- remote logging / observability sinks (requires ADR)
+- correlation / tracing platform
+- performance metrics pipeline
+- request-id helper consolidation
+- mobile network-client logging (when a client exists)
+- web observability logger compatibility-wrapper removal
 - streaming transport
 - complete offline transport
 - React Hook Form ↔ Zod adapter (outside shared-validation)

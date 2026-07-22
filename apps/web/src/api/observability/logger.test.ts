@@ -2,51 +2,27 @@
  * @vitest-environment node
  */
 
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-describe("logger environment access", () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-    vi.resetModules();
+import { logger } from "./logger";
+import { webLogger } from "../../platform/logging";
+
+describe("observability logger compatibility wrapper", () => {
+  it("re-exports the platform web logger", () => {
+    expect(logger).toBe(webLogger);
+    expect(typeof logger.debug).toBe("function");
+    expect(typeof logger.info).toBe("function");
+    expect(typeof logger.warn).toBe("function");
+    expect(typeof logger.error).toBe("function");
   });
 
-  it("consumes validated configuration isDevelopment", async () => {
-    vi.doMock("../../config/env", () => ({
-      env: {
-        buildMode: "development",
-        apiBaseUrl: "http://localhost:3000/api",
-        graphqlUrl: "http://localhost:3000/graphql",
-        appName: "Nexus AI Workspace",
-        isDevelopment: true,
-        isProduction: false,
-      },
-    }));
-
+  it("does not bypass the shared Logger contract with raw console.debug in test mode", () => {
     const debugSpy = vi.spyOn(console, "debug").mockImplementation(() => {});
-    const { logger } = await import("./logger");
 
-    logger.debug("hello");
-
-    expect(debugSpy).toHaveBeenCalledWith("hello");
-  });
-
-  it("suppresses debug logs when not development", async () => {
-    vi.doMock("../../config/env", () => ({
-      env: {
-        buildMode: "production",
-        apiBaseUrl: "http://localhost:3000/api",
-        graphqlUrl: "http://localhost:3000/graphql",
-        appName: "Nexus AI Workspace",
-        isDevelopment: false,
-        isProduction: true,
-      },
-    }));
-
-    const debugSpy = vi.spyOn(console, "debug").mockImplementation(() => {});
-    const { logger } = await import("./logger");
-
-    logger.debug("hello");
-
+    // Vitest MODE is typically `test` → platform logger is noop without sink.
+    logger.debug("hello", { password: "secret" });
     expect(debugSpy).not.toHaveBeenCalled();
+
+    debugSpy.mockRestore();
   });
 });

@@ -1,14 +1,14 @@
 ﻿# Package Ownership Matrix
 
-| Package             | Primary Responsibility                    | Allowed Contents                                                                                                                                              | Must Not Contain                                                                         |
-| ------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `shared-types`      | Shared TypeScript contracts               | Batch 1.1 primitives (`Brand`/`EntityId`/pagination/ISO); Batch 1.2 errors; Batch 1.3 config; justified shared domain contracts only (see `DOMAIN_MODELS.md`) | runtime logic, UI, feature entities, HTTP `ApiError`, env globals, Zod                   |
-| `shared-utils`      | Platform-safe helpers                     | Batch 1.1 helpers; Batch 1.2 Result / AppError runtime helpers; Batch 1.6 storage helpers (namespaced keys, JSON serialize/parse, memory adapter)             | browser-only or React-specific logic; environment readers; `localStorage`                |
-| `shared-validation` | Shared validation contracts               | Zod primitives; `parseWithSchema`; Batch 1.3 `parsePublicClientConfig` for **plain objects**; returns `Result`/`AppError` from `shared-types`                 | API transport, UI, feature schemas, RHF, `import.meta.env`, `process.env`, platform APIs |
-| `shared-network`    | Platform-neutral HTTP/GraphQL transport   | Axios/RTK/GraphQL helpers; `ApiError`; explicit `apiErrorToAppError` conversion                                                                               | UI, feature modules, app-specific storage, env globals                                   |
-| `shared-ui`         | Cross-platform UI foundation              | components, tokens, themes, responsive helpers                                                                                                                | product features, application state, Axios                                               |
-| `shared-theme`      | Candidate: theme-only package             | tokens and theme composition only                                                                                                                             | duplicate UI components                                                                  |
-| `ui-kit`            | Candidate: presentation component library | design-system components only                                                                                                                                 | duplicate theme ownership                                                                |
+| Package             | Primary Responsibility                    | Allowed Contents                                                                                                                                                               | Must Not Contain                                                                         |
+| ------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `shared-types`      | Shared TypeScript contracts               | Batch 1.1 primitives (`Brand`/`EntityId`/pagination/ISO); Batch 1.2 errors; Batch 1.3 config; justified shared domain contracts only (see `DOMAIN_MODELS.md`)                  | runtime logic, UI, feature entities, HTTP `ApiError`, env globals, Zod                   |
+| `shared-utils`      | Platform-safe helpers                     | Batch 1.1 helpers; Batch 1.2 Result / AppError runtime helpers; Batch 1.6 storage helpers; Batch 1.7 logging helpers (console/noop/memory/scoped, `logAppError`, level policy) | browser-only or React-specific logic; environment readers; `localStorage`; remote sinks  |
+| `shared-validation` | Shared validation contracts               | Zod primitives; `parseWithSchema`; Batch 1.3 `parsePublicClientConfig` for **plain objects**; returns `Result`/`AppError` from `shared-types`                                  | API transport, UI, feature schemas, RHF, `import.meta.env`, `process.env`, platform APIs |
+| `shared-network`    | Platform-neutral HTTP/GraphQL transport   | Axios/RTK/GraphQL helpers; `ApiError`; explicit `apiErrorToAppError` conversion                                                                                                | UI, feature modules, app-specific storage, env globals                                   |
+| `shared-ui`         | Cross-platform UI foundation              | components, tokens, themes, responsive helpers                                                                                                                                 | product features, application state, Axios                                               |
+| `shared-theme`      | Candidate: theme-only package             | tokens and theme composition only                                                                                                                                              | duplicate UI components                                                                  |
+| `ui-kit`            | Candidate: presentation component library | design-system components only                                                                                                                                                  | duplicate theme ownership                                                                |
 
 ## Environment platform ownership (Batch 1.3)
 
@@ -49,6 +49,20 @@ Do not add speculative `BaseEntity`, `AuditMetadata`, `PaginatedResult`, feature
 | Native durable / secure storage                 | Deferred — see technical debt               |
 
 See `docs/architecture/STORAGE_PLATFORM.md`. Do not put browser or native storage APIs in shared packages.
+
+## Logging platform ownership (Batch 1.7)
+
+| Concern                                                                             | Owner                                                     |
+| ----------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `Logger` contract                                                                   | `@nexus/shared-types` (unchanged)                         |
+| Console / noop / memory / scoped helpers, `logAppError`, sanitization, level policy | `@nexus/shared-utils`                                     |
+| `NetworkLogger`, `redactSensitive`, transport logs                                  | `@nexus/shared-network`                                   |
+| Web logger + NetworkLogger adapter + client wiring                                  | `apps/web/src/platform/logging` (+ `api` clients)         |
+| Mobile logger                                                                       | `apps/mobile/src/platform/logging`                        |
+| Observability compatibility re-export                                               | `apps/web/src/api/observability/logger.ts` (thin wrapper) |
+| Remote sinks / telemetry / analytics                                                | Deferred                                                  |
+
+See `docs/architecture/LOGGING_PLATFORM.md`. Do not create `@nexus/shared-logger`. Do not move network redaction into shared-utils.
 
 ## Overlap Decision
 

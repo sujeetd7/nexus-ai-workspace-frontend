@@ -1,6 +1,10 @@
 import { createHttpClient } from "@nexus/shared-network";
 
 import { api } from "../../config";
+import {
+  createNetworkLoggerAdapter,
+  webLogger,
+} from "../../platform/logging";
 import { getAccessToken, logout } from "../auth";
 
 const managedHttpClient = createHttpClient({
@@ -11,6 +15,7 @@ const managedHttpClient = createHttpClient({
   unauthorizedHandler: {
     onUnauthorized: logout,
   },
+  logger: createNetworkLoggerAdapter(webLogger),
 });
 
 export const axiosClient = managedHttpClient.client;

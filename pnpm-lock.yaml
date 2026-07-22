@@ -97,6 +97,9 @@ importers:
       "@nexus/shared-types":
         specifier: workspace:*
         version: link:../../packages/shared-types
+      "@nexus/shared-utils":
+        specifier: workspace:*
+        version: link:../../packages/shared-utils
       "@nexus/shared-validation":
         specifier: workspace:*
         version: link:../../packages/shared-validation

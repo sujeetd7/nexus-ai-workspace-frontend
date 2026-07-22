@@ -1,14 +1,14 @@
 import type { AppError, Result } from "@nexus/shared-types";
 
 import { normalizeError } from "../errors";
-import { err, ok } from "./result";
+import { err, isErr, isOk, ok } from "./result";
 
 export function mapResultAsync<T, U, E>(
   result: Result<T, E>,
   mapFn: (value: T) => Promise<U>,
 ): Promise<Result<U, E>> {
-  if (!result.ok) {
-    return Promise.resolve(result);
+  if (isErr(result)) {
+    return Promise.resolve(err(result.error));
   }
 
   return mapFn(result.value).then((value) => ok(value));
@@ -18,15 +18,19 @@ export function andThen<T, U, E>(
   result: Result<T, E>,
   mapFn: (value: T) => Result<U, E>,
 ): Result<U, E> {
-  return result.ok ? mapFn(result.value) : result;
+  if (isErr(result)) {
+    return err(result.error);
+  }
+
+  return mapFn(result.value);
 }
 
 export async function andThenAsync<T, U, E>(
   result: Result<T, E>,
   mapFn: (value: T) => Promise<Result<U, E>>,
 ): Promise<Result<U, E>> {
-  if (!result.ok) {
-    return result;
+  if (isErr(result)) {
+    return err(result.error);
   }
 
   return mapFn(result.value);
@@ -39,7 +43,11 @@ export function matchResult<T, E, U>(
     readonly err: (error: E) => U;
   },
 ): U {
-  return result.ok ? handlers.ok(result.value) : handlers.err(result.error);
+  if (isOk(result)) {
+    return handlers.ok(result.value);
+  }
+
+  return handlers.err(result.error);
 }
 
 export function fromThrowable<T>(fn: () => T): Result<T, AppError> {
@@ -69,8 +77,8 @@ export function allResults<T, E>(
   const values: T[] = [];
 
   for (const result of results) {
-    if (!result.ok) {
-      return result;
+    if (isErr(result)) {
+      return err(result.error);
     }
 
     values.push(result.value);
