@@ -2,11 +2,12 @@
 
 ## Current Phase
 
-Sprint 1 — Shared Platform Foundation (Batch 1.1 complete)
+Sprint 1 — Shared Platform Foundation
+Batch 1.2 — Complete
 
 ## Sprint 0 Status
 
-Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 Batch 1.1 start
+Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 start
 
 ## Sprint 1 — Batch 1.1 (Shared Core Foundation)
 
@@ -14,6 +15,14 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 Ba
 - Extended `@nexus/shared-utils` with `assertNever`, Result helpers, and `createId` tests
 - No `@nexus/shared-core` package (Option B — reuse approved packages)
 - Package tests run via Vitest (aligned with `@nexus/shared-network`; package Jest presets lacked TypeScript transform)
+- Validated with `pnpm verify`
+
+## Sprint 1 — Batch 1.2 (Result & Error Platform)
+
+- Extended `AppError` with `ErrorCode`/`ERROR_CODES`, `ErrorMetadata`, retryability, and `SerializedAppError`
+- Added shared-utils normalization, serialization, factories, and Result composition helpers
+- Kept `ApiError` network-specific with explicit `apiErrorToAppError` conversion
+- Documented in `docs/architecture/RESULT_AND_ERRORS.md`
 - Validated with `pnpm verify`
 
 ## Completed (Sprint 0)
@@ -67,6 +76,7 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 Ba
 - streaming transport
 - complete offline transport
 - Zod / `@nexus/shared-validation` population (later Sprint 1 batch)
+- Automatic Axios interceptor conversion to `AppError`
 - Sprint 1 authentication UI and product features
 
 ## Quality Commands

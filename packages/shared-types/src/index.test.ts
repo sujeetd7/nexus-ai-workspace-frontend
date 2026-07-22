@@ -58,6 +58,8 @@ describe("@nexus/shared-types public contracts", () => {
     const error: AppError = {
       code: "VALIDATION",
       message: "Invalid input",
+      retryable: false,
+      metadata: { field: "email" },
     };
 
     const logger: Logger = {

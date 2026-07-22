@@ -4,7 +4,14 @@ export type {
 } from "./async";
 export type { Logger, StorageAdapter } from "./contracts";
 export type { ISODateString, ISODateTimeString } from "./datetime";
-export type { AppError } from "./errors";
+export {
+  ERROR_CODES,
+  type AppError,
+  type ErrorCode,
+  type ErrorMetadata,
+  type ErrorMetadataValue,
+  type SerializedAppError,
+} from "./errors";
 export type {
   CursorPageRequest,
   CursorPageResponse,
