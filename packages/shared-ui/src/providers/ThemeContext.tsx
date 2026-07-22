@@ -25,8 +25,9 @@ export interface ThemeContextValue {
   /** Update theme preference (persisted when storage is configured). */
   setPreference: (preference: ThemePreference) => void;
   /**
-   * Convenience setter for an explicit light/dark mode.
-   * Equivalent to `setPreference("light" | "dark")`.
+   * Stable convenience setter for an explicit light/dark mode.
+   * Equivalent to `setPreference(mode)` — same persistence and controlled-mode path.
+   * Prefer `setPreference` when `"system"` must be selectable.
    */
   setMode: (mode: ThemeMode) => void;
 }

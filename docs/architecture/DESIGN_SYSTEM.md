@@ -137,7 +137,9 @@ Build tooling may resolve Tamagui config via `@nexus/shared-ui/tamagui-config`.
 - **Level 1** — primitives
 - **Level 2** — composites
 
-Batch 2.2 completes tokens + theme engine only. No component migration.
+Batch 2.2 completed tokens + theme engine (including preference/persistence/Tamagui sync). That work must not be repeated in Batch 2.3.
+
+Batch 2.3 focuses on responsive governance and accessibility foundations — not primitives. See `docs/sprint-2/BATCH_MAP.md`.
 
 ## Deferred
 
