@@ -64,6 +64,8 @@ Batch 1.7: `@nexus/shared-utils` may own framework-independent logging helpers (
 
 Batch 1.8: shared repository capability contracts are deferred. When later justified, type-only contracts live only in `@nexus/shared-types` and must not import `@nexus/shared-network`, Axios, GraphQL clients, storage backends, Redux, or apps. Feature repository implementations stay feature- or application-owned. Do not create `@nexus/shared-repository` without an approved ADR. See `docs/architecture/REPOSITORY_CONTRACTS.md`.
 
+Batch 1.9: shared application services are deferred. When later justified, place minimal factories in an existing approved package; do not create `@nexus/shared-services` without an approved ADR. Shared services must not import React, React Native, Redux, RTK Query, Saga, Axios, GraphQL clients, apps, or features. Do not invent repository contracts to support services while Batch 1.8 remains deferred. Prefer explicit factory parameters over a DI container. See `docs/architecture/SHARED_SERVICES.md`.
+
 Do not reverse boundaries (`shared-types` must not import validation or utils; `shared-utils` must not import validation).
 
 ## Verification

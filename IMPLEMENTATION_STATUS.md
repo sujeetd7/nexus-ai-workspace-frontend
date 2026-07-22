@@ -3,7 +3,7 @@
 ## Current Phase
 
 Sprint 1 — Shared Platform Foundation
-Batch 1.8 — Complete
+Batch 1.9 — Complete
 
 ## Sprint 0 Status
 
@@ -86,6 +86,16 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - Feature repositories (when introduced) remain feature-owned
 - Validated with `pnpm verify`
 
+## Sprint 1 — Batch 1.9 (Shared Services)
+
+- Governance complete; shared services deferred pending demonstrated cross-platform orchestration
+- Audited existing “service” named code: feature `authSession` helpers and RTK `baseApi` shell only; Mobile has none
+- Platform env/storage/logging/network factories remain the approved shared coordination points
+- Documented eligibility, ownership, DI/factory policy, Result/AppError policy, and anti-patterns in `docs/architecture/SHARED_SERVICES.md`
+- No `@nexus/shared-services`, no DI container, no `BaseService`, no `gen:service`
+- Feature business services remain feature-owned; Batch 1.8 repository deferral respected (no invented repository contracts)
+- Validated with `pnpm verify`
+
 ## Completed (Sprint 0)
 
 - pnpm workspace configuration
@@ -148,6 +158,7 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - Feature/form/auth/AI schema placement with feature owners
 - Shared domain entity contracts pending cross-platform or multi-layer consumers
 - Shared repository capability contracts pending demonstrated reusable consumers (see `REPOSITORY_CONTRACTS.md`)
+- Shared application services pending demonstrated cross-platform orchestration (see `SHARED_SERVICES.md`)
 - Shared audit metadata / soft-delete / optimistic versioning (see technical debt)
 - API response runtime validation at DTO boundaries
 - Automatic Axios interceptor conversion to `AppError`

@@ -77,6 +77,20 @@ See `docs/architecture/LOGGING_PLATFORM.md`. Do not create `@nexus/shared-logger
 
 Do not add speculative `IRepository`, `BaseRepository`, generic filter/sort DSLs, or repository implementations to shared packages. Do not create `@nexus/shared-repository` without an approved ADR.
 
+## Shared service ownership (Batch 1.9)
+
+| Concern                                                    | Owner                                                   |
+| ---------------------------------------------------------- | ------------------------------------------------------- |
+| Shared service eligibility policy                          | `docs/architecture/SHARED_SERVICES.md`                  |
+| Proven cross-platform orchestration (when justified later) | Frontend Platform Team via an existing approved package |
+| Feature business services                                  | Feature teams                                           |
+| App composition roots / wiring                             | `apps/web`, `apps/mobile`                               |
+| Env / storage / logging / network factories                | Existing Batch 1.3–1.7 owners (unchanged)               |
+| Long-running workflows / server-state cache                | Redux Saga (ADR-0004) / RTK Query (ADR-0005)            |
+| New `@nexus/shared-services` package                       | Forbidden without approved ADR                          |
+
+Do not wrap existing platform utilities in service classes for Batch 1.9 completeness. Do not introduce a DI container or service locator. Do not invent repository contracts to support shared services while Batch 1.8 remains deferred.
+
 ## Overlap Decision
 
 The preferred target is:

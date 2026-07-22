@@ -45,6 +45,9 @@
 | TD-041 | Shared repositories    | Shared repository capability contracts deferred until ≥2 real multi-platform or multi-layer consumers with shared semantics            | Medium | Medium   | When eligibility in REPOSITORY_CONTRACTS.md is met |
 | TD-042 | Repo filter/sort DSL   | Generic repository filter/sort/query-specification contracts deferred; feature filters stay feature-owned                              | Low    | Low      | Requires multi-domain evidence + review            |
 | TD-043 | gen:repository         | Repository generator deferred until repeated approved feature-owned repository bundles exist                                           | Low    | Low      | After proven repository bundle pattern             |
+| TD-044 | Shared services        | Shared application services deferred until demonstrated cross-platform orchestration not owned by env/storage/logging/network/RTK/Saga | Medium | Medium   | When eligibility in SHARED_SERVICES.md is met      |
+| TD-045 | Service DI container   | No DI container / service locator; factories only. Container introduction requires ADR                                                 | Low    | Low      | Requires ADR if product mandates container         |
+| TD-046 | gen:service            | Service generator deferred until repeated approved service bundles (contract/factory/tests/exports/docs) exist                         | Low    | Low      | After proven shared-service bundle pattern         |
 
 ## Review Policy
 

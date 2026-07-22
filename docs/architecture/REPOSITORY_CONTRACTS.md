@@ -212,3 +212,4 @@ These must **not** be reclassified as shared repositories solely for neatness:
 - Dependency rules: `docs/architecture/dependency-rules.md`
 - Package ownership: `docs/sprint-0/package-ownership-matrix.md`
 - RTK Query: `docs/adr/ADR-0005-rtk-query.md`
+- Shared services: `docs/architecture/SHARED_SERVICES.md`

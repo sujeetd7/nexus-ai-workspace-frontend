@@ -16,7 +16,7 @@ Future generators (not implemented; no CLI placeholders):
 - graphql
 - saga
 - repository — deferred (Batch 1.8); see `docs/architecture/REPOSITORY_CONTRACTS.md`
-- service
+- service — deferred (Batch 1.9); see `docs/architecture/SHARED_SERVICES.md`
 - zod
 - story
 - test
