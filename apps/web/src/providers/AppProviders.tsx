@@ -4,19 +4,25 @@ import {
   THEME_PREFERENCE_STORAGE_KEY,
 } from "@nexus/shared-ui";
 
-import { createLocalStorageAdapter } from "../platform/storage";
+import type { WebRuntime } from "../bootstrap/types";
 import { ReduxProvider } from "./redux";
 
-const themeStorage = createLocalStorageAdapter();
+export interface AppProvidersProps extends PropsWithChildren {
+  readonly runtime: WebRuntime;
+}
 
-export function AppProviders({ children }: PropsWithChildren) {
+/**
+ * Web provider composition after successful bootstrap.
+ * SharedUIProvider is the sole design-system provider; Redux wraps the store once.
+ */
+export function AppProviders({ children, runtime }: AppProvidersProps) {
   return (
     <SharedUIProvider
       defaultPreference="system"
-      storage={themeStorage}
+      storage={runtime.themeStorage}
       storageKey={THEME_PREFERENCE_STORAGE_KEY}
     >
-      <ReduxProvider>{children}</ReduxProvider>
+      <ReduxProvider store={runtime.store}>{children}</ReduxProvider>
     </SharedUIProvider>
   );
 }

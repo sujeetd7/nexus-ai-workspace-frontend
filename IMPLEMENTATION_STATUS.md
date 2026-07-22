@@ -2,12 +2,43 @@
 
 ## Current Phase
 
+Sprint 3 — Application Runtime Foundation: **In progress**
+Batch 3.2 — Bootstrap & Provider Foundation: **Complete**
+Batch 3.1 — Repository Audit & Runtime Baseline: **Complete**
+
 Sprint 2 — Design System Foundation: **Complete** (closeout Batch 2.8)
-Batch 2.8 — Sprint 2 Closeout: Complete
 
 ## Sprint 0 Status
 
 Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 start
+
+## Sprint 3 batch map
+
+See `docs/sprint-3/BATCH_MAP.md`, `docs/sprint-3/RUNTIME_INVENTORY.md`, and batch completion reports.
+
+- **3.1** Repository audit & runtime baseline — complete
+- **3.2** Bootstrap & provider foundation — complete
+- **3.3** Navigation foundation — not started
+
+## Sprint 3 — Batch 3.2 (Bootstrap & Provider Foundation)
+
+- Explicit idempotent bootstrap for web and mobile with structured outcomes
+- Shared bootstrap contracts in `@nexus/shared-types`
+- Web: lazy env, HTTP/store factories, provider gate, startup loading/failure
+- Mobile: Redux/RTK/Saga/HTTP, ErrorBoundary, SafeArea → SharedUI → Redux
+- Provider depth ≤ 8; no navigation, feature state, or GraphQL React provider
+- Syncpack Storybook script-order hygiene
+- Docs: `APPLICATION_BOOTSTRAP.md`, `PROVIDER_COMPOSITION.md`
+- Validated with repository quality gates
+
+## Sprint 3 — Batch 3.1 (Repository Audit & Runtime Baseline)
+
+- Verified toolchain and repository state on `master` @ Sprint 2 closeout commit
+- Audited web/mobile bootstrap, providers, Redux/Saga/RTK, GraphQL transport, networking, logging, storage, env, routing/navigation, shell, lifecycle, generators, DI, package ownership
+- Classified reusable infrastructure; confirmed Sprint 3 can bootstrap store infrastructure without additional feature reducers
+- Confirmed architecture compliance (no new packages, no IoC, no Module Federation)
+- Documentation: Sprint 3 batch map + runtime inventory + Batch 3.1 completion report
+- No production runtime implementation; Batch 3.2 not started
 
 ## Sprint 2 batch map
 
@@ -252,7 +283,8 @@ See `docs/sprint-2/BATCH_MAP.md` and `docs/sprint-2/SPRINT_2_COMPLETION_REPORT.m
 
 ## Deferred
 
-- Sprint 3+ feature work (not started)
+- Sprint 3 Batch 3.3+ navigation / shell (not started)
+- Sprint 3+ product feature work (not started)
 - React Native Storybook (TD-057)
 - Overlay composites / Tooltip (TD-056)
 - Design System generator implementation (specs only)

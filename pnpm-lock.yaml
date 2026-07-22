@@ -94,6 +94,9 @@ importers:
 
   apps/mobile:
     dependencies:
+      "@nexus/shared-network":
+        specifier: workspace:*
+        version: link:../../packages/shared-network
       "@nexus/shared-types":
         specifier: workspace:*
         version: link:../../packages/shared-types
@@ -109,6 +112,12 @@ importers:
       "@react-native/new-app-screen":
         specifier: 0.85.3
         version: 0.85.3(@types/react@19.2.17)(react-native@0.85.3(@babel/core@7.29.7)(@react-native-community/cli@20.1.0(typescript@5.9.3))(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
+      "@reduxjs/toolkit":
+        specifier: ^2.12.0
+        version: 2.12.0(react-redux@9.3.0(@types/react@19.2.17)(react@19.2.3)(redux@5.0.1))(react@19.2.3)
+      axios:
+        specifier: ^1.18.1
+        version: 1.18.1
       react:
         specifier: 19.2.3
         version: 19.2.3
@@ -118,10 +127,19 @@ importers:
       react-native-safe-area-context:
         specifier: ^5.5.2
         version: 5.8.0(react-native@0.85.3(@babel/core@7.29.7)(@react-native-community/cli@20.1.0(typescript@5.9.3))(@react-native/jest-preset@0.85.3(@babel/core@7.29.7)(react@19.2.3))(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
+      react-redux:
+        specifier: ^9.3.0
+        version: 9.3.0(@types/react@19.2.17)(react@19.2.3)(redux@5.0.1)
+      redux-saga:
+        specifier: ^1.5.0
+        version: 1.5.0
     devDependencies:
       "@babel/core":
         specifier: ^7.25.2
         version: 7.29.7
+      "@babel/plugin-transform-export-namespace-from":
+        specifier: ^7.27.1
+        version: 7.29.7(@babel/core@7.29.7)
       "@babel/preset-env":
         specifier: ^7.25.3
         version: 7.29.7(@babel/core@7.29.7)
@@ -13443,6 +13461,18 @@ snapshots:
 
   "@redux-saga/types@1.4.0": {}
 
+  "@reduxjs/toolkit@2.12.0(react-redux@9.3.0(@types/react@19.2.17)(react@19.2.3)(redux@5.0.1))(react@19.2.3)":
+    dependencies:
+      "@standard-schema/spec": 1.1.0
+      "@standard-schema/utils": 0.3.0
+      immer: 11.1.15
+      redux: 5.0.1
+      redux-thunk: 3.1.0(redux@5.0.1)
+      reselect: 5.2.0
+    optionalDependencies:
+      react: 19.2.3
+      react-redux: 9.3.0(@types/react@19.2.17)(react@19.2.3)(redux@5.0.1)
+
   "@reduxjs/toolkit@2.12.0(react-redux@9.3.0(@types/react@19.2.17)(react@19.2.7)(redux@5.0.1))(react@19.2.7)":
     dependencies:
       "@standard-schema/spec": 1.1.0
@@ -17825,6 +17855,15 @@ snapshots:
       react: 19.2.3
       scheduler: 0.27.0
 
+  react-redux@9.3.0(@types/react@19.2.17)(react@19.2.3)(redux@5.0.1):
+    dependencies:
+      "@types/use-sync-external-store": 0.0.6
+      react: 19.2.3
+      use-sync-external-store: 1.6.0(react@19.2.3)
+    optionalDependencies:
+      "@types/react": 19.2.17
+      redux: 5.0.1
+
   react-redux@9.3.0(@types/react@19.2.17)(react@19.2.7)(redux@5.0.1):
     dependencies:
       "@types/use-sync-external-store": 0.0.6
@@ -18672,6 +18711,10 @@ snapshots:
     dependencies:
       querystringify: 2.2.0
       requires-port: 1.0.0
+
+  use-sync-external-store@1.6.0(react@19.2.3):
+    dependencies:
+      react: 19.2.3
 
   use-sync-external-store@1.6.0(react@19.2.7):
     dependencies:

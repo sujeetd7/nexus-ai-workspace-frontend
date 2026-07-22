@@ -1,8 +1,12 @@
 import type { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 
-import { store } from "../../store";
+import type { AppStore } from "../../store/createAppStore";
 
-export function ReduxProvider({ children }: PropsWithChildren) {
+export interface ReduxProviderProps extends PropsWithChildren {
+  readonly store: AppStore;
+}
+
+export function ReduxProvider({ children, store }: ReduxProviderProps) {
   return <Provider store={store}>{children}</Provider>;
 }

@@ -1,4 +1,4 @@
-import type { RootState } from "../../configureStore";
+import type { RootState } from "../../createAppStore";
 
 export const selectAuth = (state: RootState) => state.auth;
 

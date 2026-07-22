@@ -1,12 +1,25 @@
 import type { PropsWithChildren } from "react";
-
+import { Provider } from "react-redux";
 import { SharedUIProvider } from "@nexus/shared-ui";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import type { MobileRuntime } from "../bootstrap/types";
+
+export interface AppProvidersProps extends PropsWithChildren {
+  readonly runtime: MobileRuntime;
+}
 
 /**
- * Mobile UI providers. Durable theme persistence awaits a native StorageAdapter (TD-032).
+ * Mobile provider composition after successful bootstrap.
+ * SafeArea remains application-owned and outermost of the design-system stack.
+ * Theme persistence deferred (TD-032 / TD-051).
  */
-export function AppProviders({ children }: PropsWithChildren) {
+export function AppProviders({ children, runtime }: AppProvidersProps) {
   return (
-    <SharedUIProvider defaultPreference="system">{children}</SharedUIProvider>
+    <SafeAreaProvider>
+      <SharedUIProvider defaultPreference="system">
+        <Provider store={runtime.store}>{children}</Provider>
+      </SharedUIProvider>
+    </SafeAreaProvider>
   );
 }

@@ -2,6 +2,13 @@ export type {
   Awaitable,
   MaybePromise,
 } from "./async";
+export {
+  BOOTSTRAP_FAILURE_CODES,
+  type BootstrapFailure,
+  type BootstrapFailureCode,
+  type BootstrapOutcome,
+  type BootstrapStatus,
+} from "./bootstrap";
 export type { BuildMode, PublicClientConfig } from "./config";
 export type { Logger, StorageAdapter } from "./contracts";
 export type { ISODateString, ISODateTimeString } from "./datetime";

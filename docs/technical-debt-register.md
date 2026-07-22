@@ -59,6 +59,8 @@
 | TD-055 | Button native element  | Closed Batch 2.4 correction — Web Button is native `<button>`; RN Button is `Pressable` with shared public API. Disabled uses native disabled; loading uses busy semantics without forcing disabled (focus preserved on web).                                                     | —      | —        | Closed Batch 2.4 correction                        |
 | TD-056 | Tooltip / overlays     | Batch 2.5 deferred Tooltip (and evaluated Popover/Dialog/Sheet/Select). Production overlays need portal/positioning/focus management; Tamagui full-kit plus likely native gesture peers are not approved. Remain on `@tamagui/core` until an overlay batch + dependency approval. | Medium | Medium   | Overlay / Tamagui kit approval batch               |
 | TD-057 | RN Storybook           | React Native Storybook not configured. Web Storybook covers shared-ui via RNW in Batch 2.6; native device Storybook awaits explicit approval and toolchain setup.                                                                                                                 | Low    | Low      | When RN Storybook is approved                      |
+| TD-058 | Mobile Metro Zod Babel | Closed Batch 3.2 — `@babel/plugin-transform-export-namespace-from` added so Metro can transform Zod 4 when bootstrap pulls `@nexus/shared-validation` on the App entry path.                                                                                                      | —      | —        | Closed Batch 3.2                                   |
+| TD-059 | Mobile Jest SharedUI   | App smoke test mocks `@nexus/shared-ui` because Tamagui resolves React 19.2.7 while mobile pins 19.2.3 under `react-test-renderer`, causing invalid hook calls. Bootstrap/store tests cover runtime without the mock.                                                             | Low    | Low      | Align React versions under mobile Jest or use RNTL |
 
 ## Sprint 2 debt review (Batch 2.7 / finalized Batch 2.8)
 
@@ -69,15 +71,13 @@
 | Requires architectural review before work | TD-056 (Tamagui full-kit / native peers), TD-051 (depends on TD-032 ADR)                     |
 | Not debt (roadmap / future features)      | Pattern/Screen implementation, Design System generator implementation — governance docs only |
 
-### Recommended Sprint 3 priorities (not registered as debt)
+### Sprint 3 Batch 3.2 debt notes
 
-1. Overlay batch when dependencies approved (TD-056)
-2. Scoped web `jsx-a11y` (TD-052)
-3. Contrast follow-up if Patterns need status-as-text (TD-053)
-4. Mobile TamaguiProvider ESLint parity (TD-049)
-5. Shared Patterns only after ≥2 real consumers (Hybrid promotion)
-
-No new roadmap debt created in Batch 2.7/2.8.
+| Status              | IDs                                                                                                                        |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Closed              | Syncpack Storybook script-order hygiene (Batch 3.1 finding); TD-058 Metro Zod Babel                                        |
+| Added               | TD-059 Mobile Jest SharedUI / React duplicate under test renderer                                                          |
+| Unchanged carryover | TD-048–053, TD-056, TD-057; TD-032/051 theme persist; GraphQL React provider remains deferred (not registered as new debt) |
 
 ## Review Policy
 

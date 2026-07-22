@@ -31,9 +31,53 @@ export function createWebEnv(viteEnv: ViteEnvSource): PublicClientConfig {
   throw new Error(result.error.message);
 }
 
-export const env: PublicClientConfig = createWebEnv({
-  VITE_API_URL: import.meta.env.VITE_API_URL,
-  VITE_GRAPHQL_URL: import.meta.env.VITE_GRAPHQL_URL,
-  VITE_APP_NAME: import.meta.env.VITE_APP_NAME,
-  MODE: import.meta.env.MODE,
-});
+let cachedEnv: PublicClientConfig | undefined;
+
+function readImportMetaEnv(): ViteEnvSource {
+  return {
+    VITE_API_URL: import.meta.env.VITE_API_URL,
+    VITE_GRAPHQL_URL: import.meta.env.VITE_GRAPHQL_URL,
+    VITE_APP_NAME: import.meta.env.VITE_APP_NAME,
+    MODE: import.meta.env.MODE,
+  };
+}
+
+/**
+ * Lazily resolves and caches the validated public client config.
+ * Prefer injecting config from bootstrap; this remains for legacy call sites.
+ */
+export function getEnv(): PublicClientConfig {
+  if (!cachedEnv) {
+    cachedEnv = createWebEnv(readImportMetaEnv());
+  }
+  return cachedEnv;
+}
+
+/** @internal Test helper — clears the lazy env cache. */
+export function resetWebEnvCacheForTests(): void {
+  cachedEnv = undefined;
+}
+
+/**
+ * Lazy config surface for existing imports. Property access triggers validation.
+ */
+export const env: PublicClientConfig = {
+  get buildMode() {
+    return getEnv().buildMode;
+  },
+  get apiBaseUrl() {
+    return getEnv().apiBaseUrl;
+  },
+  get graphqlUrl() {
+    return getEnv().graphqlUrl;
+  },
+  get appName() {
+    return getEnv().appName;
+  },
+  get isDevelopment() {
+    return getEnv().isDevelopment;
+  },
+  get isProduction() {
+    return getEnv().isProduction;
+  },
+};

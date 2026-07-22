@@ -2,17 +2,23 @@
   "name": "mobile",
   "version": "0.0.1",
   "dependencies": {
+    "@nexus/shared-network": "workspace:*",
     "@nexus/shared-types": "workspace:*",
     "@nexus/shared-ui": "workspace:*",
     "@nexus/shared-utils": "workspace:*",
     "@nexus/shared-validation": "workspace:*",
     "@react-native/new-app-screen": "0.85.3",
+    "@reduxjs/toolkit": "^2.12.0",
+    "axios": "^1.18.1",
     "react": "19.2.3",
     "react-native": "0.85.3",
-    "react-native-safe-area-context": "^5.5.2"
+    "react-native-safe-area-context": "^5.5.2",
+    "react-redux": "^9.3.0",
+    "redux-saga": "^1.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@babel/plugin-transform-export-namespace-from": "^7.27.1",
     "@babel/preset-env": "^7.25.3",
     "@babel/runtime": "^7.25.0",
     "@react-native-community/cli": "20.1.0",

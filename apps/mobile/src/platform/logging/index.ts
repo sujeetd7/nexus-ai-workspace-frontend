@@ -4,6 +4,7 @@ export {
   createMobileLogger,
   type CreateMobileLoggerOptions,
 } from './createMobileLogger';
+export { createNetworkLoggerAdapter } from './createNetworkLoggerAdapter';
 
 /**
  * Shared Mobile logger instance for application modules.
