@@ -41,6 +41,11 @@
       "label": "Tamagui packages share one pinned version",
       "dependencies": ["tamagui", "@tamagui/**"],
       "pinVersion": "2.4.6"
+    },
+    {
+      "label": "Storybook packages share one pinned version",
+      "dependencies": ["storybook", "@storybook/**"],
+      "pinVersion": "10.5.3"
     }
   ],
   "semverGroups": [

@@ -19,19 +19,20 @@ Do not create `shared-theme` or `ui-kit` packages. Tokens and themes stay in `sh
 
 ## Token categories (Batch 2.2)
 
-| Category           | Module                                            | Notes                                                     |
-| ------------------ | ------------------------------------------------- | --------------------------------------------------------- |
-| Colors (palette)   | `theme/colors.ts`, `theme/dark.ts` (`darkColors`) | Hex SoT                                                   |
-| Semantic colors    | `theme/semanticColors.ts`                         | Derived aliases — no new hex                              |
-| Typography         | `theme/typography.ts`                             | Family, sizes, weights, line heights, letter spacing      |
-| Spacing            | `theme/spacing.ts`                                |                                                           |
-| Radius             | `theme/radius.ts`                                 | `circle` stays Nexus-only (`"50%"`)                       |
-| Elevation          | `theme/elevation.ts`                              |                                                           |
-| Shadows            | `theme/shadows.ts`                                |                                                           |
-| Opacity            | `theme/opacity.ts`                                |                                                           |
-| Z-index            | `theme/zIndex.ts`                                 |                                                           |
-| Motion (durations) | `theme/animations.ts` (`motion` alias on themes)  | No animation drivers yet                                  |
-| Breakpoints        | `responsive/breakpoints.ts`                       | Shared web/mobile media source (see RESPONSIVE_DESIGN.md) |
+| Category           | Module                                            | Notes                                                       |
+| ------------------ | ------------------------------------------------- | ----------------------------------------------------------- |
+| Colors (palette)   | `theme/colors.ts`, `theme/dark.ts` (`darkColors`) | Hex SoT                                                     |
+| Semantic colors    | `theme/semanticColors.ts`                         | Derived aliases — no new hex                                |
+| Typography         | `theme/typography.ts`                             | Family, sizes, weights, line heights, letter spacing        |
+| Spacing            | `theme/spacing.ts`                                |                                                             |
+| Radius             | `theme/radius.ts`                                 | `circle` stays Nexus-only (`"50%"`)                         |
+| Elevation          | `theme/elevation.ts`                              |                                                             |
+| Shadows            | `theme/shadows.ts`                                |                                                             |
+| Opacity            | `theme/opacity.ts`                                |                                                             |
+| Z-index            | `theme/zIndex.ts`                                 |                                                             |
+| Motion (durations) | `theme/animations.ts` (`motion` alias on themes)  | CSS helpers in `motion/*` (Batch 2.6); no animation drivers |
+
+| Breakpoints | `responsive/breakpoints.ts` | Shared web/mobile media source (see RESPONSIVE_DESIGN.md) |
 
 ### Token rules
 
@@ -131,6 +132,7 @@ Stable package-root exports include:
 - `ThemeProvider`, `SharedUIProvider`, `useTheme`
 - Responsive breakpoints and device-class helpers
 - Accessibility roles, touch-target constants, reduced-motion helpers
+- Motion transition helpers (`resolveTransitionDuration`, `createCssTransition`, …)
 - Level 1 primitives: View, Text, Stack, Button, Input, Label, Divider, Loader
 - Level 2 composites: FormField, HelperText, ErrorText, Badge, Chip, Card, Surface, Section
   (`Tooltip` deferred — see `COMPONENTS.md` Tamagui full-kit evaluation)
@@ -173,16 +175,19 @@ Batch 2.4 completed Level 1 primitives (`COMPONENTS.md`). Stub migration debt fo
 
 Batch 2.5 completed Level 2 composites (FormField, HelperText, ErrorText, Badge, Chip, Card, Surface, Section). Tooltip deferred pending overlay deps — see `COMPONENTS.md`.
 
+Batch 2.6 completed motion helpers + Web Storybook + quality layer — see `MOTION.md`, `STORYBOOK.md`, ADR-0013.
+
 ## Deferred
 
-- Storybook (ADR-0010), including React Native Storybook and Storybook a11y tooling
+- React Native Storybook (TD-057)
 - Overlay composites (Tooltip, Dialog, Sheet, Drawer, Toast, Popover, Menu, Select)
-- Animation drivers / motion implementation beyond Loader reduced-motion fallback
+- Animation drivers (Framer Motion / Reanimated / Tamagui `createAnimations`) — not required for Batch 2.6 helpers
 - Native durable theme persistence (TD-032 / TD-051)
 - Optimizing compiler extraction / Metro plugin (TD-048)
 - ESLint `jsx-a11y` enforcement (TD-052)
 
 ## Related ADRs
 
-- ADR-0010 — Storybook deferred
+- ADR-0010 — Storybook deferred (superseded for web by ADR-0013)
 - ADR-0012 — Tamagui foundation
+- ADR-0013 — Web Storybook

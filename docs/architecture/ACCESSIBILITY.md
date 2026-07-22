@@ -16,11 +16,9 @@ See also: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md), [`RESPONSIVE_DESIGN.md`](./R
 
 ## What remains for later batches
 
-- Component implementations that apply these conventions
 - Focus-trap / live-region services (with overlays and forms)
-- Storybook a11y tooling (ADR-0010)
+- React Native Storybook a11y (TD-057) — web Storybook includes `addon-a11y` (ADR-0013)
 - ESLint `jsx-a11y` (not in toolchain yet — see Technical Debt)
-- Stub-component remediation (TD-047)
 
 Do not mark stub components mature merely because this policy exists.
 
@@ -170,14 +168,15 @@ Policy for future motion:
 
 ## Quality gates
 
-| Gate                          | Status in Batch 2.3                                       |
-| ----------------------------- | --------------------------------------------------------- |
-| Contrast unit tests           | Enforced in `@nexus/shared-ui`                            |
-| Role / touch-target tests     | Enforced                                                  |
-| Reduced-motion listener tests | Enforced                                                  |
-| ESLint `jsx-a11y`             | Not present — deferred (TD-052)                           |
-| Storybook a11y                | Deferred (ADR-0010)                                       |
-| Component keyboard/SR checks  | Required by maturity checklist; enforced in later batches |
+| Gate                          | Status in Batch 2.3                                            |
+| ----------------------------- | -------------------------------------------------------------- |
+| Contrast unit tests           | Enforced in `@nexus/shared-ui`                                 |
+| Role / touch-target tests     | Enforced                                                       |
+| Reduced-motion listener tests | Enforced                                                       |
+| ESLint `jsx-a11y`             | Not present — deferred (TD-052)                                |
+| Storybook a11y                | Web: `@storybook/addon-a11y` (Batch 2.6); RN deferred (TD-057) |
+
+| Component keyboard/SR checks | Required by maturity checklist; enforced in later batches |
 
 ---
 

@@ -3,7 +3,7 @@
 ## Current Phase
 
 Sprint 2 — Design System Foundation: In progress
-Batch 2.5 — Level 2 Composites: Complete
+Batch 2.6 — Motion + Web Storybook + Quality: Complete
 
 ## Sprint 0 Status
 
@@ -18,6 +18,17 @@ See `docs/sprint-2/BATCH_MAP.md`.
 - **2.3** Responsive governance + accessibility foundation — complete
 - **2.4** Level 1 primitives — complete
 - **2.5** Level 2 composites — complete (Tooltip deferred)
+- **2.6** Motion foundation + Web Storybook + quality — complete
+
+## Sprint 2 — Batch 2.6 (Motion, Storybook, Quality)
+
+- Motion: CSS transition helpers on existing duration tokens + reduced-motion gating (`motion/*`); docs `MOTION.md`; no Framer/Reanimated/Tamagui drivers
+- Web Storybook (`apps/web`, Storybook 10.5.3): `SharedUIProvider` decorator, theme toolbar, docs + a11y addons; stories for all Level 1 + Level 2 components (ADR-0013)
+- Testing: `renderWithThemePreference`; quality tests for theme/interaction/a11y; Storybook CSF smoke tests
+- Docs: `STORYBOOK.md`, `MOTION.md`; ADR-0010 superseded for web; TD-002 closed for web (RN Storybook residual TD-057)
+- Web production bundle measured unchanged vs Batch 2.5 baseline when stories unused by App: **776.79 kB** (gzip **240.69 kB**)
+- Storybook static build succeeds separately (`apps/web/storybook-static`; iframe ~1.76 MB — tooling only)
+- Validated with repository quality gates including `storybook:build`
 
 ## Sprint 2 — Batch 2.5 (Level 2 Composites)
 
@@ -220,7 +231,7 @@ See `docs/sprint-2/BATCH_MAP.md`.
 
 ## Deferred
 
-- Storybook implementation (ADR-0010; React Native Storybook also deferred)
+- React Native Storybook (TD-057; web Storybook complete via ADR-0013)
 - APK/AAB release automation
 - web deployment automation
 - production SonarQube integration (root baseline config present; hosted scan deferred)

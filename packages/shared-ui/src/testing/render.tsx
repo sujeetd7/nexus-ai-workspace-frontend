@@ -2,10 +2,15 @@ import type { ReactElement, ReactNode } from "react";
 import { render, type RenderResult } from "@testing-library/react";
 
 import { SharedUIProvider } from "../providers/SharedUIProvider";
+import type { ThemePreference } from "../theme/resolveThemeMode";
+
+export type RenderWithSharedUIOptions = {
+  preference?: ThemePreference;
+};
 
 export function renderWithSharedUI(
   ui: ReactElement,
-  options?: { preference?: "light" | "dark" | "system" },
+  options?: RenderWithSharedUIOptions,
 ): RenderResult {
   function Wrapper({ children }: { children: ReactNode }) {
     return (
@@ -16,4 +21,15 @@ export function renderWithSharedUI(
   }
 
   return render(ui, { wrapper: Wrapper });
+}
+
+/**
+ * Rerender helper that remounts under a different theme preference.
+ * Prefer for theme verification without Storybook.
+ */
+export function renderWithThemePreference(
+  ui: ReactElement,
+  preference: ThemePreference,
+): RenderResult {
+  return renderWithSharedUI(ui, { preference });
 }

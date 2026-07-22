@@ -1,0 +1,26 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introduction/Design System" />
+
+# Nexus Design System
+
+Web Storybook for `@nexus/shared-ui` (Batch 2.6).
+
+## How to use
+
+1. Browse **Primitives** and **Composites** in the sidebar.
+2. Use the **Theme** toolbar to switch light / dark / system.
+3. Use **Controls** for args where provided.
+4. Open the **Accessibility** panel (`addon-a11y`) for axe checks.
+
+## Provider
+
+All stories wrap production components with `SharedUIProvider` only — never import `TamaguiProvider` in stories.
+
+## Motion
+
+See repository doc `docs/architecture/MOTION.md`. Duration tokens + reduced-motion helpers; no animation drivers in this batch.
+
+## Out of scope
+
+React Native Storybook, pattern/screen categories, overlays (Tooltip/Dialog/…), and product UI.

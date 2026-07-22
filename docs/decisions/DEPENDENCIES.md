@@ -21,11 +21,19 @@ Approved dependency policy notes for the Nexus AI Workspace frontend monorepo.
 
 All `@tamagui/*` packages and `tamagui` must share one pinned version (Syncpack version group).
 
+## Storybook (Batch 2.6 / ADR-0013)
+
+| Package                                                                                                    | Where            | Version policy  |
+| ---------------------------------------------------------------------------------------------------------- | ---------------- | --------------- |
+| `storybook`, `@storybook/react`, `@storybook/react-vite`, `@storybook/addon-docs`, `@storybook/addon-a11y` | `apps/web` (dev) | Pinned `10.5.3` |
+
+Web-only. React Native Storybook remains deferred. Storybook must not ship in the production app bundle.
+
 ## Do not add without ADR / explicit approval
 
 - Alternative UI frameworks (Tailwind-as-foundation, Radix-as-foundation, NativeWind, etc.)
 - Animation drivers / portal / toast native modules for Tamagui until a consumer batch justifies them
-- Storybook packages (ADR-0010)
+- React Native Storybook (web Storybook approved by ADR-0013)
 - Native storage / env injectors (see technical debt + prior ADRs)
 
 ## Application import rules
@@ -45,6 +53,6 @@ import { anything } from "@nexus/shared-ui/src/...";
 
 ## Related
 
-- ADR-0012, `docs/architecture/DESIGN_SYSTEM.md`
+- ADR-0012, ADR-0013, `docs/architecture/DESIGN_SYSTEM.md`, `docs/architecture/STORYBOOK.md`
 - `docs/architecture/dependency-rules.md`
 - `.syncpackrc.json`

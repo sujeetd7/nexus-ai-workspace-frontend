@@ -56,9 +56,19 @@ Completed in commits through Batch 2.2 finalization:
 
 **Out of Batch 2.5:** Dialog, Sheet, Drawer, Toast, Popover, Menu, Select, data table, charts, product UI, Storybook, removable chips, icon system, React Hook Form.
 
-## Batch 2.6+ (not started)
+## Batch 2.6 — Complete (Motion + Web Storybook + Quality)
 
-- Remaining design-system batches per sprint plan (Storybook, overlays when approved)
+- Motion helpers: `resolveTransitionDuration`, `createCssTransition`, `createMotionStyle` + `MOTION.md`
+- Web Storybook under `apps/web` with stories for all completed primitives/composites (`STORYBOOK.md`, ADR-0013)
+- Theme toolbar + `SharedUIProvider`; addon-docs + addon-a11y
+- Quality tests + testing utility `renderWithThemePreference`
+- RN Storybook still deferred (TD-057)
+
+**Out of Batch 2.6:** React Native Storybook, new UI components, patterns/screens, overlays, product UI, animation drivers.
+
+## Batch 2.7+ (not started)
+
+- Remaining design-system batches per sprint plan (overlays when approved)
 
 ## Related docs
 
@@ -67,5 +77,7 @@ Completed in commits through Batch 2.2 finalization:
 - `docs/architecture/RESPONSIVE_DESIGN.md`
 - `docs/architecture/ACCESSIBILITY.md`
 - `docs/architecture/COMPONENTS.md`
+- `docs/architecture/MOTION.md`
+- `docs/architecture/STORYBOOK.md`
 - `IMPLEMENTATION_STATUS.md`
-- ADR-0012
+- ADR-0012, ADR-0013

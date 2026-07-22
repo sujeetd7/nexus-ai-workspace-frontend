@@ -8,13 +8,14 @@ import tseslint from "typescript-eslint";
 import { webBoundaryConfigs } from "../../configs/eslint/boundaries.mjs";
 
 export default defineConfig([
-  globalIgnores(["dist", "coverage", "node_modules"]),
+  globalIgnores(["dist", "coverage", "node_modules", "storybook-static"]),
   {
     files: ["**/*.{ts,tsx}"],
     ignores: [
       "**/coverage/**",
       "**/dist/**",
       "**/build/**",
+      "**/storybook-static/**",
       "**/node_modules/**",
     ],
     extends: [

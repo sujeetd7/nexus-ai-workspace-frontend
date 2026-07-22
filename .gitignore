@@ -29,6 +29,10 @@ dist-ssr
 # Local scratch (generator security tests, etc.)
 tmp/
 
+# Storybook static build output (web)
+storybook-static
+**/storybook-static/
+
 # Test coverage artifacts
 coverage
 *.lcov

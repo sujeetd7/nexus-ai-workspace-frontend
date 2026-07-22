@@ -31,7 +31,7 @@ All components require `SharedUIProvider` (already used by web/mobile apps).
 
 **Not exported in Batch 2.5:** `Tooltip` (deferred — see Tamagui full-kit evaluation below).
 
-Storybook is deferred (Batch 2.6 / ADR-0010).
+**Storybook (Batch 2.6):** Web stories under `apps/web/src/stories` — see `STORYBOOK.md` / ADR-0013. React Native Storybook remains deferred (TD-057).
 
 ---
 
