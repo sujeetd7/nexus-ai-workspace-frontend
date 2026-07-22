@@ -3,7 +3,7 @@
 ## Current Phase
 
 Sprint 1 — Shared Platform Foundation
-Batch 1.7 — Complete
+Batch 1.8 — Complete
 
 ## Sprint 0 Status
 
@@ -76,6 +76,16 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - No `gen:logger`; no remote sinks / telemetry dependencies
 - Validated with `pnpm verify`
 
+## Sprint 1 — Batch 1.8 (Repository Contracts)
+
+- Governance complete; shared repository contracts deferred pending demonstrated reusable consumers
+- Audited existing foundations: `Result`, `AppError`, `EntityId`, page/cursor pagination; no `IRepository` / `BaseRepository` found
+- Web data access remains RTK Query + feature helpers; Mobile has no repository layer
+- Documented eligibility, ownership, anti-patterns, and ADR triggers in `docs/architecture/REPOSITORY_CONTRACTS.md`
+- No new shared repository types, implementations, filter/sort DSLs, or `gen:repository`
+- Feature repositories (when introduced) remain feature-owned
+- Validated with `pnpm verify`
+
 ## Completed (Sprint 0)
 
 - pnpm workspace configuration
@@ -137,6 +147,7 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - React Hook Form ↔ Zod adapter (outside shared-validation)
 - Feature/form/auth/AI schema placement with feature owners
 - Shared domain entity contracts pending cross-platform or multi-layer consumers
+- Shared repository capability contracts pending demonstrated reusable consumers (see `REPOSITORY_CONTRACTS.md`)
 - Shared audit metadata / soft-delete / optimistic versioning (see technical debt)
 - API response runtime validation at DTO boundaries
 - Automatic Axios interceptor conversion to `AppError`

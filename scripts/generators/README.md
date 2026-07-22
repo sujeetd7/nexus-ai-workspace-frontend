@@ -8,14 +8,14 @@ Implemented generators:
 - hook
 - slice
 
-Future generators:
+Future generators (not implemented; no CLI placeholders):
 
 - screen
 - feature
 - api
 - graphql
 - saga
-- repository
+- repository — deferred (Batch 1.8); see `docs/architecture/REPOSITORY_CONTRACTS.md`
 - service
 - zod
 - story

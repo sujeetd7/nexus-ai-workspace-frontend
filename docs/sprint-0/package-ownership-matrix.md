@@ -64,6 +64,19 @@ See `docs/architecture/STORAGE_PLATFORM.md`. Do not put browser or native storag
 
 See `docs/architecture/LOGGING_PLATFORM.md`. Do not create `@nexus/shared-logger`. Do not move network redaction into shared-utils.
 
+## Repository contract ownership (Batch 1.8)
+
+| Concern                                                         | Owner                                                  |
+| --------------------------------------------------------------- | ------------------------------------------------------ |
+| Shared repository eligibility policy                            | `docs/architecture/REPOSITORY_CONTRACTS.md`            |
+| Universal type-only capability contracts (when justified later) | Frontend Platform Team via `@nexus/shared-types`       |
+| Feature repository contracts and implementations                | Feature teams                                          |
+| RTK Query / Axios / GraphQL transport                           | App `api/` + `@nexus/shared-network` (unchanged)       |
+| `Result` / `AppError` / pagination foundations                  | `@nexus/shared-types` (already present)                |
+| New shared repository interfaces                                | Deferred until multi-platform or multi-layer consumers |
+
+Do not add speculative `IRepository`, `BaseRepository`, generic filter/sort DSLs, or repository implementations to shared packages. Do not create `@nexus/shared-repository` without an approved ADR.
+
 ## Overlap Decision
 
 The preferred target is:

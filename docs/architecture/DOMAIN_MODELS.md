@@ -139,3 +139,4 @@ Product entities (workspace, document, prompt, chat, agent, MCP, billing) belong
 - Validation platform: `docs/architecture/VALIDATION_PLATFORM.md`
 - Dependency rules: `docs/architecture/dependency-rules.md`
 - Result and errors: `docs/architecture/RESULT_AND_ERRORS.md`
+- Repository contracts: `docs/architecture/REPOSITORY_CONTRACTS.md`
