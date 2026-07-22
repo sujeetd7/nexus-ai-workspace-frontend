@@ -9,5 +9,6 @@ export * from "./types";
 export * from "./utils";
 
 export * from "./responsive";
+export * from "./accessibility";
 
 export * from "./appearance";

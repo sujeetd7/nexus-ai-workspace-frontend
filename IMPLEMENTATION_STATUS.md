@@ -3,7 +3,7 @@
 ## Current Phase
 
 Sprint 2 — Design System Foundation: In progress
-Batch 2.2 — Design Tokens and Theme Engine: Complete (reconciled)
+Batch 2.3 — Responsive and Accessibility Foundation: Complete
 
 ## Sprint 0 Status
 
@@ -15,7 +15,21 @@ See `docs/sprint-2/BATCH_MAP.md`.
 
 - **2.1** Tamagui foundation — complete
 - **2.2** Tokens + theme engine (incl. system preference + optional persistence) — complete; absorbed theme-engine work so Batch 2.3 must not redo it
-- **2.3** Responsive governance + accessibility foundation — not started (no primitives)
+- **2.3** Responsive governance + accessibility foundation — complete (no primitives)
+
+## Sprint 2 — Batch 2.3 (Responsive and Accessibility Foundation)
+
+- Kept single breakpoint SoT in `responsive/breakpoints.ts`; Tamagui `media` remains derived (sync tests added)
+- Extended responsive helpers (`resolveBreakpoint`, `getDeviceClass`) without a parallel media framework or layout components
+- Added accessibility conventions docs (`ACCESSIBILITY.md`, `RESPONSIVE_DESIGN.md`) for WCAG 2.2 AA, keyboard, focus, SR, roles, contrast, reduced motion, RN touch targets
+- Added minimal utilities: accessibility roles, `MIN_TOUCH_TARGET_SIZE` (44), `prefersReducedMotion` / `subscribeReducedMotion`
+- Added semantic contrast-pair tests (light/dark text and interactive primary); contrast helpers via `@nexus/shared-ui/testing` only
+- Documented intentional contrast exclusions (borders, status-as-text, onPrimary, focus ring) as TD-053 — required pairs pass without token changes
+- Updated component maturity checklist; stubs remain immature (TD-047 / TD-054)
+- Deferred `eslint-plugin-jsx-a11y` (TD-052) — not essential before Level 1 components
+- Recorded Batch 2.2 web bundle baseline for comparison: **776.46 kB** (gzip **240.77 kB**)
+- Batch 2.3 web production bundle unchanged: **776.46 kB** (gzip **240.77 kB**) — no material increase
+- Validated with repository quality gates
 
 ## Sprint 2 — Batch 2.2 (Design Tokens and Theme Engine)
 

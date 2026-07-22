@@ -21,6 +21,12 @@
       "import": "./src/tamagui/config.ts",
       "default": "./src/tamagui/config.ts",
       "react-native": "./src/tamagui/config.ts"
+    },
+    "./testing": {
+      "types": "./src/testing/index.ts",
+      "import": "./src/testing/index.ts",
+      "default": "./src/testing/index.ts",
+      "react-native": "./src/testing/index.ts"
     }
   },
   "main": "./src/index.ts",

@@ -70,6 +70,8 @@ Batch 2.1: Tamagui configuration, token mapping, and `SharedUIProvider` live onl
 
 Batch 2.2: Theme preference lifecycle (`light`/`dark`/`system`), semantic token mapping, and Tamagui theme sync live in `@nexus/shared-ui`. Applications may inject `StorageAdapter` + storage key into `SharedUIProvider` but must not own theme switching. `@nexus/shared-ui` may depend on `@nexus/shared-types` for `StorageAdapter` typing only. See `docs/architecture/THEME_ENGINE.md`.
 
+Batch 2.3: Breakpoints and device-class helpers live only in `@nexus/shared-ui` (`src/responsive/*`). Applications must not own a competing shared breakpoint scale. Tamagui `media` must derive from that scale. Accessibility conventions and minimal helpers (`src/accessibility/*`) are shared-ui owned. Contrast helpers are exported only via `@nexus/shared-ui/testing` (approved subpath alongside `@nexus/shared-ui/tamagui-config`). See `docs/architecture/RESPONSIVE_DESIGN.md` and `docs/architecture/ACCESSIBILITY.md`.
+
 Do not reverse boundaries (`shared-types` must not import validation or utils; `shared-utils` must not import validation).
 
 ## Verification

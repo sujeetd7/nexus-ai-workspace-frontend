@@ -3,18 +3,23 @@
  * Consumed by the root eslint.config.mjs and apps/web/eslint.config.js.
  */
 
+/**
+ * Forbid deep `@nexus/<pkg>/...` imports while allowing approved package.json
+ * export subpaths (`tamagui-config`, `testing`).
+ */
+const deepNexusImportPattern = {
+  regex:
+    "^@nexus/(?!shared-ui/(?:tamagui-config|testing)$)[^/]+/.+",
+  message:
+    "Import only the package public API: @nexus/<package-name>. Deep imports are forbidden. Approved shared-ui subpaths: tamagui-config, testing.",
+};
+
 /** @type {import("eslint").Linter.RulesRecord} */
 const deepPackageImports = {
   "no-restricted-imports": [
     "error",
     {
-      patterns: [
-        {
-          group: ["@nexus/*/*", "@nexus/*/*/*"],
-          message:
-            "Import only the package public API: @nexus/<package-name>. Deep imports are forbidden.",
-        },
-      ],
+      patterns: [deepNexusImportPattern],
     },
   ],
 };
@@ -35,11 +40,7 @@ export const packageBoundaryConfigs = [
             },
           ],
           patterns: [
-            {
-              group: ["@nexus/*/*", "@nexus/*/*/*"],
-              message:
-                "Import only the package public API: @nexus/<package-name>. Deep imports are forbidden.",
-            },
+            deepNexusImportPattern,
             {
               group: [
                 "apps/**",
@@ -65,11 +66,7 @@ export const packageBoundaryConfigs = [
         "error",
         {
           patterns: [
-            {
-              group: ["@nexus/*/*", "@nexus/*/*/*"],
-              message:
-                "Import only the package public API: @nexus/<package-name>. Deep imports are forbidden.",
-            },
+            deepNexusImportPattern,
             {
               group: [
                 "apps/**",
@@ -111,11 +108,7 @@ export const packageBoundaryConfigs = [
             },
           ],
           patterns: [
-            {
-              group: ["@nexus/*/*", "@nexus/*/*/*"],
-              message:
-                "Import only the package public API: @nexus/<package-name>. Deep imports are forbidden.",
-            },
+            deepNexusImportPattern,
             {
               group: [
                 "apps/**",
@@ -164,11 +157,7 @@ export const webBoundaryConfigs = [
             },
           ],
           patterns: [
-            {
-              group: ["@nexus/*/*", "@nexus/*/*/*"],
-              message:
-                "Import only the package public API: @nexus/<package-name>. Deep imports are forbidden.",
-            },
+            deepNexusImportPattern,
             {
               group: [
                 "mobile",
@@ -196,11 +185,7 @@ export const webBoundaryConfigs = [
         "error",
         {
           patterns: [
-            {
-              group: ["@nexus/*/*", "@nexus/*/*/*"],
-              message:
-                "Import only the package public API: @nexus/<package-name>. Deep imports are forbidden.",
-            },
+            deepNexusImportPattern,
             {
               group: [
                 "mobile",

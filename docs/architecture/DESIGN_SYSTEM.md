@@ -8,6 +8,7 @@ Canonical design-system rules for the Nexus AI Workspace frontend monorepo (Spri
 | --------------------------------------- | --------------------------------------------------------- |
 | Design tokens (source of truth)         | `@nexus/shared-ui` → `src/theme/*`                        |
 | Breakpoints                             | `@nexus/shared-ui` → `src/responsive/*`                   |
+| Accessibility conventions / utilities   | `@nexus/shared-ui` → `src/accessibility/*` + docs         |
 | Tamagui configuration and token mapping | `@nexus/shared-ui` → `src/tamagui/*`                      |
 | Theme engine / preference lifecycle     | `@nexus/shared-ui` → `ThemeProvider` + `SharedUIProvider` |
 | Centralized UI providers                | `@nexus/shared-ui` → `SharedUIProvider`                   |
@@ -18,19 +19,19 @@ Do not create `shared-theme` or `ui-kit` packages. Tokens and themes stay in `sh
 
 ## Token categories (Batch 2.2)
 
-| Category           | Module                                            | Notes                                                |
-| ------------------ | ------------------------------------------------- | ---------------------------------------------------- |
-| Colors (palette)   | `theme/colors.ts`, `theme/dark.ts` (`darkColors`) | Hex SoT                                              |
-| Semantic colors    | `theme/semanticColors.ts`                         | Derived aliases — no new hex                         |
-| Typography         | `theme/typography.ts`                             | Family, sizes, weights, line heights, letter spacing |
-| Spacing            | `theme/spacing.ts`                                |                                                      |
-| Radius             | `theme/radius.ts`                                 | `circle` stays Nexus-only (`"50%"`)                  |
-| Elevation          | `theme/elevation.ts`                              |                                                      |
-| Shadows            | `theme/shadows.ts`                                |                                                      |
-| Opacity            | `theme/opacity.ts`                                |                                                      |
-| Z-index            | `theme/zIndex.ts`                                 |                                                      |
-| Motion (durations) | `theme/animations.ts` (`motion` alias on themes)  | No animation drivers yet                             |
-| Breakpoints        | `responsive/breakpoints.ts`                       | Shared web/mobile media source                       |
+| Category           | Module                                            | Notes                                                     |
+| ------------------ | ------------------------------------------------- | --------------------------------------------------------- |
+| Colors (palette)   | `theme/colors.ts`, `theme/dark.ts` (`darkColors`) | Hex SoT                                                   |
+| Semantic colors    | `theme/semanticColors.ts`                         | Derived aliases — no new hex                              |
+| Typography         | `theme/typography.ts`                             | Family, sizes, weights, line heights, letter spacing      |
+| Spacing            | `theme/spacing.ts`                                |                                                           |
+| Radius             | `theme/radius.ts`                                 | `circle` stays Nexus-only (`"50%"`)                       |
+| Elevation          | `theme/elevation.ts`                              |                                                           |
+| Shadows            | `theme/shadows.ts`                                |                                                           |
+| Opacity            | `theme/opacity.ts`                                |                                                           |
+| Z-index            | `theme/zIndex.ts`                                 |                                                           |
+| Motion (durations) | `theme/animations.ts` (`motion` alias on themes)  | No animation drivers yet                                  |
+| Breakpoints        | `responsive/breakpoints.ts`                       | Shared web/mobile media source (see RESPONSIVE_DESIGN.md) |
 
 ### Token rules
 
@@ -128,7 +129,14 @@ Stable package-root exports include:
 
 - Tokens, themes, `createTheme`, semantic colors, resolve helpers
 - `ThemeProvider`, `SharedUIProvider`, `useTheme`
+- Responsive breakpoints and device-class helpers
+- Accessibility roles, touch-target constants, reduced-motion helpers
 - Stub components (unchanged)
+
+Approved export subpaths:
+
+- `@nexus/shared-ui/tamagui-config` — build tooling
+- `@nexus/shared-ui/testing` — contrast helpers and contrast-pair fixtures (tests/tooling only; not for runtime UI)
 
 Build tooling may resolve Tamagui config via `@nexus/shared-ui/tamagui-config`.
 
@@ -137,17 +145,36 @@ Build tooling may resolve Tamagui config via `@nexus/shared-ui/tamagui-config`.
 - **Level 1** — primitives
 - **Level 2** — composites
 
-Batch 2.2 completed tokens + theme engine (including preference/persistence/Tamagui sync). That work must not be repeated in Batch 2.3.
+### Component maturity checklist
 
-Batch 2.3 focuses on responsive governance and accessibility foundations — not primitives. See `docs/sprint-2/BATCH_MAP.md`.
+A Level 1 or Level 2 component is **not complete** until all applicable items are done:
+
+- [ ] Keyboard verification (web, where interactive)
+- [ ] Screen-reader label verification
+- [ ] Semantic-role verification
+- [ ] Focus verification (visible + programmatic where needed)
+- [ ] Contrast verification against semantic tokens
+- [ ] Reduced-motion verification when motion exists
+- [ ] React Native touch-target verification (min 44×44 or documented hit-area expansion)
+- [ ] Web verification
+- [ ] Mobile verification
+- [ ] Tests
+- [ ] Documentation
+
+Stub components must not be marked mature solely because this policy exists (TD-047).
+
+Batch 2.2 completed tokens + theme engine (including preference/persistence/Tamagui sync). That work must not be repeated.
+
+Batch 2.3 completed responsive governance + accessibility foundations — not primitives. See `docs/sprint-2/BATCH_MAP.md`, `RESPONSIVE_DESIGN.md`, and `ACCESSIBILITY.md`.
 
 ## Deferred
 
-- Storybook (ADR-0010), including React Native Storybook
+- Storybook (ADR-0010), including React Native Storybook and Storybook a11y tooling
 - Migration of existing stub components to Tamagui (TD-047)
-- Animation drivers / motion implementation
-- Native durable theme persistence (TD-032)
+- Animation drivers / motion implementation (consume reduced-motion helpers when introduced)
+- Native durable theme persistence (TD-032 / TD-051)
 - Optimizing compiler extraction / Metro plugin (TD-048)
+- ESLint `jsx-a11y` enforcement (TD-052)
 
 ## Related ADRs
 

@@ -55,7 +55,16 @@ function addViolation(filePath, specifier, message) {
   violations.push(`${rel(filePath)}: "${specifier}" — ${message}`);
 }
 
+/** Approved package.json `exports` subpaths (not filesystem deep imports). */
+const APPROVED_NEXUS_SUBPATHS = new Set([
+  "@nexus/shared-ui/tamagui-config",
+  "@nexus/shared-ui/testing",
+]);
+
 function isDeepNexusImport(specifier) {
+  if (APPROVED_NEXUS_SUBPATHS.has(specifier)) {
+    return false;
+  }
   return /^@nexus\/[^/]+\/.+/.test(specifier);
 }
 
