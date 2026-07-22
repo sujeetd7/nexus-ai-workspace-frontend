@@ -1,2 +1,8 @@
-export * from "./Text";
-export * from "./Text.types";
+export { Text } from "./Text";
+export type {
+  FontWeightToken,
+  LegacyTextVariant,
+  TextAlign,
+  TextProps,
+  TextVariant,
+} from "./Text";

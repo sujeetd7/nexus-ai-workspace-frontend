@@ -13,3 +13,4 @@ export {
   REQUIRED_CONTRAST_PAIRS,
   type ContrastPair,
 } from "../accessibility/contrastPairs";
+export { renderWithSharedUI } from "./render";

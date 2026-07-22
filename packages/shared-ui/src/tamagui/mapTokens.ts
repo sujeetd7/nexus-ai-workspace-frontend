@@ -179,6 +179,9 @@ export const themes = {
     warning: lightSemanticColors.warning,
     danger: lightSemanticColors.danger,
     info: lightSemanticColors.info,
+    onPrimary: lightSemanticColors.onPrimary,
+    onDanger: lightSemanticColors.onDanger,
+    focusRing: lightSemanticColors.focusRing,
   },
   dark: {
     background: darkSemanticColors.background,
@@ -192,5 +195,8 @@ export const themes = {
     warning: darkSemanticColors.warning,
     danger: darkSemanticColors.danger,
     info: darkSemanticColors.info,
+    onPrimary: darkSemanticColors.onPrimary,
+    onDanger: darkSemanticColors.onDanger,
+    focusRing: darkSemanticColors.focusRing,
   },
 } as const;

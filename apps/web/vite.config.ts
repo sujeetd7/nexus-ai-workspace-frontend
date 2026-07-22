@@ -26,6 +26,18 @@ export default defineConfig({
       { find: "react-native", replacement: "react-native-web" },
       ...tamaguiAliases({ rnwLite: true }),
     ],
+    // Prefer platform web modules (e.g. Button.web.tsx) over the TS default entry.
+    extensions: [
+      ".web.tsx",
+      ".web.ts",
+      ".tsx",
+      ".ts",
+      ".web.jsx",
+      ".web.js",
+      ".jsx",
+      ".js",
+      ".json",
+    ],
   },
   test: {
     env: {

@@ -35,11 +35,30 @@ Completed in commits through Batch 2.2 finalization:
 
 **Out of Batch 2.3:** primitive/composite component implementation, Storybook, product/feature UI, focus-trap frameworks, `jsx-a11y` dependency (TD-052).
 
-## Batch 2.4+ (not started)
+## Batch 2.4 — Complete (Level 1 primitives)
 
-- Level 1 primitives
-- Level 2 composites
-- Stub component migration (TD-047)
+- Migrated/implemented: `View`, `Text`, `Stack` (+ `XStack`/`YStack`), `Button`, `Input`, `Label`, `Divider`, `Loader`
+- Tamagui-backed via `@tamagui/core` only (no full component kit)
+- Additive semantic tokens: `onPrimary`, `onDanger`, `focusRing` (contrast-tested)
+- Docs: `docs/architecture/COMPONENTS.md`
+- Component tests under SharedUIProvider (jsdom + RNW alias)
+
+**Out of Batch 2.4:** composites, Storybook, icon system, FormField, skeletons/progress bars.
+
+## Batch 2.5 — Complete (Level 2 composites)
+
+- Implemented: `FormField`, `HelperText`, `ErrorText`, `Badge`, `Chip`, `Card`, `Surface`, `Section`
+- Additive primitive support only: Input `describedBy`, Text `id` (for describedby associations)
+- No new semantic color tokens (Badge uses outline + `text` for AA; status borders decorative)
+- Tooltip **not** implemented — Tamagui full-kit + portal/gesture peers not justified yet (see `COMPONENTS.md`)
+- Docs: `COMPONENTS.md`, `DESIGN_SYSTEM.md`, Technical Debt TD-056
+- Tests: shared-ui composite coverage + public export checks
+
+**Out of Batch 2.5:** Dialog, Sheet, Drawer, Toast, Popover, Menu, Select, data table, charts, product UI, Storybook, removable chips, icon system, React Hook Form.
+
+## Batch 2.6+ (not started)
+
+- Remaining design-system batches per sprint plan (Storybook, overlays when approved)
 
 ## Related docs
 
@@ -47,5 +66,6 @@ Completed in commits through Batch 2.2 finalization:
 - `docs/architecture/THEME_ENGINE.md`
 - `docs/architecture/RESPONSIVE_DESIGN.md`
 - `docs/architecture/ACCESSIBILITY.md`
+- `docs/architecture/COMPONENTS.md`
 - `IMPLEMENTATION_STATUS.md`
 - ADR-0012

@@ -30,15 +30,15 @@ Do not mark stub components mature merely because this policy exists.
 
 Required for interactive Level 1 / Level 2 components (document; do not invent overlays here):
 
-| Topic             | Rule                                                                                     |
-| ----------------- | ---------------------------------------------------------------------------------------- |
-| Tab order         | Follow DOM / accessibility order; do not scramble with positive `tabIndex` without cause |
-| Activation        | Buttons/links: **Enter** and **Space** where platform norms require                      |
-| Escape            | Dismiss temporary layers (dialogs, menus, popovers) when introduced                      |
-| Arrow keys        | Composite widgets (menus, radios, tabs) only — document per pattern                      |
-| Disabled controls | Not focusable / not activatable; expose disabled state to AT                             |
-| Modals / overlays | Focus trap + restore on close (implement with those components)                          |
-| Keyboard traps    | Forbidden except intentional modal traps with an Escape exit                             |
+| Topic             | Rule                                                                                                                                                                             |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tab order         | Follow DOM / accessibility order; do not scramble with positive `tabIndex` without cause                                                                                         |
+| Activation        | Buttons/links: **Enter** and **Space** where platform norms require. Shared `Button` uses native `<button>` on web (browser handles activation) and `Pressable` on React Native. |
+| Escape            | Dismiss temporary layers (dialogs, menus, popovers) when introduced                                                                                                              |
+| Arrow keys        | Composite widgets (menus, radios, tabs) only — document per pattern                                                                                                              |
+| Disabled controls | Not focusable / not activatable; expose disabled state to AT                                                                                                                     |
+| Modals / overlays | Focus trap + restore on close (implement with those components)                                                                                                                  |
+| Keyboard traps    | Forbidden except intentional modal traps with an Escape exit                                                                                                                     |
 
 ---
 
@@ -74,6 +74,13 @@ No shared focus-manager framework in Batch 2.3 — none is required yet.
 | Grouping           | Fieldset / group roles when needed         | Grouping views with clear labels                |
 
 Avoid duplicating native semantics with redundant ARIA.
+
+### Label ↔ Input association
+
+| Platform     | Association                                                                        |
+| ------------ | ---------------------------------------------------------------------------------- |
+| Web          | `Label` `htmlFor` + `Input` `id`                                                   |
+| React Native | No `htmlFor`; set Input `accessibilityLabel` (and optional Label text for visuals) |
 
 ---
 
@@ -111,12 +118,20 @@ Primary / secondary text and interactive primary on background/surface for light
 
 ### Intentional exclusions (token review later)
 
-| Case                         | Reason                                                 |
-| ---------------------------- | ------------------------------------------------------ |
-| Border on background         | No dedicated non-text contrast role; subtle separators |
-| Status colors as body text   | No `onSuccess` / status-text semantic roles yet        |
-| Inverse text on accent fills | No `onPrimary` (or equivalent) token yet               |
-| Focus indicator rings        | No focus-ring semantic token yet                       |
+| Case                       | Reason                                                 |
+| -------------------------- | ------------------------------------------------------ |
+| Border on background       | No dedicated non-text contrast role; subtle separators |
+| Status colors as body text | No `onSuccess` / status-text semantic roles yet        |
+
+### Added in Batch 2.4 (validated)
+
+| Token       | Use                                  |
+| ----------- | ------------------------------------ |
+| `onPrimary` | Filled primary Button label          |
+| `onDanger`  | Filled destructive Button label      |
+| `focusRing` | Focus-visible outline / input chrome |
+
+Dark `onPrimary` / `onDanger` use `gray.900` (not white) so AA holds on dark accent fills.
 
 If a **required** pair fails AA, stop and report — do not silently lower thresholds or change approved tokens without review.
 

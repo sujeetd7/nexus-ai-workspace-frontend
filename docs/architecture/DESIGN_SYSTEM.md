@@ -131,7 +131,9 @@ Stable package-root exports include:
 - `ThemeProvider`, `SharedUIProvider`, `useTheme`
 - Responsive breakpoints and device-class helpers
 - Accessibility roles, touch-target constants, reduced-motion helpers
-- Stub components (unchanged)
+- Level 1 primitives: View, Text, Stack, Button, Input, Label, Divider, Loader
+- Level 2 composites: FormField, HelperText, ErrorText, Badge, Chip, Card, Surface, Section
+  (`Tooltip` deferred — see `COMPONENTS.md` Tamagui full-kit evaluation)
 
 Approved export subpaths:
 
@@ -167,11 +169,15 @@ Batch 2.2 completed tokens + theme engine (including preference/persistence/Tama
 
 Batch 2.3 completed responsive governance + accessibility foundations — not primitives. See `docs/sprint-2/BATCH_MAP.md`, `RESPONSIVE_DESIGN.md`, and `ACCESSIBILITY.md`.
 
+Batch 2.4 completed Level 1 primitives (`COMPONENTS.md`). Stub migration debt for those components is closed.
+
+Batch 2.5 completed Level 2 composites (FormField, HelperText, ErrorText, Badge, Chip, Card, Surface, Section). Tooltip deferred pending overlay deps — see `COMPONENTS.md`.
+
 ## Deferred
 
 - Storybook (ADR-0010), including React Native Storybook and Storybook a11y tooling
-- Migration of existing stub components to Tamagui (TD-047)
-- Animation drivers / motion implementation (consume reduced-motion helpers when introduced)
+- Overlay composites (Tooltip, Dialog, Sheet, Drawer, Toast, Popover, Menu, Select)
+- Animation drivers / motion implementation beyond Loader reduced-motion fallback
 - Native durable theme persistence (TD-032 / TD-051)
 - Optimizing compiler extraction / Metro plugin (TD-048)
 - ESLint `jsx-a11y` enforcement (TD-052)

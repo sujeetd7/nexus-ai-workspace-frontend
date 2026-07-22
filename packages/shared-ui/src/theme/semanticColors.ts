@@ -17,11 +17,17 @@ export const lightSemanticColors = {
   warning: colors.warning,
   danger: colors.danger,
   info: colors.info,
+  /** Foreground on filled primary controls (Button). */
+  onPrimary: colors.white,
+  /** Foreground on filled danger controls (Button destructive). */
+  onDanger: colors.white,
+  /** Focus-visible ring / outline against surfaces. */
+  focusRing: colors.primary,
 } as const;
 
 /**
  * Semantic color roles for dark mode.
- * Values are derived from `darkColors` (and palette `info`) — no new hex literals.
+ * Values are derived from `darkColors` (and palette) — no new hex literals.
  */
 export const darkSemanticColors = {
   background: darkColors.background,
@@ -35,6 +41,10 @@ export const darkSemanticColors = {
   warning: darkColors.warning,
   danger: darkColors.danger,
   info: colors.info,
+  /** Dark primary fails AA with white; use gray.900 (verified in contrast tests). */
+  onPrimary: colors.gray[900],
+  onDanger: colors.gray[900],
+  focusRing: darkColors.primary,
 } as const;
 
 export type SemanticColors =

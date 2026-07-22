@@ -72,6 +72,8 @@ Batch 2.2: Theme preference lifecycle (`light`/`dark`/`system`), semantic token 
 
 Batch 2.3: Breakpoints and device-class helpers live only in `@nexus/shared-ui` (`src/responsive/*`). Applications must not own a competing shared breakpoint scale. Tamagui `media` must derive from that scale. Accessibility conventions and minimal helpers (`src/accessibility/*`) are shared-ui owned. Contrast helpers are exported only via `@nexus/shared-ui/testing` (approved subpath alongside `@nexus/shared-ui/tamagui-config`). See `docs/architecture/RESPONSIVE_DESIGN.md` and `docs/architecture/ACCESSIBILITY.md`.
 
+Batch 2.4: Level 1 primitives live only in `@nexus/shared-ui` and must be imported from the package root. Applications must not import Tamagui `View`/`Text`/`styled` for shared UI replacements. See `docs/architecture/COMPONENTS.md`.
+
 Do not reverse boundaries (`shared-types` must not import validation or utils; `shared-utils` must not import validation).
 
 ## Verification

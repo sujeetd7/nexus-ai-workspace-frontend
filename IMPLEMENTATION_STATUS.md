@@ -3,7 +3,7 @@
 ## Current Phase
 
 Sprint 2 — Design System Foundation: In progress
-Batch 2.3 — Responsive and Accessibility Foundation: Complete
+Batch 2.5 — Level 2 Composites: Complete
 
 ## Sprint 0 Status
 
@@ -14,8 +14,35 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 See `docs/sprint-2/BATCH_MAP.md`.
 
 - **2.1** Tamagui foundation — complete
-- **2.2** Tokens + theme engine (incl. system preference + optional persistence) — complete; absorbed theme-engine work so Batch 2.3 must not redo it
-- **2.3** Responsive governance + accessibility foundation — complete (no primitives)
+- **2.2** Tokens + theme engine (incl. system preference + optional persistence) — complete
+- **2.3** Responsive governance + accessibility foundation — complete
+- **2.4** Level 1 primitives — complete
+- **2.5** Level 2 composites — complete (Tooltip deferred)
+
+## Sprint 2 — Batch 2.5 (Level 2 Composites)
+
+- Implemented composites: FormField, HelperText, ErrorText, Badge, Chip, Card, Surface, Section
+- Composed from Level 1 primitives; Chip follows Button’s web `<button>` / RN `Pressable` platform pattern for selection semantics
+- Additive Input `describedBy` + Text `id` only — no primitive redesign; no new semantic color tokens
+- Badge uses soft outline + semantic `text` (status borders decorative) to satisfy AA without `onSuccess`/`onWarning` tokens
+- Tamagui full-kit evaluation: Tooltip/Popover/Dialog/Sheet/Select — remain on `@tamagui/core`; Tooltip not exported (TD-056)
+- Tests: shared-ui suite includes composite composition, a11y relationships, theme, slots, exports (80 tests)
+- Docs: `COMPONENTS.md`, `DESIGN_SYSTEM.md`, `BATCH_MAP.md`, Technical Debt TD-056
+- Web production bundle: **776.79 kB** (gzip **240.69 kB**) — unchanged vs Batch 2.4 Button correction baseline (composites unused by `apps/web` App; tree-shaken)
+- Validated with repository quality gates (`pnpm verify`)
+
+## Sprint 2 — Batch 2.4 (Level 1 Primitives)
+
+- Migrated stubs to Tamagui-backed primitives: View, Text, Button, Divider, Loader
+- Added Stack (+ XStack/YStack), Input, Label
+- Preserved Button `children` + `onPress` consumer (`apps/web` App); redefined unused stub variant/colorScheme API to primary/secondary/ghost/destructive
+- Added semantic tokens `onPrimary`, `onDanger`, `focusRing` with contrast tests
+- Accessibility: roles/labels, focus-visible styles, loading announcements, RN 44×44 targets, reduced-motion Loader fallback
+- Tests: 53 shared-ui tests including component interaction coverage
+- Docs: `docs/architecture/COMPONENTS.md`; closed/reduced TD-047 / TD-054 for these primitives; TD-052 remains open
+- **Button semantics correction:** Web native `<button>` + RN `Pressable`; closed TD-055; additive optional `type` prop (web-only behavior)
+- Web bundle after Button correction: **776.79 kB** (gzip **240.69 kB**) vs prior Batch 2.4 **776.73 / 240.63** — negligible delta
+- Validated with repository quality gates
 
 ## Sprint 2 — Batch 2.3 (Responsive and Accessibility Foundation)
 
@@ -218,7 +245,7 @@ See `docs/sprint-2/BATCH_MAP.md`.
 - API response runtime validation at DTO boundaries
 - Automatic Axios interceptor conversion to `AppError`
 - Sprint 2 authentication UI and product features
-- Tamagui stub-component migration (TD-047)
+- Tamagui stub-component migration (TD-047) — closed in Batch 2.4
 - Tamagui compiler extraction / Metro plugin (TD-048)
 
 ## Quality Commands

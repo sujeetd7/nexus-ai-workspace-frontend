@@ -1,2 +1,2 @@
-export * from "./Loader";
-export * from "./Loader.types";
+export { Loader } from "./Loader";
+export type { LoaderColor, LoaderProps, LoaderSize } from "./Loader";

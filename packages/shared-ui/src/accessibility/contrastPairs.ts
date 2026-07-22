@@ -8,10 +8,8 @@ import type { ContrastLevel } from "./contrast";
  * Documented semantic foreground/background pairs validated at WCAG AA.
  *
  * Exclusions (intentional — see ACCESSIBILITY.md / contrast tests):
- * - Borders as sole non-text contrast (no dedicated focus/border contrast role yet)
+ * - Borders as sole non-text contrast (subtle separators; non-text role TBD)
  * - Status colors used as body text (no onSuccess/onWarning/… text roles)
- * - Inverse text on accent fills (no onPrimary token)
- * - Focus indicators (no focus-ring semantic token yet)
  */
 export type ContrastPair = {
   id: string;
@@ -70,6 +68,33 @@ export const REQUIRED_CONTRAST_PAIRS: readonly ContrastPair[] = [
     level: "aa-normal",
   },
   {
+    id: "light.onPrimary/primary",
+    theme: "light",
+    foregroundToken: "semantic.onPrimary",
+    backgroundToken: "semantic.primary",
+    foreground: lightSemanticColors.onPrimary,
+    background: lightSemanticColors.primary,
+    level: "aa-normal",
+  },
+  {
+    id: "light.onDanger/danger",
+    theme: "light",
+    foregroundToken: "semantic.onDanger",
+    backgroundToken: "semantic.danger",
+    foreground: lightSemanticColors.onDanger,
+    background: lightSemanticColors.danger,
+    level: "aa-normal",
+  },
+  {
+    id: "light.focusRing/background",
+    theme: "light",
+    foregroundToken: "semantic.focusRing",
+    backgroundToken: "semantic.background",
+    foreground: lightSemanticColors.focusRing,
+    background: lightSemanticColors.background,
+    level: "aa-large",
+  },
+  {
     id: "dark.text/background",
     theme: "dark",
     foregroundToken: "semantic.text",
@@ -113,5 +138,32 @@ export const REQUIRED_CONTRAST_PAIRS: readonly ContrastPair[] = [
     foreground: darkSemanticColors.primary,
     background: darkSemanticColors.background,
     level: "aa-normal",
+  },
+  {
+    id: "dark.onPrimary/primary",
+    theme: "dark",
+    foregroundToken: "semantic.onPrimary",
+    backgroundToken: "semantic.primary",
+    foreground: darkSemanticColors.onPrimary,
+    background: darkSemanticColors.primary,
+    level: "aa-normal",
+  },
+  {
+    id: "dark.onDanger/danger",
+    theme: "dark",
+    foregroundToken: "semantic.onDanger",
+    backgroundToken: "semantic.danger",
+    foreground: darkSemanticColors.onDanger,
+    background: darkSemanticColors.danger,
+    level: "aa-normal",
+  },
+  {
+    id: "dark.focusRing/background",
+    theme: "dark",
+    foregroundToken: "semantic.focusRing",
+    backgroundToken: "semantic.background",
+    foreground: darkSemanticColors.focusRing,
+    background: darkSemanticColors.background,
+    level: "aa-large",
   },
 ] as const;
