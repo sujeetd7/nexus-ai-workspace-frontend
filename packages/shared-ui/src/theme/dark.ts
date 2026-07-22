@@ -1,37 +1,23 @@
 import { breakpoints } from "../responsive";
 import { animations } from "./animations";
+import { darkColors } from "./darkColors";
 import { elevation } from "./elevation";
 import { opacity } from "./opacity";
 import { radius } from "./radius";
+import { darkSemanticColors } from "./semanticColors";
 import { shadows } from "./shadows";
 import { spacing } from "./spacing";
 import { typography } from "./typography";
 import { zIndex } from "./zIndex";
 
-export const darkColors = {
-  primary: "#3B82F6",
-
-  secondary: "#8B5CF6",
-
-  success: "#22C55E",
-
-  warning: "#F59E0B",
-
-  danger: "#EF4444",
-
-  background: "#121212",
-
-  surface: "#1E1E1E",
-
-  text: "#FFFFFF",
-
-  border: "#333333",
-};
+export { darkColors } from "./darkColors";
 
 export const darkTheme = {
-  mode: "dark",
+  mode: "dark" as const,
 
   colors: darkColors,
+
+  semantic: darkSemanticColors,
 
   spacing,
 
@@ -47,7 +33,12 @@ export const darkTheme = {
 
   animations,
 
+  /** Motion duration tokens — alias of `animations` (no duplicated values). */
+  motion: animations,
+
   breakpoints,
 
   zIndex,
 } as const;
+
+export type DarkTheme = typeof darkTheme;

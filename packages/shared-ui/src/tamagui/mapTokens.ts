@@ -3,10 +3,14 @@ import { createFont, createTokens } from "@tamagui/core";
 import { breakpoints } from "../responsive/breakpoints";
 import { animations } from "../theme/animations";
 import { colors } from "../theme/colors";
-import { darkColors } from "../theme/dark";
+import { darkColors } from "../theme/darkColors";
 import { elevation } from "../theme/elevation";
 import { opacity } from "../theme/opacity";
 import { radius } from "../theme/radius";
+import {
+  darkSemanticColors,
+  lightSemanticColors,
+} from "../theme/semanticColors";
 import { shadows } from "../theme/shadows";
 import { spacing } from "../theme/spacing";
 import { typography } from "../theme/typography";
@@ -64,13 +68,13 @@ export const tokens = createTokens({
     xl: spacing.xl,
     xxl: spacing.xxl,
     xxxl: spacing.xxxl,
-    display: typography.display,
-    h1: typography.h1,
-    h2: typography.h2,
-    h3: typography.h3,
-    body: typography.body,
-    caption: typography.caption,
-    label: typography.label,
+    display: typography.size.display,
+    h1: typography.size.h1,
+    h2: typography.size.h2,
+    h3: typography.size.h3,
+    body: typography.size.body,
+    caption: typography.size.caption,
+    label: typography.size.label,
   },
   // Numeric radius keys only — `radius.circle` ("50%") remains on the Nexus theme object.
   radius: {
@@ -107,7 +111,7 @@ export const tokens = createTokens({
     md: shadows.md,
     lg: shadows.lg,
   },
-  // Duration strings only — no animation driver in Batch 2.1.
+  // Motion duration strings only — no animation driver in Batch 2.2.
   duration: {
     fast: animations.fast,
     normal: animations.normal,
@@ -119,13 +123,37 @@ export const fonts = {
   body: createFont({
     family: typography.fontFamily,
     size: {
-      display: typography.display,
-      h1: typography.h1,
-      h2: typography.h2,
-      h3: typography.h3,
-      body: typography.body,
-      caption: typography.caption,
-      label: typography.label,
+      display: typography.size.display,
+      h1: typography.size.h1,
+      h2: typography.size.h2,
+      h3: typography.size.h3,
+      body: typography.size.body,
+      caption: typography.size.caption,
+      label: typography.size.label,
+    },
+    lineHeight: {
+      display: typography.lineHeight.display,
+      h1: typography.lineHeight.h1,
+      h2: typography.lineHeight.h2,
+      h3: typography.lineHeight.h3,
+      body: typography.lineHeight.body,
+      caption: typography.lineHeight.caption,
+      label: typography.lineHeight.label,
+    },
+    weight: {
+      4: typography.fontWeight.regular,
+      5: typography.fontWeight.medium,
+      6: typography.fontWeight.semibold,
+      7: typography.fontWeight.bold,
+    },
+    letterSpacing: {
+      display: typography.letterSpacing.display,
+      h1: typography.letterSpacing.h1,
+      h2: typography.letterSpacing.h2,
+      h3: typography.letterSpacing.h3,
+      body: typography.letterSpacing.body,
+      caption: typography.letterSpacing.caption,
+      label: typography.letterSpacing.label,
     },
   }),
 };
@@ -140,26 +168,29 @@ export const media = {
 
 export const themes = {
   light: {
-    background: colors.white,
-    color: colors.gray[900],
-    borderColor: colors.gray[200],
-    primary: colors.primary,
-    secondary: colors.secondary,
-    success: colors.success,
-    warning: colors.warning,
-    danger: colors.danger,
-    info: colors.info,
+    background: lightSemanticColors.background,
+    color: lightSemanticColors.text,
+    colorSecondary: lightSemanticColors.textSecondary,
+    borderColor: lightSemanticColors.border,
+    surface: lightSemanticColors.surface,
+    primary: lightSemanticColors.primary,
+    secondary: lightSemanticColors.secondary,
+    success: lightSemanticColors.success,
+    warning: lightSemanticColors.warning,
+    danger: lightSemanticColors.danger,
+    info: lightSemanticColors.info,
   },
   dark: {
-    background: darkColors.background,
-    color: darkColors.text,
-    borderColor: darkColors.border,
-    primary: darkColors.primary,
-    secondary: darkColors.secondary,
-    success: darkColors.success,
-    warning: darkColors.warning,
-    danger: darkColors.danger,
-    info: colors.info,
-    surface: darkColors.surface,
+    background: darkSemanticColors.background,
+    color: darkSemanticColors.text,
+    colorSecondary: darkSemanticColors.textSecondary,
+    borderColor: darkSemanticColors.border,
+    surface: darkSemanticColors.surface,
+    primary: darkSemanticColors.primary,
+    secondary: darkSemanticColors.secondary,
+    success: darkSemanticColors.success,
+    warning: darkSemanticColors.warning,
+    danger: darkSemanticColors.danger,
+    info: darkSemanticColors.info,
   },
 } as const;

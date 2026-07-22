@@ -3,11 +3,22 @@
 ## Current Phase
 
 Sprint 2 — Design System Foundation: In progress
-Batch 2.1 — Design System Foundation and Tamagui Setup: Complete
+Batch 2.2 — Design Tokens and Theme Engine: Complete
 
 ## Sprint 0 Status
 
 Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 start
+
+## Sprint 2 — Batch 2.2 (Design Tokens and Theme Engine)
+
+- Completed typography scales (weights, line heights, letter spacing) in the token SoT
+- Added semantic color mapping for light/dark derived from existing palettes
+- Built theme engine: preference (`light`/`dark`/`system`), switching, system subscription, optional `StorageAdapter` persistence
+- Synced Tamagui `<Theme>` with resolved mode inside `SharedUIProvider`
+- Wired web persistence via localStorage + namespaced key; mobile uses system preference (durable store deferred — TD-032)
+- Removed orphan duplicate `theme/breakpoints.ts`; responsive breakpoints remain canonical
+- Documented in `DESIGN_SYSTEM.md` and `THEME_ENGINE.md`
+- Validated with repository quality gates
 
 ## Sprint 2 — Batch 2.1 (Design System Foundation and Tamagui Setup)
 

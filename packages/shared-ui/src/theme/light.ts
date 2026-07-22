@@ -4,15 +4,18 @@ import { colors } from "./colors";
 import { elevation } from "./elevation";
 import { opacity } from "./opacity";
 import { radius } from "./radius";
+import { lightSemanticColors } from "./semanticColors";
 import { shadows } from "./shadows";
 import { spacing } from "./spacing";
 import { typography } from "./typography";
 import { zIndex } from "./zIndex";
 
 export const lightTheme = {
-  mode: "light",
+  mode: "light" as const,
 
   colors,
+
+  semantic: lightSemanticColors,
 
   spacing,
 
@@ -30,5 +33,10 @@ export const lightTheme = {
 
   animations,
 
+  /** Motion duration tokens — alias of `animations` (no duplicated values). */
+  motion: animations,
+
   zIndex,
 } as const;
+
+export type LightTheme = typeof lightTheme;

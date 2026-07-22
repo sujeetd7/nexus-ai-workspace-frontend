@@ -68,6 +68,8 @@ Batch 1.9: shared application services are deferred. When later justified, place
 
 Batch 2.1: Tamagui configuration, token mapping, and `SharedUIProvider` live only in `@nexus/shared-ui` (ADR-0012). Applications import `SharedUIProvider` from `@nexus/shared-ui` and must not import `TamaguiProvider` from `@tamagui/core` or `tamagui`. Do not deep-import `@nexus/shared-ui/src/**`. See `docs/architecture/DESIGN_SYSTEM.md`.
 
+Batch 2.2: Theme preference lifecycle (`light`/`dark`/`system`), semantic token mapping, and Tamagui theme sync live in `@nexus/shared-ui`. Applications may inject `StorageAdapter` + storage key into `SharedUIProvider` but must not own theme switching. `@nexus/shared-ui` may depend on `@nexus/shared-types` for `StorageAdapter` typing only. See `docs/architecture/THEME_ENGINE.md`.
+
 Do not reverse boundaries (`shared-types` must not import validation or utils; `shared-utils` must not import validation).
 
 ## Verification

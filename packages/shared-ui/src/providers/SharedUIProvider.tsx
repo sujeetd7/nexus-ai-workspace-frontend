@@ -1,21 +1,39 @@
 import type { PropsWithChildren } from "react";
-import { TamaguiProvider } from "@tamagui/core";
+import { Theme, TamaguiProvider } from "@tamagui/core";
+import type { StorageAdapter } from "@nexus/shared-types";
 
+import { resolveModeFromPreference } from "../appearance/appearance";
 import { tamaguiConfig } from "../tamagui/config";
+import type { ThemeMode, ThemePreference } from "../theme/resolveThemeMode";
 import {
   ThemeProvider,
   type ThemeProviderProps,
 } from "./ThemeProvider";
+import { useTheme } from "../hooks/useTheme";
 
 export interface SharedUIProviderProps extends PropsWithChildren {
   /**
-   * Optional Nexus theme object passed to the existing ThemeProvider lifecycle.
+   * Controlled theme preference (`light` | `dark` | `system`).
    */
-  theme?: ThemeProviderProps["theme"];
+  preference?: ThemePreference;
   /**
-   * Tamagui default theme name. Defaults to `"light"`.
+   * Uncontrolled initial preference. Defaults to `"light"`.
+   * When `defaultTheme` is provided without `defaultPreference`, it is used.
    */
-  defaultTheme?: "light" | "dark";
+  defaultPreference?: ThemePreference;
+  /**
+   * Batch 2.1 compatibility: initial light/dark mode.
+   * Prefer `defaultPreference` for new code (supports `"system"`).
+   */
+  defaultTheme?: ThemeMode;
+  storage?: StorageAdapter;
+  storageKey?: string;
+  onPreferenceChange?: ThemeProviderProps["onPreferenceChange"];
+}
+
+function TamaguiThemeBridge({ children }: PropsWithChildren) {
+  const { mode } = useTheme();
+  return <Theme name={mode}>{children}</Theme>;
 }
 
 /**
@@ -25,12 +43,27 @@ export interface SharedUIProviderProps extends PropsWithChildren {
  */
 export function SharedUIProvider({
   children,
-  theme,
+  preference,
+  defaultPreference,
   defaultTheme = "light",
+  storage,
+  storageKey,
+  onPreferenceChange,
 }: SharedUIProviderProps) {
+  const initialPreference = defaultPreference ?? defaultTheme;
+  const initialMode = resolveModeFromPreference(initialPreference);
+
   return (
-    <TamaguiProvider config={tamaguiConfig} defaultTheme={defaultTheme}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    <TamaguiProvider config={tamaguiConfig} defaultTheme={initialMode}>
+      <ThemeProvider
+        preference={preference}
+        defaultPreference={initialPreference}
+        storage={storage}
+        storageKey={storageKey}
+        onPreferenceChange={onPreferenceChange}
+      >
+        <TamaguiThemeBridge>{children}</TamaguiThemeBridge>
+      </ThemeProvider>
     </TamaguiProvider>
   );
 }
