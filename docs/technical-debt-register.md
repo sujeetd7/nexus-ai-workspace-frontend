@@ -61,6 +61,7 @@
 | TD-057 | RN Storybook           | React Native Storybook not configured. Web Storybook covers shared-ui via RNW in Batch 2.6; native device Storybook awaits explicit approval and toolchain setup.                                                                                                                 | Low    | Low      | When RN Storybook is approved                      |
 | TD-058 | Mobile Metro Zod Babel | Closed Batch 3.2 — `@babel/plugin-transform-export-namespace-from` added so Metro can transform Zod 4 when bootstrap pulls `@nexus/shared-validation` on the App entry path.                                                                                                      | —      | —        | Closed Batch 3.2                                   |
 | TD-059 | Mobile Jest SharedUI   | App smoke test mocks `@nexus/shared-ui` because Tamagui resolves React 19.2.7 while mobile pins 19.2.3 under `react-test-renderer`, causing invalid hook calls. Bootstrap/store tests cover runtime without the mock.                                                             | Low    | Low      | Align React versions under mobile Jest or use RNTL |
+| TD-060 | Mobile deep-link hosts | Batch 3.3 linking config exists with empty `prefixes` and infrastructure screen map only. Production URL schemes / universal links require approved domain + native configuration before activation.                                                                              | Low    | Low      | When deep-link scheme/domain is approved           |
 
 ## Sprint 2 debt review (Batch 2.7 / finalized Batch 2.8)
 
@@ -78,6 +79,14 @@
 | Closed              | Syncpack Storybook script-order hygiene (Batch 3.1 finding); TD-058 Metro Zod Babel                                        |
 | Added               | TD-059 Mobile Jest SharedUI / React duplicate under test renderer                                                          |
 | Unchanged carryover | TD-048–053, TD-056, TD-057; TD-032/051 theme persist; GraphQL React provider remains deferred (not registered as new debt) |
+
+### Sprint 3 Batch 3.3 debt notes
+
+| Status              | IDs                                                                                                       |
+| ------------------- | --------------------------------------------------------------------------------------------------------- |
+| Closed              | Mobile navigation absence (capability gap from 3.1/3.2); shared route contract gap for infrastructure IDs |
+| Added               | TD-060 Mobile deep-link hosts / empty linking prefixes                                                    |
+| Unchanged carryover | TD-059 Mobile Jest SharedUI mock (still required for App smoke); TD-048–053, TD-056, TD-057; TD-032/051   |
 
 ## Review Policy
 

@@ -34,9 +34,22 @@ See `docs/sprint-3/BATCH_3_2_COMPLETION_REPORT.md`.
 
 ---
 
-## Batch 3.3 — Planned (Navigation Foundation)
+## Batch 3.3 — Complete (Navigation & Application Shell)
 
-NavigationContainer / React Router route tables only — **not started**.
+- Web: React Router v7 `createBrowserRouter` + application shell + infrastructure routes
+- Mobile: React Navigation native stack + `NavigationContainer` + application shell
+- Shared navigation contracts in `@nexus/shared-types` (IDs, kind, guard decision)
+- Route-level loading/error; deep-link readiness (mobile prefixes empty)
+- Docs: `NAVIGATION_ARCHITECTURE.md`, `APPLICATION_SHELL.md`, provider composition update
+- **Out of scope:** auth/RBAC, feature routes, dashboards, Batch 3.4 DI registry
+
+See `docs/sprint-3/BATCH_3_3_COMPLETION_REPORT.md`.
+
+---
+
+## Batch 3.4 — Planned (Dependency Registry Prep)
+
+Typed factory/registry documentation only — **not started**.
 
 ---
 

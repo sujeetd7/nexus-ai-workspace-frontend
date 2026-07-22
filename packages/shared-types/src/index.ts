@@ -27,6 +27,17 @@ export type {
   PageResponse,
 } from "./pagination";
 export type { Err, Ok, Result } from "./result";
+export {
+  INFRASTRUCTURE_ROUTES,
+  ROUTE_IDS,
+  findDuplicateRouteIds,
+  isNavigationAllowed,
+  type InfrastructureRouteId,
+  type NavigationDecision,
+  type RouteId,
+  type RouteKind,
+  type RouteReference,
+} from "./navigation";
 export type {
   Brand,
   EntityId,

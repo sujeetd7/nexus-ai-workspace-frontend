@@ -1,8 +1,47 @@
 # Sprint 3 — Runtime Inventory
 
-Capability inventory for Sprint 3. Batch 3.1 established the baseline; **Batch 3.2 updated runtime readiness** for bootstrap, providers, store, and networking.
+Capability inventory for Sprint 3. Batch 3.1 established the baseline; Batch 3.2 updated bootstrap/providers; **Batch 3.3 updated navigation and application shells**.
 
 Classifications: **Ready** | **Partially implemented** | **Missing** | **Duplicate** | **Application-owned** | **Deferred**.
+
+---
+
+## Capability matrix (Batch 3.3)
+
+| Capability                  | Classification        | Owner / location                       | Notes                                       |
+| --------------------------- | --------------------- | -------------------------------------- | ------------------------------------------- |
+| Bootstrap (web)             | Ready                 | `apps/web` bootstrap orchestrator      | Unchanged from 3.2                          |
+| Bootstrap (mobile)          | Ready                 | `apps/mobile` bootstrap orchestrator   | Unchanged from 3.2                          |
+| Configuration               | Ready                 | shared-types/validation + app adapters |                                             |
+| Logging                     | Ready                 | shared-utils + app adapters            |                                             |
+| Storage (web theme)         | Ready                 | web platform storage                   |                                             |
+| Storage (mobile durable)    | Deferred              | —                                      | TD-032 / TD-051                             |
+| Networking (web/mobile)     | Ready                 | shared-network + app factories         |                                             |
+| Redux / Saga / RTK (web)    | Ready                 | `createAppStore`                       | No feature reducers added                   |
+| Redux / Saga / RTK (mobile) | Ready                 | `createAppStore`                       | `api` only                                  |
+| GraphQL transport           | Ready                 | shared-network + web client            |                                             |
+| GraphQL React provider      | Deferred              | —                                      | No approved consumer                        |
+| Routing (web)               | Ready                 | `apps/web` router + shell              | Infrastructure routes only                  |
+| Navigation (mobile)         | Ready                 | `apps/mobile` navigation + shell       | Native stack; one NavigationContainer       |
+| Shared route contracts      | Ready                 | `@nexus/shared-types` navigation       | IDs / kind / guard decision                 |
+| Shell / layouts             | Ready                 | app-owned shells                       | Neutral chrome; no product UI               |
+| ErrorBoundary               | Ready                 | web + mobile                           |                                             |
+| Startup loading/failure     | Ready                 | both apps                              | Distinct from route loading                 |
+| Route loading / errors      | Ready                 | web (+ mobile screen fallbacks)        | RR `errorElement`; NotFound distinct        |
+| Deep-link readiness         | Partially implemented | web history + mobile linking config    | Mobile prefixes empty until approved scheme |
+| SharedUI / SafeArea         | Ready                 | shared-ui / mobile                     | Depth ≤ 8                                   |
+| Feature registration        | Partially implemented | injectEndpoints                        | Unchanged                                   |
+| DI registry                 | Deferred              | factories only                         | Batch 3.4                                   |
+
+Provider depths: **Web 5**, **Mobile 6** (limit ≤ 8).
+
+See also `docs/architecture/NAVIGATION_ARCHITECTURE.md`, `APPLICATION_SHELL.md`, `PROVIDER_COMPOSITION.md`.
+
+---
+
+## Batch 3.2 historical notes
+
+The Batch 3.2 matrix and Batch 3.1 narrative remain below for reference.
 
 ---
 

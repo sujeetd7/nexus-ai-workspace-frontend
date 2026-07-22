@@ -3,6 +3,7 @@
 ## Current Phase
 
 Sprint 3 — Application Runtime Foundation: **In progress**
+Batch 3.3 — Navigation & Application Shell: **Complete**
 Batch 3.2 — Bootstrap & Provider Foundation: **Complete**
 Batch 3.1 — Repository Audit & Runtime Baseline: **Complete**
 
@@ -18,7 +19,18 @@ See `docs/sprint-3/BATCH_MAP.md`, `docs/sprint-3/RUNTIME_INVENTORY.md`, and batc
 
 - **3.1** Repository audit & runtime baseline — complete
 - **3.2** Bootstrap & provider foundation — complete
-- **3.3** Navigation foundation — not started
+- **3.3** Navigation & application shell — complete
+- **3.4** Dependency registry prep — not started
+
+## Sprint 3 — Batch 3.3 (Navigation & Application Shell)
+
+- Web: React Router v7 data router, application shell, home + not-found infrastructure routes
+- Mobile: React Navigation native stack, one NavigationContainer, application shell
+- Shared navigation contracts in `@nexus/shared-types` (route IDs, kinds, guard decisions)
+- Route-level Suspense loading and route error fallback (web); deep-link readiness without invented schemes
+- Provider depth: web 5, mobile 6 (≤ 8); no feature routes/state/auth/RBAC
+- Docs: `NAVIGATION_ARCHITECTURE.md`, `APPLICATION_SHELL.md`, provider composition update
+- Validated with repository quality gates
 
 ## Sprint 3 — Batch 3.2 (Bootstrap & Provider Foundation)
 
@@ -283,7 +295,8 @@ See `docs/sprint-2/BATCH_MAP.md` and `docs/sprint-2/SPRINT_2_COMPLETION_REPORT.m
 
 ## Deferred
 
-- Sprint 3 Batch 3.3+ navigation / shell (not started)
+- Sprint 3 Batch 3.4+ dependency registry prep (not started)
+- Product feature routes, auth/RBAC navigation, dashboards (intentionally out of Batch 3.3)
 - Sprint 3+ product feature work (not started)
 - React Native Storybook (TD-057)
 - Overlay composites / Tooltip (TD-056)

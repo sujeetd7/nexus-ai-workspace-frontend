@@ -1,5 +1,9 @@
-import type { PropsWithChildren } from "react";
+import { ApplicationShell } from "../../shell/ApplicationShell";
 
-export function MainLayout({ children }: PropsWithChildren) {
-  return <>{children}</>;
+/**
+ * Legacy layout entry — delegates to the application shell.
+ * Nested route trees render through the shell Outlet.
+ */
+export function MainLayout() {
+  return <ApplicationShell />;
 }

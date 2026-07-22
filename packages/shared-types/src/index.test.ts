@@ -123,3 +123,40 @@ describe("@nexus/shared-types public contracts", () => {
     expect(config.isDevelopment).toBe(true);
   });
 });
+
+describe("@nexus/shared-types navigation contracts", () => {
+  it("exposes stable infrastructure route IDs and catalog metadata", async () => {
+    const {
+      INFRASTRUCTURE_ROUTES,
+      ROUTE_IDS,
+      findDuplicateRouteIds,
+      isNavigationAllowed,
+    } = await import("./index");
+
+    expect(ROUTE_IDS.HOME).toBe("home");
+    expect(ROUTE_IDS.NOT_FOUND).toBe("not-found");
+    expect(INFRASTRUCTURE_ROUTES.home.id).toBe(ROUTE_IDS.HOME);
+    expect(INFRASTRUCTURE_ROUTES.home.webPath).toBe("/");
+    expect(INFRASTRUCTURE_ROUTES.home.mobileName).toBe("Home");
+    expect(INFRASTRUCTURE_ROUTES["not-found"].kind).toBe("system");
+
+    const duplicates = findDuplicateRouteIds([
+      INFRASTRUCTURE_ROUTES.home,
+      INFRASTRUCTURE_ROUTES["not-found"],
+      INFRASTRUCTURE_ROUTES.home,
+    ]);
+    expect(duplicates).toEqual([ROUTE_IDS.HOME]);
+    expect(findDuplicateRouteIds(Object.values(INFRASTRUCTURE_ROUTES))).toEqual(
+      [],
+    );
+
+    expect(isNavigationAllowed({ allowed: true })).toBe(true);
+    expect(
+      isNavigationAllowed({
+        allowed: false,
+        reason: "blocked",
+        redirectTo: ROUTE_IDS.HOME,
+      }),
+    ).toBe(false);
+  });
+});

@@ -1,6 +1,6 @@
 # Provider Composition
 
-Sprint 3 Batch 3.2 provider trees. Count includes actual React context providers only (not ErrorBoundary, Suspense, or ordinary wrappers).
+Sprint 3 Batch 3.3 provider trees. Count includes actual React context providers only (not ErrorBoundary, Suspense, or ordinary wrappers).
 
 ## Web (ready path)
 
@@ -12,15 +12,18 @@ ErrorBoundary                    (application-owned; not a context provider)
               ├── ThemeProvider
               └── Theme (bridge)
                     └── Redux Provider
-                          └── BrowserRouter
-                                └── existing catch-all routes
+                          └── RouterProvider (createBrowserRouter)
+                                └── Application Shell
+                                      └── route Outlet
 ```
 
-**Context provider depth:** 5 (TamaguiProvider, ThemeProvider, Theme, Redux, BrowserRouter) — under the limit of 8.
+**Context provider depth:** 5 (TamaguiProvider, ThemeProvider, Theme, Redux, RouterProvider) — under the limit of 8.
 
-SharedUIProvider is the sole design-system entry. Applications must not mount `TamaguiProvider` / `ThemeProvider` directly.
+Notes:
 
-During initializing/failed states, a temporary SharedUIProvider wraps startup loading/failure UI only — never stacked with the ready-tree SharedUIProvider.
+- Batch 3.2 documented `BrowserRouter`. Batch 3.3 uses React Router v7 `createBrowserRouter` + `RouterProvider` for nested routes, lazy elements, and `errorElement` support. Ownership remains `apps/web`.
+- SharedUIProvider is the sole design-system entry. Applications must not mount `TamaguiProvider` / `ThemeProvider` directly.
+- During initializing/failed states, a temporary SharedUIProvider wraps startup loading/failure UI only — never stacked with the ready-tree SharedUIProvider.
 
 ## Mobile (ready path)
 
@@ -33,12 +36,13 @@ ErrorBoundary
                     ├── ThemeProvider
                     └── Theme
                           └── Redux Provider
-                                └── temporary template content
+                                └── NavigationContainer
+                                      └── Application Shell / screens
 ```
 
-**Context provider depth:** 5 (SafeArea, Tamagui, ThemeProvider, Theme, Redux).
+**Context provider depth:** 6 (SafeArea, Tamagui, ThemeProvider, Theme, Redux, NavigationContainer) — under the limit of 8.
 
-NavigationContainer is **not** mounted (Batch 3.3).
+Exactly one `NavigationContainer`. No duplicate SharedUI or Redux providers.
 
 ## Rules
 
@@ -52,7 +56,7 @@ NavigationContainer is **not** mounted (Batch 3.3).
 
 ```text
 … Redux Provider
-     └── [future approved capability providers — none in Sprint 3]
+     └── [future approved capability providers — none beyond navigation in Sprint 3 Batch 3.3]
            └── Router / Navigation
                  └── Application Shell
 ```
