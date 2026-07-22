@@ -3,7 +3,7 @@
 | Package             | Primary Responsibility                    | Allowed Contents                                                                                                                                              | Must Not Contain                                                                         |
 | ------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `shared-types`      | Shared TypeScript contracts               | Batch 1.1 primitives (`Brand`/`EntityId`/pagination/ISO); Batch 1.2 errors; Batch 1.3 config; justified shared domain contracts only (see `DOMAIN_MODELS.md`) | runtime logic, UI, feature entities, HTTP `ApiError`, env globals, Zod                   |
-| `shared-utils`      | Platform-safe helpers                     | Batch 1.1 helpers; Batch 1.2 Result / AppError runtime helpers                                                                                                | browser-only or React-specific logic; environment readers                                |
+| `shared-utils`      | Platform-safe helpers                     | Batch 1.1 helpers; Batch 1.2 Result / AppError runtime helpers; Batch 1.6 storage helpers (namespaced keys, JSON serialize/parse, memory adapter)             | browser-only or React-specific logic; environment readers; `localStorage`                |
 | `shared-validation` | Shared validation contracts               | Zod primitives; `parseWithSchema`; Batch 1.3 `parsePublicClientConfig` for **plain objects**; returns `Result`/`AppError` from `shared-types`                 | API transport, UI, feature schemas, RHF, `import.meta.env`, `process.env`, platform APIs |
 | `shared-network`    | Platform-neutral HTTP/GraphQL transport   | Axios/RTK/GraphQL helpers; `ApiError`; explicit `apiErrorToAppError` conversion                                                                               | UI, feature modules, app-specific storage, env globals                                   |
 | `shared-ui`         | Cross-platform UI foundation              | components, tokens, themes, responsive helpers                                                                                                                | product features, application state, Axios                                               |
@@ -37,6 +37,18 @@ Shared packages must not read environment globals. Do not create `@nexus/shared-
 | Runtime schemas for approved shared contracts           | `@nexus/shared-validation`                             |
 
 Do not add speculative `BaseEntity`, `AuditMetadata`, `PaginatedResult`, feature IDs, or generated GraphQL copies to `shared-types`.
+
+## Storage platform ownership (Batch 1.6)
+
+| Concern                                         | Owner                                       |
+| ----------------------------------------------- | ------------------------------------------- |
+| `StorageAdapter` contract                       | `@nexus/shared-types` (unchanged)           |
+| Namespaced keys / JSON helpers / memory adapter | `@nexus/shared-utils`                       |
+| Web `localStorage` adapter                      | `apps/web/src/platform/storage`             |
+| Auth token `localStorage` helpers               | Feature-owned (`apps/web` auth) — unchanged |
+| Native durable / secure storage                 | Deferred — see technical debt               |
+
+See `docs/architecture/STORAGE_PLATFORM.md`. Do not put browser or native storage APIs in shared packages.
 
 ## Overlap Decision
 

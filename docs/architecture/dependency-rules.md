@@ -58,6 +58,8 @@ Batch 1.4: shared-validation may export reusable primitives and `parseWithSchema
 
 Batch 1.5: justified shared domain contracts (when any exist) live only in `@nexus/shared-types`. Feature entities, API envelopes, and GraphQL-generated types must not be placed in shared-types to “centralize” them. Runtime schemas for approved shared contracts stay in `@nexus/shared-validation` → `@nexus/shared-types`. See `docs/architecture/DOMAIN_MODELS.md`.
 
+Batch 1.6: `@nexus/shared-utils` may own framework-independent storage helpers and an in-memory `StorageAdapter`. Browser `localStorage` adapters live in `apps/web`. Shared packages must not import `window` / `localStorage` / native storage modules. Auth token persistence remains feature-owned. See `docs/architecture/STORAGE_PLATFORM.md`.
+
 Do not reverse boundaries (`shared-types` must not import validation or utils; `shared-utils` must not import validation).
 
 ## Verification

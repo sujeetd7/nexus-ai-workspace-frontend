@@ -3,7 +3,7 @@
 ## Current Phase
 
 Sprint 1 — Shared Platform Foundation
-Batch 1.5 — Governance complete; new shared domain models deferred pending demonstrated cross-platform or multi-layer consumers.
+Batch 1.6 — Complete
 
 ## Sprint 0 Status
 
@@ -54,6 +54,16 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - Auth and other feature models remain feature-owned
 - Validated with `pnpm verify`
 
+## Sprint 1 — Batch 1.6 (Storage Platform)
+
+- Kept existing `StorageAdapter` unchanged (string-only, `MaybePromise`, optional `clear`)
+- Added `@nexus/shared-utils` helpers: namespaced keys, safe JSON serialize/parse, in-memory adapter
+- Added application-local Web `createLocalStorageAdapter` under `apps/web/src/platform/storage`
+- Left auth `authStorage` / token keys / `TokenProvider` unchanged
+- Deferred native durable storage, secure credentials, AsyncStorage/MMKV/Keychain
+- Documented in `docs/architecture/STORAGE_PLATFORM.md`
+- Validated with `pnpm verify`
+
 ## Completed (Sprint 0)
 
 - pnpm workspace configuration
@@ -102,6 +112,8 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - production SonarQube integration (root baseline config present; hosted scan deferred)
 - refresh-token concurrency and replay flow
 - secure mobile credential storage
+- durable native StorageAdapter (AsyncStorage/MMKV — requires ADR)
+- browser auth-token migration onto platform storage adapter
 - streaming transport
 - complete offline transport
 - React Hook Form ↔ Zod adapter (outside shared-validation)
