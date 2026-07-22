@@ -21,6 +21,11 @@
 | TD-017 | Deploy env names  | Deployment stages (local/staging/preproduction) are not modeled; only Vite/RN build modes exist                                     | Low    | Low      | When multi-stage deploy lands          |
 | TD-018 | CI runtime env    | Quality CI does not smoke-test runtime public configuration with injected `VITE_*` values                                           | Low    | Low      | Release / e2e hardening                |
 | TD-019 | App version src   | Web `APP.VERSION` remains hardcoded in `constants.ts` rather than a single shared version source                                    | Low    | Low      | Versioning / release batch             |
+| TD-020 | Validation forms  | React Hook Form ↔ Zod adapter is deferred; form integration must not live in `@nexus/shared-validation`                             | Medium | Medium   | Future adapter layer batch             |
+| TD-021 | Feature schemas   | Feature/form/auth/AI schemas remain with feature owners; placement guidance is docs-only until consumers appear                     | Medium | Medium   | When first feature schemas land        |
+| TD-022 | Validation i18n   | Shared validation messages are English fixed strings; localized messages are deferred                                               | Low    | Low      | i18n sprint                            |
+| TD-023 | API DTO validate  | API response runtime Zod validation at network/DTO boundaries is deferred                                                           | Medium | Medium   | Networking / DTO validation batch      |
+| TD-024 | Validation Jest   | Leftover `packages/shared-validation/jest.config.cjs` is unused after Vitest migration                                              | Low    | Low      | Package cleanup pass                   |
 
 ## Review Policy
 

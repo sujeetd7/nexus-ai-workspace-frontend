@@ -83,9 +83,19 @@ Excluded by default:
 3. Web `apps/web/src/api/errors` re-exports remain valid; migrate consumers gradually.
 4. React Native has no shared AppError usage yet — adopt shared-utils when storage/services land.
 
+## Validation errors (Batch 1.4)
+
+Use `parseWithSchema` from `@nexus/shared-validation` for Zod → `Result<T, AppError>` mapping.
+
+- Default code: `ERROR_CODES.VALIDATION`
+- Configuration boundaries may pass `ERROR_CODES.CONFIGURATION`
+- Safe metadata only: field path heads, issue categories, issue counts
+- See `docs/architecture/VALIDATION_PLATFORM.md`
+
 ## Deferred
 
-- Zod validation error mapping for feature/form schemas (`shared-validation` beyond public client config)
+- React Hook Form ↔ Zod adapter (outside shared-validation)
+- Feature/form schema ownership enforcement beyond documentation
 - Refresh-token orchestration mapping
 - Telemetry / remote logging sinks
 - Secure mobile storage adapters
@@ -93,7 +103,7 @@ Excluded by default:
 
 ## Environment configuration errors (Batch 1.3)
 
-Invalid public client configuration uses `ERROR_CODES.CONFIGURATION` via `parsePublicClientConfig`.
+Invalid public client configuration uses `ERROR_CODES.CONFIGURATION` via `parsePublicClientConfig` (implemented with `parseWithSchema`).
 
 Safe metadata may include field names, issue categories, and issue counts only.
 

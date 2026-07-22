@@ -54,6 +54,8 @@ apps/web, apps/mobile
 
 Batch 1.3: `@nexus/shared-validation` validates plain objects with Zod and returns `Result` / `AppError` shapes from `@nexus/shared-types` without importing `@nexus/shared-utils` (avoids pulling utils sources into app `tsc -b` graphs). It must not read environment globals or depend on apps / `@nexus/shared-network`.
 
+Batch 1.4: shared-validation may export reusable primitives and `parseWithSchema` while remaining dependent only on `zod` and `@nexus/shared-types`. Do not add `@nexus/shared-utils` to shared-validation.
+
 Do not reverse boundaries (`shared-types` must not import validation or utils; `shared-utils` must not import validation).
 
 ## Verification

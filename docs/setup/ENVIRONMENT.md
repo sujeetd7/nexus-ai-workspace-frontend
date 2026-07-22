@@ -8,7 +8,7 @@ Canonical guidance for Sprint 1 Batch 1.3 public client configuration.
 apps/web, apps/mobile
         │  (thin adapters)
         ▼
-@nexus/shared-validation   (Zod schema + parsePublicClientConfig)
+@nexus/shared-validation   (Zod schema + parsePublicClientConfig via parseWithSchema)
         │
         └── @nexus/shared-types   (BuildMode, PublicClientConfig, Result, AppError)
 ```
@@ -57,13 +57,15 @@ Deployment stages (`local`, `staging`, `preproduction`) are **not** part of this
 `parsePublicClientConfig(input)` in `@nexus/shared-validation`:
 
 1. Accept a plain object only (no env globals)
-2. Parse and validate (`buildMode`, absolute `http(s)` URLs, optional `appName`)
+2. Parse and validate (`buildMode`, absolute `http(s)` URLs, optional `appName`) using shared primitives (`buildModeSchema`, `absoluteHttpUrlSchema`)
 3. Default / trim `appName`
 4. Derive development / production flags
 5. Freeze the result
-6. Return `Result<PublicClientConfig, AppError>` with `ERROR_CODES.CONFIGURATION` on failure
+6. Return `Result<PublicClientConfig, AppError>` via `parseWithSchema` with `ERROR_CODES.CONFIGURATION` on failure
 
 Unknown fields are rejected. Error metadata may include safe field names and issue categories only — never URLs, raw input, tokens, or Zod values.
+
+Shared validation platform details: `docs/architecture/VALIDATION_PLATFORM.md`.
 
 ## Web adapter flow
 

@@ -3,7 +3,7 @@
 ## Current Phase
 
 Sprint 1 — Shared Platform Foundation
-Batch 1.3 — Complete
+Batch 1.4 — Complete
 
 ## Sprint 0 Status
 
@@ -33,6 +33,16 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - Thin React Native adapter over typed `publicConfig.ts` (no native env library)
 - Canonical app `.env.example` files; root example is guidance-only; `.env` gitignored
 - Documented in `docs/setup/ENVIRONMENT.md`
+- Validated with `pnpm verify`
+
+## Sprint 1 — Batch 1.4 (Validation Platform)
+
+- Extended `@nexus/shared-validation` with reusable Zod primitives (strings, numbers, URLs, ISO dates, identifiers, pagination, buildMode)
+- Added `parseWithSchema` Result/AppError mapping with sanitized metadata (`VALIDATION` default; `CONFIGURATION` for env)
+- Refactored `parsePublicClientConfig` to compose shared primitives + `parseWithSchema` without behavior regression
+- Kept dependency direction `shared-validation → shared-types` (no `shared-utils`)
+- Documented in `docs/architecture/VALIDATION_PLATFORM.md`
+- No React Hook Form / UI / feature schemas; no validation generator
 - Validated with `pnpm verify`
 
 ## Completed (Sprint 0)
@@ -85,7 +95,9 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 - secure mobile credential storage
 - streaming transport
 - complete offline transport
-- Feature/form Zod schema expansion beyond public client config
+- React Hook Form ↔ Zod adapter (outside shared-validation)
+- Feature/form/auth/AI schema placement with feature owners
+- API response runtime validation at DTO boundaries
 - Automatic Axios interceptor conversion to `AppError`
 - Sprint 1 authentication UI and product features
 
