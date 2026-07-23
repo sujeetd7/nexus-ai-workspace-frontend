@@ -20,6 +20,23 @@ export {
   type ErrorMetadataValue,
   type SerializedAppError,
 } from "./errors";
+export {
+  FEATURE_LIFECYCLE_STAGES,
+  PLATFORM_EXTENSION_KEYS,
+  PLATFORM_SERVICE_KEYS,
+  REGISTRATION_FAILURE_CODES,
+  type AgentRegistryContract,
+  type AiProviderContract,
+  type FeatureLifecycleStage,
+  type FeatureManifest,
+  type McpProviderContract,
+  type PlatformExtensionKey,
+  type PlatformExtensionMap,
+  type PlatformServiceKey,
+  type RegistrationError,
+  type RegistrationFailureCode,
+  type ToolRegistryContract,
+} from "./registry";
 export type {
   CursorPageRequest,
   CursorPageResponse,

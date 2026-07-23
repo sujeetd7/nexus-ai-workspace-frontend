@@ -3,6 +3,7 @@
 ## Current Phase
 
 Sprint 3 — Application Runtime Foundation: **In progress**
+Batch 3.4 — Platform Extensibility Foundation: **Complete**
 Batch 3.3 — Navigation & Application Shell: **Complete**
 Batch 3.2 — Bootstrap & Provider Foundation: **Complete**
 Batch 3.1 — Repository Audit & Runtime Baseline: **Complete**
@@ -20,7 +21,17 @@ See `docs/sprint-3/BATCH_MAP.md`, `docs/sprint-3/RUNTIME_INVENTORY.md`, and batc
 - **3.1** Repository audit & runtime baseline — complete
 - **3.2** Bootstrap & provider foundation — complete
 - **3.3** Navigation & application shell — complete
-- **3.4** Dependency registry prep — not started
+- **3.4** Platform extensibility foundation — complete
+- **3.5** — not started
+
+## Sprint 3 — Batch 3.4 (Platform Extensibility Foundation)
+
+- Typed dependency registry + feature registration pipeline (no IoC / discovery)
+- Shared contracts for services, manifests, lifecycle, AI/MCP/tool/agent placeholders
+- Web/mobile bootstrap registers platform services and seals registries before providers
+- Provider depth unchanged; no AI/MCP/agent implementations
+- Docs: `PLATFORM_EXTENSIBILITY.md`
+- Validated with repository quality gates
 
 ## Sprint 3 — Batch 3.3 (Navigation & Application Shell)
 
@@ -295,8 +306,8 @@ See `docs/sprint-2/BATCH_MAP.md` and `docs/sprint-2/SPRINT_2_COMPLETION_REPORT.m
 
 ## Deferred
 
-- Sprint 3 Batch 3.4+ dependency registry prep (not started)
-- Product feature routes, auth/RBAC navigation, dashboards (intentionally out of Batch 3.3)
+- Sprint 3 Batch 3.5+ (not started)
+- Product feature manifests, AI/MCP/agent/tool implementations (intentionally out of Batch 3.4)
 - Sprint 3+ product feature work (not started)
 - React Native Storybook (TD-057)
 - Overlay composites / Tooltip (TD-056)

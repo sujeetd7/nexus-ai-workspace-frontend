@@ -16,6 +16,7 @@ import {
   type AppStore,
   type AppStoreBundle,
 } from "../store/createAppStore";
+import { registerWebPlatform } from "../platform/registry";
 import type { WebBootstrapOutcome, WebHttpClient, WebRuntime } from "./types";
 
 export interface BootstrapWebAppOptions {
@@ -124,12 +125,36 @@ export function bootstrapWebApp(
       return outcome;
     }
 
+    let registration;
+    try {
+      registration = registerWebPlatform({
+        config,
+        logger,
+        themeStorage,
+        httpClient,
+      });
+    } catch (cause) {
+      const failure = toFailure(
+        BOOTSTRAP_FAILURE_CODES.REGISTRATION_FAILED,
+        "The application could not complete platform registration.",
+        cause,
+        true,
+      );
+      safeLogFailure(logger, failure);
+      const outcome: WebBootstrapOutcome = { status: "failed", failure };
+      cache = { outcome };
+      return outcome;
+    }
+
     const runtime: WebRuntime = {
       config,
       logger,
       themeStorage,
       httpClient,
       store: storeBundle.store,
+      registry: registration.registry,
+      extensions: registration.extensions,
+      featureOrder: registration.featureOrder,
     };
 
     const outcome: WebBootstrapOutcome = { status: "ready", runtime };

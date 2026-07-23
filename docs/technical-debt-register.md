@@ -46,7 +46,7 @@
 | TD-042 | Repo filter/sort DSL   | Generic repository filter/sort/query-specification contracts deferred; feature filters stay feature-owned                                                                                                                                                                         | Low    | Low      | Requires multi-domain evidence + review            |
 | TD-043 | gen:repository         | Repository generator deferred until repeated approved feature-owned repository bundles exist                                                                                                                                                                                      | Low    | Low      | After proven repository bundle pattern             |
 | TD-044 | Shared services        | Shared application services deferred until demonstrated cross-platform orchestration not owned by env/storage/logging/network/RTK/Saga                                                                                                                                            | Medium | Medium   | When eligibility in SHARED_SERVICES.md is met      |
-| TD-045 | Service DI container   | No DI container / service locator; factories only. Container introduction requires ADR                                                                                                                                                                                            | Low    | Low      | Requires ADR if product mandates container         |
+| TD-045 | Service DI container   | No DI container / service locator. Batch 3.4 added a lightweight typed dependency registry (explicit register/resolve + seal) — **not** an IoC container. Full container introduction still requires ADR.                                                                         | Low    | Low      | Requires ADR if product mandates container         |
 | TD-046 | gen:service            | Service generator deferred until repeated approved service bundles (contract/factory/tests/exports/docs) exist                                                                                                                                                                    | Low    | Low      | After proven shared-service bundle pattern         |
 | TD-047 | Stub UI migration      | Closed Batch 2.4 — View/Text/Button/Divider/Loader migrated to Tamagui-backed Level 1 primitives; Stack/Input/Label added.                                                                                                                                                        | —      | —        | Closed Batch 2.4                                   |
 | TD-051 | Theme persist mobile   | Mobile theme preference is session/system based: switching and system detection work without durable storage. Durable persistence awaits an app-provided native `StorageAdapter` (extends TD-032). Does not block theme rendering or switching.                                   | Medium | Medium   | When TD-032 native KV adapter lands                |
@@ -87,6 +87,14 @@
 | Closed              | Mobile navigation absence (capability gap from 3.1/3.2); shared route contract gap for infrastructure IDs |
 | Added               | TD-060 Mobile deep-link hosts / empty linking prefixes                                                    |
 | Unchanged carryover | TD-059 Mobile Jest SharedUI mock (still required for App smoke); TD-048–053, TD-056, TD-057; TD-032/051   |
+
+### Sprint 3 Batch 3.4 debt notes
+
+| Status              | IDs                                                                                             |
+| ------------------- | ----------------------------------------------------------------------------------------------- |
+| Updated             | TD-045 clarified — lightweight typed registry landed; IoC container still forbidden without ADR |
+| Added               | None                                                                                            |
+| Unchanged carryover | TD-059, TD-060, TD-048–053, TD-056, TD-057; TD-032/051                                          |
 
 ## Review Policy
 

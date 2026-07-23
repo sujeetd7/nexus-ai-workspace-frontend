@@ -21,6 +21,7 @@ import {
   type AppStore,
   type AppStoreBundle,
 } from "../store/createAppStore";
+import { registerMobilePlatform } from "../platform/registry";
 import type {
   MobileBootstrapOutcome,
   MobileHttpClient,
@@ -107,11 +108,34 @@ export function bootstrapMobileApp(
       return outcome;
     }
 
+    let registration;
+    try {
+      registration = registerMobilePlatform({
+        config,
+        logger,
+        httpClient,
+      });
+    } catch (cause) {
+      const failure = toFailure(
+        BOOTSTRAP_FAILURE_CODES.REGISTRATION_FAILED,
+        "The application could not complete platform registration.",
+        cause,
+        true,
+      );
+      safeLogFailure(logger, failure);
+      const outcome: MobileBootstrapOutcome = { status: "failed", failure };
+      cache = { outcome };
+      return outcome;
+    }
+
     const runtime: MobileRuntime = {
       config,
       logger,
       httpClient,
       store: storeBundle.store,
+      registry: registration.registry,
+      extensions: registration.extensions,
+      featureOrder: registration.featureOrder,
     };
 
     const outcome: MobileBootstrapOutcome = { status: "ready", runtime };

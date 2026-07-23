@@ -1,8 +1,29 @@
 # Sprint 3 — Runtime Inventory
 
-Capability inventory for Sprint 3. Batch 3.1 established the baseline; Batch 3.2 updated bootstrap/providers; **Batch 3.3 updated navigation and application shells**.
+Capability inventory for Sprint 3. Batch 3.1 established the baseline; Batch 3.2 updated bootstrap/providers; Batch 3.3 updated navigation/shells; **Batch 3.4 updated platform extensibility registration**.
 
 Classifications: **Ready** | **Partially implemented** | **Missing** | **Duplicate** | **Application-owned** | **Deferred**.
+
+---
+
+## Capability matrix (Batch 3.4)
+
+| Capability                | Classification       | Owner / location                        | Notes                                  |
+| ------------------------- | -------------------- | --------------------------------------- | -------------------------------------- |
+| Bootstrap (web/mobile)    | Ready                | app bootstrap orchestrators             | Includes sealed registry registration  |
+| Dependency registry       | Ready                | shared-utils + app platform/registry    | Typed; sealed after bootstrap; not IoC |
+| Feature manifests         | Ready                | app static lists (empty)                | Framework + validation only            |
+| Platform extensions       | Ready (contracts)    | shared-types + empty extension registry | AI/MCP/Tool/Agent placeholders only    |
+| Feature lifecycle         | Ready (contracts)    | register → initialize → ready           | Dispose deferred                       |
+| Routing / Navigation      | Ready                | apps (Batch 3.3)                        | Unchanged                              |
+| Shell                     | Ready                | apps (Batch 3.3)                        | Unchanged                              |
+| GraphQL React provider    | Deferred             | —                                       | No approved consumer                   |
+| AI / MCP / Agents / Tools | Deferred             | extension contracts only                | Sprint 4+                              |
+| DI / IoC container        | Deferred / Forbidden | TD-045                                  | Lightweight typed registry ≠ IoC       |
+
+Provider depths unchanged: **Web 5**, **Mobile 6** (limit ≤ 8).
+
+See `docs/architecture/PLATFORM_EXTENSIBILITY.md`.
 
 ---
 

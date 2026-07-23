@@ -47,9 +47,22 @@ See `docs/sprint-3/BATCH_3_3_COMPLETION_REPORT.md`.
 
 ---
 
-## Batch 3.4 — Planned (Dependency Registry Prep)
+## Batch 3.4 — Complete (Platform Extensibility Foundation)
 
-Typed factory/registry documentation only — **not started**.
+- Typed dependency registry (`@nexus/shared-utils`) + contracts (`@nexus/shared-types`)
+- Static feature manifest pipeline with duplicate/missing/cycle validation
+- Platform extension placeholders (AI/MCP/Tool/Agent) — contracts only
+- Bootstrap integration on web and mobile; registries sealed before providers
+- Docs: `PLATFORM_EXTENSIBILITY.md`, bootstrap sequence update
+- **Out of scope:** AI/MCP/agent/tool implementations, IoC, discovery, Batch 3.5
+
+See `docs/sprint-3/BATCH_3_4_COMPLETION_REPORT.md`.
+
+---
+
+## Batch 3.5 — Planned
+
+Not started.
 
 ---
 

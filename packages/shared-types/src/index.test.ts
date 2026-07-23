@@ -122,6 +122,22 @@ describe("@nexus/shared-types public contracts", () => {
     expect(config.buildMode).toBe("development");
     expect(config.isDevelopment).toBe(true);
   });
+
+  it("exposes registry and lifecycle contracts without implementations", async () => {
+    const {
+      FEATURE_LIFECYCLE_STAGES,
+      PLATFORM_EXTENSION_KEYS,
+      PLATFORM_SERVICE_KEYS,
+      REGISTRATION_FAILURE_CODES,
+    } = await import("./index");
+
+    expect(PLATFORM_SERVICE_KEYS.LOGGER).toBe("logger");
+    expect(PLATFORM_EXTENSION_KEYS.AI_PROVIDER).toBe("aiProvider");
+    expect(FEATURE_LIFECYCLE_STAGES.REGISTER).toBe("register");
+    expect(REGISTRATION_FAILURE_CODES.DUPLICATE_FEATURE_ID).toBe(
+      "DUPLICATE_FEATURE_ID",
+    );
+  });
 });
 
 describe("@nexus/shared-types navigation contracts", () => {
