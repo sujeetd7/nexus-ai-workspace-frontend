@@ -1,8 +1,31 @@
 # Sprint 3 — Runtime Inventory
 
-Capability inventory for Sprint 3. Batch 3.1 established the baseline; Batch 3.2 updated bootstrap/providers; Batch 3.3 updated navigation/shells; **Batch 3.4 updated platform extensibility registration**.
+Capability inventory for Sprint 3. Batches 3.1–3.4 delivered the application runtime foundation; **Batch 3.5 closed Sprint 3 with validation-only governance**.
 
 Classifications: **Ready** | **Partially implemented** | **Missing** | **Duplicate** | **Application-owned** | **Deferred**.
+
+---
+
+## Capability matrix (Sprint 3 closeout — Batch 3.5)
+
+| Capability                | Classification       | Owner / location                        | Notes                                       |
+| ------------------------- | -------------------- | --------------------------------------- | ------------------------------------------- |
+| Bootstrap (web/mobile)    | Ready                | app bootstrap orchestrators             | Deterministic; sealed registry registration |
+| Provider composition      | Ready                | app providers                           | Web 5 / Mobile 6; ≤ 8                       |
+| Routing (web)             | Ready                | `apps/web` router + shell               | Infrastructure routes only                  |
+| Navigation (mobile)       | Ready                | `apps/mobile` navigation + shell        | One NavigationContainer                     |
+| Application shell         | Ready                | app-owned shells                        | Neutral chrome                              |
+| Dependency registry       | Ready                | shared-utils + app platform/registry    | Typed; sealed; not IoC                      |
+| Feature manifests         | Ready                | app static lists (empty)                | Framework ready for Sprint 4                |
+| Platform extensions       | Ready (contracts)    | shared-types + empty extension registry | AI/MCP/Tool/Agent placeholders only         |
+| Shared route contracts    | Ready                | `@nexus/shared-types` navigation        |                                             |
+| GraphQL React provider    | Deferred             | —                                       | Sprint 4+ if approved consumer              |
+| AI / MCP / Agents / Tools | Deferred             | extension contracts only                | Sprint 4+                                   |
+| DI / IoC container        | Deferred / Forbidden | TD-045                                  | Typed registry ≠ IoC                        |
+
+Provider depths: **Web 5**, **Mobile 6**. Web production bundle (Batch 3.4/3.5): **899.53 kB** / gzip **281.83 kB**.
+
+See `docs/sprint-3/SPRINT_3_COMPLETION_REPORT.md`.
 
 ---
 

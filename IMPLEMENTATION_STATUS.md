@@ -2,7 +2,8 @@
 
 ## Current Phase
 
-Sprint 3 — Application Runtime Foundation: **In progress**
+Sprint 3 — Application Runtime Foundation: **Complete** (closeout Batch 3.5)
+Batch 3.5 — Sprint Validation & Closeout: **Complete**
 Batch 3.4 — Platform Extensibility Foundation: **Complete**
 Batch 3.3 — Navigation & Application Shell: **Complete**
 Batch 3.2 — Bootstrap & Provider Foundation: **Complete**
@@ -16,13 +17,21 @@ Status: Remediation batches 1–10 complete; treated as approved for Sprint 1 st
 
 ## Sprint 3 batch map
 
-See `docs/sprint-3/BATCH_MAP.md`, `docs/sprint-3/RUNTIME_INVENTORY.md`, and batch completion reports.
+See `docs/sprint-3/BATCH_MAP.md`, `docs/sprint-3/RUNTIME_INVENTORY.md`, `docs/sprint-3/SPRINT_3_COMPLETION_REPORT.md`, and batch completion reports.
 
 - **3.1** Repository audit & runtime baseline — complete
 - **3.2** Bootstrap & provider foundation — complete
 - **3.3** Navigation & application shell — complete
 - **3.4** Platform extensibility foundation — complete
-- **3.5** — not started
+- **3.5** Sprint validation & closeout — complete
+
+## Sprint 3 — Batch 3.5 (Sprint Validation & Closeout)
+
+- Governance-only validation of Batches 3.1–3.4; no new runtime features
+- Confirmed bootstrap, providers, navigation, shells, registry, package ownership, and architecture freeze
+- All mandatory quality gates + Android Metro bundle green
+- Sprint 3 Completion Report published; Sprint 4 readiness assessed (no Sprint 3 blockers)
+- Docs: `SPRINT_3_COMPLETION_REPORT.md`, `BATCH_3_5_COMPLETION_REPORT.md`
 
 ## Sprint 3 — Batch 3.4 (Platform Extensibility Foundation)
 
@@ -61,7 +70,7 @@ See `docs/sprint-3/BATCH_MAP.md`, `docs/sprint-3/RUNTIME_INVENTORY.md`, and batc
 - Classified reusable infrastructure; confirmed Sprint 3 can bootstrap store infrastructure without additional feature reducers
 - Confirmed architecture compliance (no new packages, no IoC, no Module Federation)
 - Documentation: Sprint 3 batch map + runtime inventory + Batch 3.1 completion report
-- No production runtime implementation; Batch 3.2 not started
+- No production runtime implementation in Batch 3.1 (audit-only); subsequent batches delivered runtime foundation
 
 ## Sprint 2 batch map
 
@@ -306,11 +315,11 @@ See `docs/sprint-2/BATCH_MAP.md` and `docs/sprint-2/SPRINT_2_COMPLETION_REPORT.m
 
 ## Deferred
 
-- Sprint 3 Batch 3.5+ (not started)
-- Product feature manifests, AI/MCP/agent/tool implementations (intentionally out of Batch 3.4)
-- Sprint 3+ product feature work (not started)
+- Sprint 4+ product features (AI/MCP/agents/tools, business routes, auth/RBAC UI) — not started
+- Product feature manifests (framework ready; lists empty by design in Sprint 3)
+- GraphQL React provider (deferred until approved consumer; ADR-0006)
 - React Native Storybook (TD-057)
-- Overlay composites / Tooltip (TD-056)
+- Overlay composites / Tooltip (TD-056 — architecture review)
 - Design System generator implementation (specs only)
 - Level 3 Patterns / Level 4 shared Screen catalog
 - APK/AAB release automation
@@ -318,14 +327,13 @@ See `docs/sprint-2/BATCH_MAP.md` and `docs/sprint-2/SPRINT_2_COMPLETION_REPORT.m
 - production SonarQube integration (root baseline config present; hosted scan deferred)
 - refresh-token concurrency and replay flow
 - secure mobile credential storage
-- durable native StorageAdapter (AsyncStorage/MMKV — requires ADR)
+- durable native StorageAdapter (AsyncStorage/MMKV — requires ADR; TD-032 / TD-051)
 - browser auth-token migration onto platform storage adapter
 - remote logging / observability sinks (requires ADR)
 - correlation / tracing platform
 - performance metrics pipeline
 - request-id helper consolidation
-- mobile network-client logging (when a client exists)
-- web observability logger compatibility-wrapper removal
+- mobile deep-link host activation (TD-060)
 - streaming transport
 - complete offline transport
 - React Hook Form ↔ Zod adapter (outside shared-validation)

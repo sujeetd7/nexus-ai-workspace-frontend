@@ -60,9 +60,14 @@ See `docs/sprint-3/BATCH_3_4_COMPLETION_REPORT.md`.
 
 ---
 
-## Batch 3.5 — Planned
+## Batch 3.5 — Complete (Sprint Validation & Closeout)
 
-Not started.
+- Governance-only audit and validation of Batches 3.1–3.4
+- Confirmed architecture freeze, provider depths, package ownership, and gate results
+- Sprint 3 Completion Report published
+- **Out of scope:** new runtime features, Sprint 4 product work
+
+See `docs/sprint-3/BATCH_3_5_COMPLETION_REPORT.md` and `docs/sprint-3/SPRINT_3_COMPLETION_REPORT.md`.
 
 ---
 

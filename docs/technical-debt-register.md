@@ -96,6 +96,17 @@
 | Added               | None                                                                                            |
 | Unchanged carryover | TD-059, TD-060, TD-048–053, TD-056, TD-057; TD-032/051                                          |
 
+### Sprint 3 Batch 3.5 closeout debt classification
+
+| Classification                                 | Items                                                                                                                                          |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Closed in Sprint 3                             | TD-058; Syncpack Storybook script-order hygiene; mobile navigation absence; shared infrastructure route-contract gap                           |
+| Carried forward (non-blocking)                 | TD-059 (mobile Jest SharedUI mock); TD-048–053, TD-057 (Sprint 2 DS/governance carryover)                                                      |
+| Deferred to Sprint 4+                          | TD-060 (deep-link hosts); GraphQL React provider; empty product manifests / AI-MCP-tool-agent implementations (roadmap, not debt)              |
+| Requires architecture review / ADR before work | TD-032 / TD-051 (native durable storage / mobile theme persist); TD-045 (full IoC container if ever mandated); TD-056 (overlays / Tamagui kit) |
+
+No new roadmap debt created in Batch 3.5.
+
 ## Review Policy
 
 - Review this register at the beginning and end of every sprint.
