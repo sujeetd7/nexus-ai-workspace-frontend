@@ -41,10 +41,23 @@ describe("Icon", () => {
       </Icon>,
     );
     const node = screen.getByTestId("alert");
-    expect(
-      node.getAttribute("accessibilityLabel") ??
-        node.getAttribute("aria-label"),
-    ).toContain("Warning");
+    expect(node.getAttribute("aria-label")).toBe("Warning");
+    expect(node.getAttribute("accessibilityLabel")).toBeNull();
+    expect(node.getAttribute("accessibilityRole")).toBeNull();
+    expect(node.getAttribute("role")).toBe("img");
     expect(node.getAttribute("aria-hidden")).toBeNull();
+  });
+
+  it("does not log React unknown-prop warnings for decorative icons", () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    renderWithSharedUI(
+      <Icon testID="deco-quiet" decorative>
+        <Text>*</Text>
+      </Icon>,
+    );
+    const unknownPropWarnings = error.mock.calls.filter((call) =>
+      String(call[0] ?? "").includes("React does not recognize"),
+    );
+    expect(unknownPropWarnings).toHaveLength(0);
   });
 });

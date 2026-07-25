@@ -40,6 +40,9 @@ export default defineConfig({
     ],
   },
   test: {
+    // Windows fork-pool startups can time out under Turbo concurrency / jsdom cost.
+    // Cap workers so web Vitest stays deterministic without skipping tests.
+    maxWorkers: 1,
     env: {
       VITE_API_URL: "http://localhost:3000/api",
       VITE_GRAPHQL_URL: "http://localhost:3000/graphql",

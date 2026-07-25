@@ -2,7 +2,7 @@ import type { CSSProperties, FC, MouseEvent } from "react";
 
 import { opacity } from "../../theme/opacity";
 import { useTheme } from "../../hooks/useTheme";
-import { testProps } from "../shared/a11y";
+import { mapWebDomProps } from "../shared/a11y";
 import {
   resolveAccessibleName,
   resolveButtonLayout,
@@ -119,13 +119,18 @@ export const Button: FC<ButtonProps> = ({
 
   return (
     <button
-      {...testProps(testID)}
+      {...mapWebDomProps(
+        {
+          testID,
+          accessibilityLabel: name,
+          accessibilityHint,
+        },
+        { omitWebRole: true },
+      )}
       {...{ [FOCUS_STYLE_ATTR]: true }}
       type={type}
       disabled={disabled}
       aria-busy={loading || undefined}
-      aria-label={name}
-      title={accessibilityHint}
       style={style}
       onClick={handleClick}
     >

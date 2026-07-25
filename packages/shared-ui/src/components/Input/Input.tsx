@@ -6,7 +6,7 @@ import { MIN_TOUCH_TARGET_SIZE } from "../../accessibility/touchTargets";
 import { useTheme } from "../../hooks/useTheme";
 import { opacity } from "../../theme/opacity";
 import { spacing } from "../../theme/spacing";
-import { testProps } from "../shared/a11y";
+import { getNativeAccessibilityProps } from "../shared/a11y";
 
 export type InputMode =
   | "text"
@@ -179,8 +179,13 @@ export const Input: FC<InputProps> = ({
         </TamaguiView>
       ) : null}
       <TextInput
-        {...testProps(testID)}
-        id={id}
+        {...getNativeAccessibilityProps({
+          testID,
+          nativeID: id,
+          accessibilityLabel,
+          accessibilityHint,
+          accessibilityState: { disabled },
+        })}
         value={value}
         defaultValue={defaultValue}
         placeholder={placeholder}
@@ -191,13 +196,11 @@ export const Input: FC<InputProps> = ({
         inputMode={inputMode}
         autoComplete={mapAutoCompleteForTextInput(autoComplete)}
         maxLength={maxLength}
+        aria-disabled={disabled || undefined}
         aria-invalid={invalid || undefined}
         aria-required={required || undefined}
         aria-readonly={readOnly || undefined}
         aria-describedby={describedBy}
-        accessibilityLabel={accessibilityLabel}
-        accessibilityHint={accessibilityHint}
-        accessibilityState={{ disabled }}
         onChangeText={onChangeText}
         onFocus={onFocus}
         onBlur={onBlur}

@@ -15,9 +15,12 @@ describe("Loader", () => {
     renderWithSharedUI(
       <Loader testID="loader" accessibilityLabel="Fetching data" />,
     );
-    expect(screen.getByTestId("loader").getAttribute("aria-label")).toBe(
-      "Fetching data",
-    );
+    const node = screen.getByTestId("loader");
+    expect(node.getAttribute("aria-label")).toBe("Fetching data");
+    expect(node.getAttribute("role")).toBe("progressbar");
+    expect(node.getAttribute("aria-busy")).toBe("true");
+    expect(node.getAttribute("accessibilityLabel")).toBeNull();
+    expect(node.getAttribute("accessibilityRole")).toBeNull();
   });
 
   it("uses static text when reduced motion is preferred", () => {

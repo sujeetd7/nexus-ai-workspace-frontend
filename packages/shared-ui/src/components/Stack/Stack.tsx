@@ -1,11 +1,7 @@
 import { View as TamaguiView } from "@tamagui/core";
 import type { FC } from "react";
 
-import {
-  resolveNativeAccessibilityRole,
-  resolveWebRole,
-  testProps,
-} from "../shared/a11y";
+import { getTamaguiAccessibilityProps } from "../shared/a11y";
 import type {
   NexusA11yProps,
   NexusChildrenProps,
@@ -91,12 +87,16 @@ export const Stack: FC<StackProps> = ({
   accessibilityHint,
   accessibilityRole,
 }) => {
-  const role = resolveWebRole(accessibilityRole);
   const base = layoutToStyle({ direction, gap, align, justify, wrap });
 
   return (
     <TamaguiView
-      {...testProps(testID)}
+      {...getTamaguiAccessibilityProps({
+        testID,
+        accessibilityLabel,
+        accessibilityHint,
+        accessibilityRole,
+      })}
       display="flex"
       {...base}
       flex={flex}
@@ -105,12 +105,6 @@ export const Stack: FC<StackProps> = ({
       $md={media?.md ? layoutToStyle(media.md) : undefined}
       $lg={media?.lg ? layoutToStyle(media.lg) : undefined}
       $xl={media?.xl ? layoutToStyle(media.xl) : undefined}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole={
-        resolveNativeAccessibilityRole(accessibilityRole) as never
-      }
-      role={role as never}
     >
       {children}
     </TamaguiView>

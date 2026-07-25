@@ -8,7 +8,7 @@ import {
 
 import { opacity } from "../../theme/opacity";
 import { useTheme } from "../../hooks/useTheme";
-import { testProps } from "../shared/a11y";
+import { mapNativeA11yProps, mapWebDomProps } from "../shared/a11y";
 
 export interface LabelProps {
   children: ReactNode;
@@ -60,10 +60,15 @@ export const Label: FC<LabelProps> = ({
     return createElement(
       "label",
       {
-        ...testProps(testID),
+        ...mapWebDomProps(
+          {
+            testID,
+            accessibilityLabel,
+          },
+          { omitWebRole: true },
+        ),
         htmlFor,
         style,
-        "aria-label": accessibilityLabel,
       },
       content,
     );
@@ -71,7 +76,11 @@ export const Label: FC<LabelProps> = ({
 
   return (
     <TamaguiText
-      {...testProps(testID)}
+      {...mapNativeA11yProps({
+        testID,
+        accessibilityLabel,
+        accessibilityRole: "text",
+      })}
       fontFamily="$body"
       fontSize="$label"
       lineHeight="$label"
@@ -79,8 +88,6 @@ export const Label: FC<LabelProps> = ({
       fontWeight="$5"
       color={disabled ? "$colorSecondary" : "$color"}
       opacity={disabled ? opacity.disabled : undefined}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole="text"
     >
       {content}
     </TamaguiText>

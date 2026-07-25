@@ -16,11 +16,15 @@ describe("Text", () => {
 
   it("supports typography variants and semantic roles", () => {
     renderWithSharedUI(
-      <Text variant="h1" accessibilityRole="heading">
+      <Text variant="h1" testID="title" accessibilityRole="heading" id="page-title">
         Title
       </Text>,
     );
-    expect(screen.getByText("Title")).toBeTruthy();
+    const node = screen.getByTestId("title");
+    expect(node.getAttribute("role")).toBe("heading");
+    expect(node.getAttribute("id")).toBe("page-title");
+    expect(node.getAttribute("nativeID")).toBeNull();
+    expect(node.getAttribute("accessibilityRole")).toBeNull();
   });
 
   it("maps legacy title/heading aliases", () => {

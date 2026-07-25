@@ -64,7 +64,7 @@
 | TD-060 | Mobile deep-link hosts     | Batch 3.3 linking config exists with empty `prefixes` and infrastructure screen map only. Production URL schemes / universal links require approved domain + native configuration before activation.                                                                              | Low    | Low      | When deep-link scheme/domain is approved           |
 | TD-061 | Figma MCP / Code Connect   | Batch 5.1G deferred Figma MCP and Code Connect; engineering platform tooling is descriptor/registry metadata only. Batch 5.2D keeps Code Connect deferred until auth/shared-ui component APIs stabilize.                                                                          | Medium | Low      | Sprint 5+ platform integration batch               |
 | TD-062 | Platform AI / MCP runtime  | OpenAPI, RTK Query platform wiring, Jira MCP, and AI Runtime remain deferred per Batch 5.1G scope. Frontend Wave 1 consumer uses project-adapter contracts/registry only.                                                                                                         | Medium | Low      | When platform connectors are approved for frontend |
-| TD-063 | RN a11y/test DOM leak      | React Native accessibility / `testID` props still appear on DOM nodes under RNW in some shared-ui tests. Harmless for product web builds that use `.web.tsx` splits; clean web prop filtering remains deferred.                                                                   | Low    | Low      | Shared-ui web prop hygiene batch                   |
+| TD-063 | RN a11y/test DOM leak      | Closed Batch 5.2E — shared `mapWebDomProps` / `mapNativeA11yProps` / `mapTestProps` strip RN a11y and `testID` from web DOM hosts; native paths keep RN prop names.                                                                                                               | —      | —        | Closed Batch 5.2E                                  |
 | TD-064 | Password visibility glyphs | PasswordField show/hide uses temporary text glyphs (`*` / `-`) inside Icon — not a final icon set.                                                                                                                                                                                | Low    | Low      | Iconography / PasswordField polish batch           |
 
 ## Sprint 2 debt review (Batch 2.7 / finalized Batch 2.8)
@@ -125,6 +125,13 @@ No new roadmap debt created in Batch 3.5.
 | Added               | TD-063 (RN a11y/test props leaking to DOM in tests); TD-064 (temporary PasswordField visibility glyphs) |
 | Updated             | TD-061 — Code Connect remains deferred until component APIs stabilize                                   |
 | Unchanged carryover | TD-056 (Modal/Toast/overlays blocked); TD-059, TD-060, TD-048–053, TD-057, TD-062; TD-032/051           |
+
+### Sprint 5 Batch 5.2E debt notes
+
+| Status              | IDs                                                                |
+| ------------------- | ------------------------------------------------------------------ |
+| Closed              | TD-063 (cross-platform a11y/test prop adapter)                     |
+| Unchanged carryover | TD-064; TD-056, TD-061; TD-059, TD-060, TD-048–053, TD-057, TD-062 |
 
 ## Review Policy
 

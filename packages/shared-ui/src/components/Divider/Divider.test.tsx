@@ -24,6 +24,10 @@ describe("Divider", () => {
         accessibilityLabel="Section"
       />,
     );
-    expect(screen.getByTestId("sep")).toBeTruthy();
+    const node = screen.getByTestId("sep");
+    expect(node.getAttribute("role")).toBe("separator");
+    expect(node.getAttribute("aria-label")).toBe("Section");
+    expect(node.getAttribute("aria-hidden")).toBeNull();
+    expect(node.getAttribute("accessibilityRole")).toBeNull();
   });
 });

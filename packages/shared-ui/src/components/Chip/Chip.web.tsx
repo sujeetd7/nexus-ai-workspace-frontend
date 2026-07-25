@@ -1,7 +1,7 @@
 import type { CSSProperties, FC, MouseEvent } from "react";
 
 import { useTheme } from "../../hooks/useTheme";
-import { testProps } from "../shared/a11y";
+import { mapWebDomProps } from "../shared/a11y";
 import {
   resolveChipAccessibleName,
   resolveChipLayout,
@@ -95,13 +95,18 @@ export const Chip: FC<ChipProps> = ({
 
   return (
     <button
-      {...testProps(testID)}
+      {...mapWebDomProps(
+        {
+          testID,
+          accessibilityLabel: name,
+          accessibilityHint,
+        },
+        { omitWebRole: true },
+      )}
       {...{ [FOCUS_STYLE_ATTR]: true }}
       type="button"
       disabled={disabled}
       aria-pressed={selected}
-      aria-label={name}
-      title={accessibilityHint}
       style={style}
       onClick={(event: MouseEvent<HTMLButtonElement>) => {
         if (disabled) {

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Pressable, Text as RNText, View } from "react-native";
 
 import { useTheme } from "../../hooks/useTheme";
-import { testProps } from "../shared/a11y";
+import { getNativeAccessibilityProps } from "../shared/a11y";
 import {
   resolveCheckboxLayout,
   resolveCheckboxSurface,
@@ -47,14 +47,16 @@ export const Checkbox: FC<CheckboxProps> = ({
 
   return (
     <Pressable
-      {...testProps(testID)}
-      accessibilityRole="checkbox"
-      accessibilityLabel={name}
-      accessibilityHint={accessibilityHint}
-      accessibilityState={{
-        disabled,
-        checked: indeterminate ? "mixed" : checked,
-      }}
+      {...getNativeAccessibilityProps({
+        testID,
+        accessibilityLabel: name,
+        accessibilityHint,
+        accessibilityRole: "checkbox",
+        accessibilityState: {
+          disabled,
+          checked: indeterminate ? "mixed" : checked,
+        },
+      })}
       disabled={disabled}
       onPress={toggle}
       style={({ pressed }) => ({

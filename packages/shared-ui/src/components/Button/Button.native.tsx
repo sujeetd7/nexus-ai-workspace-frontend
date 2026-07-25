@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Pressable, Text as RNText, View } from "react-native";
 
 import { useTheme } from "../../hooks/useTheme";
-import { testProps } from "../shared/a11y";
+import { getNativeAccessibilityProps } from "../shared/a11y";
 import {
   labelColor,
   resolveAccessibleName,
@@ -39,11 +39,13 @@ export const Button: FC<ButtonProps> = ({
 
   return (
     <Pressable
-      {...testProps(testID)}
-      accessibilityRole="button"
-      accessibilityLabel={name}
-      accessibilityHint={accessibilityHint}
-      accessibilityState={{ disabled, busy: loading }}
+      {...getNativeAccessibilityProps({
+        testID,
+        accessibilityLabel: name,
+        accessibilityHint,
+        accessibilityRole: "button",
+        accessibilityState: { disabled, busy: loading },
+      })}
       // Only the `disabled` prop uses Pressable's disabled flag.
       // Loading blocks activation in onPress while keeping busy state distinct.
       disabled={disabled}

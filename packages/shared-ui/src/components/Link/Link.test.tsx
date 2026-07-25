@@ -35,7 +35,7 @@ describe("Link (web native <a>)", () => {
   it("disables navigation and sets aria-disabled", () => {
     const onPress = vi.fn();
     renderWithSharedUI(
-      <Link testID="go" href="/next" disabled onPress={onPress}>
+      <Link testID="go" href="#next" disabled onPress={onPress}>
         Continue
       </Link>,
     );
@@ -46,10 +46,10 @@ describe("Link (web native <a>)", () => {
     expect(onPress).not.toHaveBeenCalled();
   });
 
-  it("invokes onPress when enabled", () => {
+  it("invokes onPress when enabled without document navigation", () => {
     const onPress = vi.fn();
     renderWithSharedUI(
-      <Link testID="go" href="/next" onPress={onPress}>
+      <Link testID="go" href="#continue" onPress={onPress}>
         Continue
       </Link>,
     );
@@ -57,19 +57,24 @@ describe("Link (web native <a>)", () => {
     expect(onPress).toHaveBeenCalledTimes(1);
   });
 
-  it("exposes accessibility label", () => {
+  it("exposes accessibility label and omits RN prop names", () => {
     renderWithSharedUI(
       <Link
         testID="help"
-        href="/help"
+        href="#help"
         accessibilityLabel="Open help center"
+        accessibilityHint="Opens the help article"
       >
         Help
       </Link>,
     );
-    expect(screen.getByTestId("help").getAttribute("aria-label")).toBe(
-      "Open help center",
-    );
+    const node = screen.getByTestId("help");
+    expect(node.getAttribute("aria-label")).toBe("Open help center");
+    expect(node.getAttribute("data-testid")).toBe("help");
+    expect(node.getAttribute("testID")).toBeNull();
+    expect(node.getAttribute("accessibilityLabel")).toBeNull();
+    expect(node.getAttribute("accessibilityHint")).toBeNull();
+    expect(node.getAttribute("title")).toBeNull();
   });
 });
 

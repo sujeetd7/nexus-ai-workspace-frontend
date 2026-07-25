@@ -26,7 +26,7 @@ describe("InlineAlert", () => {
     );
   });
 
-  it("uses text role for info tone and renders action slot", () => {
+  it("uses native informational semantics and renders action slot", () => {
     renderWithSharedUI(
       <InlineAlert
         tone="info"
@@ -36,7 +36,9 @@ describe("InlineAlert", () => {
         Check your inbox.
       </InlineAlert>,
     );
-    expect(screen.getByTestId("info").getAttribute("role")).toBe("text");
+    const infoNode = screen.getByTestId("info");
+    // Static info content: no live-region role on web (RN keeps accessibilityRole="text").
+    expect(infoNode.getAttribute("role")).toBeNull();
     expect(screen.getByTestId("info-action").textContent).toContain("Retry");
   });
 });

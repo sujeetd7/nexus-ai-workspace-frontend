@@ -98,10 +98,23 @@ describe("Button (web native <button>)", () => {
   });
 
   it("does not emit invalid accessibilityState DOM attributes", () => {
-    renderWithSharedUI(<Button testID="save">Save</Button>);
+    renderWithSharedUI(
+      <Button
+        testID="save"
+        accessibilityLabel="Save"
+        accessibilityHint="Saves the document"
+      >
+        Save
+      </Button>,
+    );
     const node = screen.getByTestId("save");
+    expect(node.getAttribute("data-testid")).toBe("save");
+    expect(node.getAttribute("aria-label")).toBe("Save");
     expect(node.getAttribute("accessibilitystate")).toBeNull();
     expect(node.getAttribute("accessibilityRole")).toBeNull();
+    expect(node.getAttribute("accessibilityHint")).toBeNull();
+    expect(node.getAttribute("testID")).toBeNull();
+    expect(node.getAttribute("title")).toBeNull();
   });
 
   it("documents touch-target policy constant", () => {

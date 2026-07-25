@@ -1,7 +1,7 @@
 import type { CSSProperties, FC, MouseEvent } from "react";
 
 import { useTheme } from "../../hooks/useTheme";
-import { testProps } from "../shared/a11y";
+import { mapWebDomProps } from "../shared/a11y";
 import {
   resolveLinkAccessibleName,
   resolveLinkColor,
@@ -95,14 +95,19 @@ export const Link: FC<LinkProps> = ({
 
   return (
     <a
-      {...testProps(testID)}
+      {...mapWebDomProps(
+        {
+          testID,
+          accessibilityLabel: name,
+          accessibilityHint,
+        },
+        { omitWebRole: true },
+      )}
       {...{ [FOCUS_STYLE_ATTR]: true }}
       href={disabled ? undefined : href}
       target={external && !disabled ? "_blank" : undefined}
       rel={external && !disabled ? "noopener noreferrer" : undefined}
       aria-disabled={disabled || undefined}
-      aria-label={name}
-      title={accessibilityHint}
       tabIndex={disabled ? -1 : undefined}
       style={style}
       onClick={handleClick}

@@ -58,7 +58,8 @@ function resolveBorderColor(
 
 /**
  * Level 2 inline status message — not a Toast, Modal, or queue.
- * Uses alert semantics for error/warning/success; info uses text role.
+ * Uses alert semantics for error/warning/success; info uses RN `text`
+ * (omitted on web — not a valid ARIA/Tamagui role).
  */
 export const InlineAlert: FC<InlineAlertProps> = ({
   tone = "info",

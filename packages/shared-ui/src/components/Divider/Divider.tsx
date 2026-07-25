@@ -1,7 +1,7 @@
 import { View as TamaguiView } from "@tamagui/core";
 import type { FC } from "react";
 
-import { testProps } from "../shared/a11y";
+import { getTamaguiAccessibilityProps } from "../shared/a11y";
 import type { SpacingToken } from "../shared/types";
 
 export type DividerOrientation = "horizontal" | "vertical";
@@ -52,19 +52,22 @@ export const Divider: FC<DividerProps> = ({
 
   return (
     <TamaguiView
-      {...testProps(testID)}
+      {...getTamaguiAccessibilityProps(
+        {
+          testID,
+          accessibilityLabel: decorative ? undefined : accessibilityLabel,
+        },
+        {
+          hidden: decorative,
+          webRole: decorative ? "presentation" : "separator",
+          // RN has no separator role — keep prior `none` for semantic dividers.
+          nativeAccessibilityRole: decorative ? undefined : "none",
+        },
+      )}
       backgroundColor="$borderColor"
       flexShrink={0}
       {...orientationStyles[resolvedOrientation]}
       margin={margin ? `$${margin}` : undefined}
-      // Decorative: no SR noise. Semantic: separator role.
-      accessible={!decorative}
-      accessibilityElementsHidden={decorative}
-      importantForAccessibility={decorative ? "no" : "yes"}
-      aria-hidden={decorative || undefined}
-      role={decorative ? "presentation" : "separator"}
-      accessibilityRole={decorative ? undefined : "none"}
-      accessibilityLabel={decorative ? undefined : accessibilityLabel}
     />
   );
 };

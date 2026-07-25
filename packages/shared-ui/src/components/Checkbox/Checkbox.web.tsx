@@ -2,7 +2,7 @@ import type { CSSProperties, FC, KeyboardEvent, MouseEvent } from "react";
 import { useState } from "react";
 
 import { useTheme } from "../../hooks/useTheme";
-import { testProps } from "../shared/a11y";
+import { mapWebDomProps } from "../shared/a11y";
 import {
   resolveCheckboxLayout,
   resolveCheckboxSurface,
@@ -141,14 +141,18 @@ export const Checkbox: FC<CheckboxProps> = ({
 
   return (
     <button
-      {...testProps(testID)}
+      {...mapWebDomProps(
+        {
+          testID,
+          accessibilityLabel: name,
+          accessibilityHint,
+        },
+        { omitWebRole: true },
+      )}
       {...{ [FOCUS_STYLE_ATTR]: true }}
       type="button"
       role="checkbox"
       aria-checked={resolveAriaChecked(checked, indeterminate)}
-      aria-disabled={disabled || undefined}
-      aria-label={name}
-      title={accessibilityHint}
       disabled={disabled}
       style={rootStyle}
       onClick={handleClick}

@@ -1,3 +1,5 @@
+import type { AccessibilityRole } from "react-native";
+
 /**
  * Approved accessibility role identifiers for future Level 1 / Level 2 components.
  *
@@ -48,4 +50,4 @@ export const REACT_NATIVE_ACCESSIBILITY_ROLES = {
   navigation: "none",
   list: "list",
   listitem: "none",
-} as const satisfies Record<AccessibilityRoleName, string>;
+} as const satisfies Record<AccessibilityRoleName, AccessibilityRole>;

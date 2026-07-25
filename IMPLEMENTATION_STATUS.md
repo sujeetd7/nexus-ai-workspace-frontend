@@ -2,9 +2,17 @@
 
 ## Current Phase
 
-Sprint 5 — AI Engineering Platform Consumer Wiring: **In progress** (Batch 5.1G complete; Batch 5.2D auth UI composition contract complete)
+Sprint 5 — AI Engineering Platform Consumer Wiring: **In progress** (Batch 5.1G complete; Batch 5.2D auth UI composition contract complete; Batch 5.2E a11y prop adapter complete)
 Batch 5.1G — Frontend Consumer Wiring: **Complete**
 Batch 5.2D — Authentication UI Composition Contract: **Complete** (patterns + Storybook only; no routes/APIs/session)
+Batch 5.2E — Cross-Platform Accessibility Prop Adapter: **Complete**
+
+## Sprint 5 — Batch 5.2E (Cross-Platform Accessibility Prop Adapter)
+
+- Shared mapper in `components/shared/a11y.ts`: `mapWebDomProps`, `mapNativeA11yProps`, `mapTestProps`, `mapPlatformA11yProps`
+- Web: `testID`→`data-testid`, `nativeID`→`id`, labels/roles/state→ARIA; hints omitted (use `aria-describedby`)
+- Native platform files use `mapNativeA11yProps` so RN prop names are preserved even under RNW tests
+- TD-063 closed
 
 ## Sprint 5 — Batch 5.2D (Authentication UI Composition Contract)
 
@@ -12,7 +20,7 @@ Batch 5.2D — Authentication UI Composition Contract: **Complete** (patterns + 
 - Level 2 `InlineAlert` (info/success/warning/error) — not Toast
 - Storybook compositions: Login, Registration, Forgot Password, Reset Password (mock state only)
 - No product routes, auth APIs, Redux/session, Modal, or Toast
-- Debt: TD-063, TD-064; TD-056/TD-061 unchanged blockers for overlays / Code Connect
+- Debt: TD-064 remaining; TD-063 closed in 5.2E; TD-056/TD-061 unchanged blockers for overlays / Code Connect
 
 Sprint 3 — Application Runtime Foundation: **Complete** (closeout Batch 3.5)
 Batch 3.5 — Sprint Validation & Closeout: **Complete**

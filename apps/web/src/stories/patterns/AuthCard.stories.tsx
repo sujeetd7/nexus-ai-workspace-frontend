@@ -20,14 +20,18 @@ const meta = {
 } satisfies Meta<typeof AuthCard>;
 
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  args: {
+    title: "Sign in",
+  },
   render: () => (
     <AuthShell
       brand={
         <Text variant="h2" align="center" weight="bold">
-          Nexus
+          Nexus{" "}
         </Text>
       }
     >
@@ -41,19 +45,23 @@ export const Default: Story = {
           />
         }
       >
-        <FormField label="Email" placeholder="you@example.com" />
-        <Button fullWidth>Continue</Button>
-      </AuthCard>
+        {" "}
+        <FormField label="Email" placeholder="you@example.com" />{" "}
+        <Button fullWidth>Continue</Button>{" "}
+      </AuthCard>{" "}
     </AuthShell>
   ),
 };
 
 export const WithStatus: Story = {
+  args: {
+    title: "Sign in",
+  },
   render: () => (
     <AuthShell
       brand={
         <Text variant="h2" align="center" weight="bold">
-          Nexus
+          Nexus{" "}
         </Text>
       }
     >
@@ -61,7 +69,7 @@ export const WithStatus: Story = {
         title="Sign in"
         status={
           <InlineAlert tone="error" title="Unable to sign in">
-            Invalid email or password.
+            Invalid email or password.{" "}
           </InlineAlert>
         }
         footer={
@@ -71,9 +79,10 @@ export const WithStatus: Story = {
           />
         }
       >
-        <FormField label="Email" placeholder="you@example.com" />
-        <Button fullWidth>Continue</Button>
-      </AuthCard>
+        {" "}
+        <FormField label="Email" placeholder="you@example.com" />{" "}
+        <Button fullWidth>Continue</Button>{" "}
+      </AuthCard>{" "}
     </AuthShell>
   ),
 };

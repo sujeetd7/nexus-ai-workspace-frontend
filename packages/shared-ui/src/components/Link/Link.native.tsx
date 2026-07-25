@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Pressable, Text as RNText } from "react-native";
 
 import { useTheme } from "../../hooks/useTheme";
-import { testProps } from "../shared/a11y";
+import { mapNativeA11yProps } from "../shared/a11y";
 import {
   resolveLinkAccessibleName,
   resolveLinkColor,
@@ -33,11 +33,13 @@ export const Link: FC<LinkProps> = ({
 
   return (
     <Pressable
-      {...testProps(testID)}
-      accessibilityRole="link"
-      accessibilityLabel={name}
-      accessibilityHint={accessibilityHint}
-      accessibilityState={{ disabled }}
+      {...mapNativeA11yProps({
+        testID,
+        accessibilityLabel: name,
+        accessibilityHint,
+        accessibilityRole: "link",
+        accessibilityState: { disabled },
+      })}
       disabled={disabled}
       onPress={() => {
         if (disabled) {

@@ -6,7 +6,7 @@ import { prefersReducedMotion } from "../../accessibility/reducedMotion";
 import { useTheme } from "../../hooks/useTheme";
 import { spacing } from "../../theme/spacing";
 import { Text } from "../Text";
-import { testProps } from "../shared/a11y";
+import { getTamaguiAccessibilityProps } from "../shared/a11y";
 import type { SemanticTextColor } from "../shared/types";
 
 export type LoaderSize = "sm" | "md" | "lg";
@@ -56,14 +56,14 @@ export const Loader: FC<LoaderProps> = ({
 
   return (
     <TamaguiView
-      {...testProps(testID)}
+      {...getTamaguiAccessibilityProps({
+        testID,
+        accessibilityLabel,
+        accessibilityRole: "progress",
+        accessibilityState: { busy: true },
+      })}
       alignItems="center"
       justifyContent="center"
-      role="progressbar"
-      accessibilityRole="progressbar"
-      accessibilityLabel={accessibilityLabel}
-      aria-label={accessibilityLabel}
-      aria-busy
       minWidth={dimension}
       minHeight={dimension}
     >

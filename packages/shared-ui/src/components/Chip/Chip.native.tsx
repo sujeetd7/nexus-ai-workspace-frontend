@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Pressable, Text as RNText } from "react-native";
 
 import { useTheme } from "../../hooks/useTheme";
-import { testProps } from "../shared/a11y";
+import { getNativeAccessibilityProps } from "../shared/a11y";
 import {
   resolveChipAccessibleName,
   resolveChipLayout,
@@ -33,11 +33,13 @@ export const Chip: FC<ChipProps> = ({
 
   return (
     <Pressable
-      {...testProps(testID)}
-      accessibilityRole="button"
-      accessibilityLabel={name}
-      accessibilityHint={accessibilityHint}
-      accessibilityState={{ disabled, selected }}
+      {...getNativeAccessibilityProps({
+        testID,
+        accessibilityLabel: name,
+        accessibilityHint,
+        accessibilityRole: "button",
+        accessibilityState: { disabled, selected },
+      })}
       disabled={disabled}
       onPress={() => {
         if (disabled) {

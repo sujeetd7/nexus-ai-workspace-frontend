@@ -1,11 +1,7 @@
 import { Text as TamaguiText } from "@tamagui/core";
 import type { FC, ReactNode } from "react";
 
-import {
-  resolveNativeAccessibilityRole,
-  resolveWebRole,
-  testProps,
-} from "../shared/a11y";
+import { getTamaguiAccessibilityProps } from "../shared/a11y";
 import type {
   NexusA11yProps,
   NexusTestProps,
@@ -145,14 +141,17 @@ export const Text: FC<TextProps> = ({
   style,
 }) => {
   const resolvedVariant = normalizeVariant(variant);
-  const role = resolveWebRole(accessibilityRole);
   const lines = truncate ? 1 : numberOfLines;
 
   return (
     <TamaguiText
-      {...testProps(testID)}
-      id={id}
-      nativeID={id}
+      {...getTamaguiAccessibilityProps({
+        testID,
+        nativeID: id,
+        accessibilityLabel,
+        accessibilityHint,
+        accessibilityRole,
+      })}
       fontFamily="$body"
       color={colorMap[color]}
       {...variantStyles[resolvedVariant]}
@@ -160,12 +159,6 @@ export const Text: FC<TextProps> = ({
       {...(weight ? { fontWeight: weightMap[weight] } : {})}
       numberOfLines={lines}
       ellipsizeMode={lines ? "tail" : undefined}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole={
-        resolveNativeAccessibilityRole(accessibilityRole) as never
-      }
-      role={role as never}
       style={style as never}
     >
       {children}

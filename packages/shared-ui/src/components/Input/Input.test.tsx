@@ -44,6 +44,28 @@ describe("Input", () => {
     expect(screen.getByTestId("bad").getAttribute("aria-invalid")).toBe("true");
   });
 
+  it("maps test and a11y props to DOM attributes", () => {
+    renderWithSharedUI(
+      <Input
+        testID="mapped"
+        id="mapped-id"
+        accessibilityLabel="Mapped field"
+        accessibilityHint="Should not become title"
+        disabled
+      />,
+    );
+    const node = screen.getByTestId("mapped");
+    expect(node.getAttribute("data-testid")).toBe("mapped");
+    expect(node.getAttribute("id")).toBe("mapped-id");
+    expect(node.getAttribute("aria-label")).toBe("Mapped field");
+    expect(node.getAttribute("aria-disabled")).toBe("true");
+    expect(node.getAttribute("testID")).toBeNull();
+    expect(node.getAttribute("accessibilityLabel")).toBeNull();
+    expect(node.getAttribute("accessibilityHint")).toBeNull();
+    expect(node.getAttribute("accessibilityState")).toBeNull();
+    expect(node.getAttribute("title")).toBeNull();
+  });
+
   it("supports secure text entry without throwing", () => {
     renderWithSharedUI(
       <Input testID="secret" accessibilityLabel="Password" secureTextEntry />,
