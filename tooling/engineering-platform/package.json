@@ -1,0 +1,10 @@
+{
+  "name": "@nexus/engineering-platform-tooling",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node --import tsx --test __tests__/**/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "type": "module"
+}

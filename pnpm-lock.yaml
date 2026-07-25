@@ -16,6 +16,21 @@ importers:
       "@eslint/js":
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.7.0(jiti@2.6.1))
+      "@sujeetd7/ai-engineering-contracts":
+        specifier: 0.1.1
+        version: 0.1.1
+      "@sujeetd7/ai-engineering-project-adapter-contracts":
+        specifier: 0.1.1
+        version: 0.1.1
+      "@sujeetd7/ai-engineering-project-adapter-registry":
+        specifier: 0.1.1
+        version: 0.1.1
+      "@sujeetd7/ai-engineering-registry-runtime":
+        specifier: 0.1.1
+        version: 0.1.1
+      "@sujeetd7/ai-engineering-runtime":
+        specifier: 0.1.1
+        version: 0.1.1
       "@testing-library/react":
         specifier: ^16.3.2
         version: 16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -415,6 +430,8 @@ importers:
       vitest:
         specifier: ^4.1.10
         version: 4.1.10(@types/node@24.13.3)(@vitest/coverage-v8@4.1.10)(jsdom@29.1.1)(msw@2.15.0(@types/node@24.13.3)(typescript@5.9.3))(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.6.1)(terser@5.49.0)(tsx@4.23.1)(yaml@2.9.0))
+
+  tooling/engineering-platform: {}
 
 packages:
   "@adobe/css-tools@4.5.0":
@@ -3845,6 +3862,41 @@ packages:
         optional: true
       typescript:
         optional: true
+
+  "@sujeetd7/ai-engineering-contracts@0.1.1":
+    resolution:
+      {
+        integrity: sha512-PCWY3LfTuN8Jnb++nQMK/lwFm5obcTraaagNdc8nTyUTeq0t5GQKAZbRGT7NnHPmuxxgnklaE0F2B15RxN7hNw==,
+        tarball: https://npm.pkg.github.com/download/@sujeetd7/ai-engineering-contracts/0.1.1/41d619ab5a34416bbf37d9e62822afa7c3481f77,
+      }
+
+  "@sujeetd7/ai-engineering-project-adapter-contracts@0.1.1":
+    resolution:
+      {
+        integrity: sha512-8bCfrwaysGP9JSIRJFqIsTN+PaNJpjcuYgo6T3S0GfhLUwj2s6FV6rd0c3aSEmqFGIZv8q6WGomri3N4+AzJdA==,
+        tarball: https://npm.pkg.github.com/download/@sujeetd7/ai-engineering-project-adapter-contracts/0.1.1/70810aa7bd79f7140a375124f99d949438f963f4,
+      }
+
+  "@sujeetd7/ai-engineering-project-adapter-registry@0.1.1":
+    resolution:
+      {
+        integrity: sha512-Q7q8eB3CXMISp0VHWJVp8Yg7r+q0nQdENZCr3po8v9EjhPZAZAXdi6HK+Y7r9nuOHJx5JwC8UVorbL7+D+N98A==,
+        tarball: https://npm.pkg.github.com/download/@sujeetd7/ai-engineering-project-adapter-registry/0.1.1/0e4bf69edf250d4ae78f028a20cbd8f0ffa888f4,
+      }
+
+  "@sujeetd7/ai-engineering-registry-runtime@0.1.1":
+    resolution:
+      {
+        integrity: sha512-jwuMpZwgHCtIaquU3g1sdt4xlIi7nP7bViR70RBPdQuqlpMc9L3T0cTKWuBOQZYYwTt+gQgcgzaKix7MLE1O4w==,
+        tarball: https://npm.pkg.github.com/download/@sujeetd7/ai-engineering-registry-runtime/0.1.1/8f1cc026161d783b956405c3d71380a019b7a21b,
+      }
+
+  "@sujeetd7/ai-engineering-runtime@0.1.1":
+    resolution:
+      {
+        integrity: sha512-ZfAsTaw2AWTs7xmWd/E7I55Jwsu5r0uP8d+SCTbacDJHPjGn/DJEmLei0TxNCepF5xMmcf+I7hfd4ZAQvNJHig==,
+        tarball: https://npm.pkg.github.com/download/@sujeetd7/ai-engineering-runtime/0.1.1/6247b210ccce5ae1aef5f9ebc924c49ed93e62c9,
+      }
 
   "@tamagui/animation-helpers@2.4.6":
     resolution:
@@ -13885,6 +13937,28 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  "@sujeetd7/ai-engineering-contracts@0.1.1": {}
+
+  "@sujeetd7/ai-engineering-project-adapter-contracts@0.1.1":
+    dependencies:
+      "@sujeetd7/ai-engineering-contracts": 0.1.1
+
+  "@sujeetd7/ai-engineering-project-adapter-registry@0.1.1":
+    dependencies:
+      "@sujeetd7/ai-engineering-contracts": 0.1.1
+      "@sujeetd7/ai-engineering-project-adapter-contracts": 0.1.1
+      "@sujeetd7/ai-engineering-registry-runtime": 0.1.1
+      "@sujeetd7/ai-engineering-runtime": 0.1.1
+
+  "@sujeetd7/ai-engineering-registry-runtime@0.1.1":
+    dependencies:
+      "@sujeetd7/ai-engineering-contracts": 0.1.1
+      "@sujeetd7/ai-engineering-runtime": 0.1.1
+
+  "@sujeetd7/ai-engineering-runtime@0.1.1":
+    dependencies:
+      "@sujeetd7/ai-engineering-contracts": 0.1.1
+
   "@tamagui/animation-helpers@2.4.6": {}
 
   "@tamagui/animations-css@2.4.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)":
@@ -14519,7 +14593,7 @@ snapshots:
       obug: 2.1.4
       std-env: 4.2.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.10(@types/node@24.13.3)(@vitest/coverage-v8@4.1.10)(jsdom@29.1.1)(msw@2.15.0(@types/node@24.13.3)(typescript@5.9.3))(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.6.1)(terser@5.49.0)(tsx@4.23.1)(yaml@2.9.0))
+      vitest: 4.1.10(@types/node@24.13.3)(@vitest/coverage-v8@4.1.10)(jsdom@29.1.1)(msw@2.15.0(@types/node@24.13.3)(typescript@5.9.3))(vite@8.1.5(@types/node@24.13.3)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.49.0)(tsx@4.23.1)(yaml@2.9.0))
 
   "@vitest/expect@3.2.4":
     dependencies:

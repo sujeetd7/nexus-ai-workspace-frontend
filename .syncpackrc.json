@@ -79,6 +79,11 @@
       "dependencies": [
         "@commitlint/cli",
         "@commitlint/config-conventional",
+        "@sujeetd7/ai-engineering-contracts",
+        "@sujeetd7/ai-engineering-project-adapter-contracts",
+        "@sujeetd7/ai-engineering-project-adapter-registry",
+        "@sujeetd7/ai-engineering-registry-runtime",
+        "@sujeetd7/ai-engineering-runtime",
         "@types/jest",
         "commander",
         "jest",

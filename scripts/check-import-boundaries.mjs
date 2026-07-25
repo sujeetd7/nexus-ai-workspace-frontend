@@ -88,6 +88,7 @@ function checkFile(filePath) {
   const inPackage = normalized.startsWith("packages/");
   const inSharedNetwork = normalized.startsWith("packages/shared-network/");
   const inWebApi = normalized.startsWith("apps/web/src/api/");
+  const inMobileApi = normalized.startsWith("apps/mobile/src/api/");
   const inWeb = normalized.startsWith("apps/web/");
   const currentFeature = featureNameFromPath(filePath);
 
@@ -106,11 +107,11 @@ function checkFile(filePath) {
     }
 
     if (specifier === "axios" || specifier.startsWith("axios/")) {
-      if (!inSharedNetwork && !inWebApi) {
+      if (!inSharedNetwork && !inWebApi && !inMobileApi) {
         addViolation(
           filePath,
           specifier,
-          "Axios is only allowed in @nexus/shared-network and apps/web/src/api.",
+          "Axios is only allowed in @nexus/shared-network and app api layers.",
         );
       }
     }
@@ -143,6 +144,21 @@ function checkFile(filePath) {
       addViolation(filePath, specifier, "Web must not import from mobile.");
     }
 
+    const inMobile = normalized.startsWith("apps/mobile/");
+    const inSharedUi = normalized.startsWith("packages/shared-ui/");
+    const inRuntimeSurface = inWeb || inMobile || inSharedUi;
+    if (
+      inRuntimeSurface &&
+      (specifier.startsWith("@sujeetd7/ai-engineering") ||
+        specifier.includes("@sujeetd7/ai-engineering/"))
+    ) {
+      addViolation(
+        filePath,
+        specifier,
+        "AI Engineering Platform packages are tooling-only and must not be imported from runtime surfaces.",
+      );
+    }
+
     if (specifier.includes("/features/") || specifier.startsWith("features/")) {
       addViolation(
         filePath,
@@ -170,7 +186,9 @@ function checkFile(filePath) {
 const targets = [
   path.join(ROOT, "packages"),
   path.join(ROOT, "apps", "web", "src"),
+  path.join(ROOT, "apps", "mobile", "src"),
   path.join(ROOT, "scripts"),
+  path.join(ROOT, "tooling"),
 ].filter((dir) => fs.existsSync(dir));
 
 for (const target of targets) {

@@ -2,6 +2,9 @@
 
 ## Current Phase
 
+Sprint 5 — AI Engineering Platform Consumer Wiring: **In progress** (Batch 5.1G complete)
+Batch 5.1G — Frontend Consumer Wiring: **Complete**
+
 Sprint 3 — Application Runtime Foundation: **Complete** (closeout Batch 3.5)
 Batch 3.5 — Sprint Validation & Closeout: **Complete**
 Batch 3.4 — Platform Extensibility Foundation: **Complete**
@@ -10,6 +13,17 @@ Batch 3.2 — Bootstrap & Provider Foundation: **Complete**
 Batch 3.1 — Repository Audit & Runtime Baseline: **Complete**
 
 Sprint 2 — Design System Foundation: **Complete** (closeout Batch 2.8)
+
+## Sprint 5 — Batch 5.1G (Frontend Consumer Wiring)
+
+- First external consumer of AI Engineering Platform Wave 1 via GitHub Packages (`@sujeetd7/ai-engineering-*@0.1.1`)
+- Tooling-only integration under `tooling/engineering-platform/` — no runtime imports, no provider changes
+- Single frontend project adapter registered via `createProjectAdapterRegistry`
+- Capabilities declare existing surfaces only (React, RN, Storybook, CI/CD, diagnostics, architecture/dependency validation)
+- Runtime isolation enforced via `boundaries:check` and dedicated tests
+- CI updated for GitHub Packages auth (`packages: read`, `NODE_AUTH_TOKEN`)
+- Figma MCP / Code Connect / OpenAPI / RTK Query / Jira MCP / AI Runtime **deferred**
+- Docs: `docs/setup/CONSUMER_INSTALLATION.md`, `docs/sprint-5/BATCH_5_1G_COMPLETION_REPORT.md`
 
 ## Sprint 0 Status
 
