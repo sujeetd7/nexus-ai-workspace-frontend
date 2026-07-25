@@ -28,6 +28,12 @@ import {
   Card,
   Surface,
   Section,
+  InlineAlert,
+  // Level 3 — Patterns (auth contract)
+  AuthShell,
+  AuthCard,
+  AuthHeader,
+  AuthFooter,
 } from "@nexus/shared-ui";
 ```
 
@@ -41,42 +47,50 @@ All components require `SharedUIProvider` (already used by web/mobile apps).
 
 ## Classification inventory
 
-| Component               | Level | Name                       | Maturity          |
-| ----------------------- | ----- | -------------------------- | ----------------- |
-| View                    | 1     | Primitive                  | Ready             |
-| Text                    | 1     | Primitive                  | Ready             |
-| Stack / XStack / YStack | 1     | Primitive                  | Ready             |
-| Button                  | 1     | Primitive                  | Ready             |
-| Input                   | 1     | Primitive                  | Ready             |
-| Label                   | 1     | Primitive                  | Ready             |
-| Divider                 | 1     | Primitive                  | Ready             |
-| Loader                  | 1     | Primitive                  | Ready             |
-| FormField               | 2     | Composite                  | Ready             |
-| HelperText              | 2     | Composite                  | Ready             |
-| ErrorText               | 2     | Composite                  | Ready             |
-| Badge                   | 2     | Composite                  | Ready             |
-| Chip                    | 2     | Composite                  | Ready             |
-| Card                    | 2     | Composite                  | Ready             |
-| Surface                 | 2     | Composite                  | Ready             |
-| Section                 | 2     | Composite                  | Ready             |
-| Tooltip                 | —     | Overlay (future Composite) | Deferred (TD-056) |
+| Component               | Level | Name                       | Maturity           |
+| ----------------------- | ----- | -------------------------- | ------------------ |
+| View                    | 1     | Primitive                  | Ready              |
+| Text                    | 1     | Primitive                  | Ready              |
+| Stack / XStack / YStack | 1     | Primitive                  | Ready              |
+| Button                  | 1     | Primitive                  | Ready              |
+| Input                   | 1     | Primitive                  | Ready              |
+| Label                   | 1     | Primitive                  | Ready              |
+| Divider                 | 1     | Primitive                  | Ready              |
+| Loader                  | 1     | Primitive                  | Ready              |
+| FormField               | 2     | Composite                  | Ready              |
+| HelperText              | 2     | Composite                  | Ready              |
+| ErrorText               | 2     | Composite                  | Ready              |
+| Badge                   | 2     | Composite                  | Ready              |
+| Chip                    | 2     | Composite                  | Ready              |
+| Card                    | 2     | Composite                  | Ready              |
+| Surface                 | 2     | Composite                  | Ready              |
+| Section                 | 2     | Composite                  | Ready              |
+| InlineAlert             | 2     | Composite                  | Ready (Batch 5.2D) |
+| AuthShell               | 3     | Pattern                    | Ready (Batch 5.2D) |
+| AuthCard                | 3     | Pattern                    | Ready (Batch 5.2D) |
+| AuthHeader / AuthFooter | 3     | Pattern                    | Ready (Batch 5.2D) |
+| Tooltip                 | —     | Overlay (future Composite) | Deferred (TD-056)  |
 
-### Level 3 — Patterns (not implemented)
+### Level 3 — Patterns
 
-Documented examples only — **do not implement in Sprint 2:**
+| Pattern                                | Status             | Notes                                          |
+| -------------------------------------- | ------------------ | ---------------------------------------------- |
+| AuthShell                              | Ready (Batch 5.2D) | Auth layout shell — not a route/provider       |
+| AuthCard                               | Ready (Batch 5.2D) | Form container on Card                         |
+| AuthHeader / AuthFooter                | Ready (Batch 5.2D) | Title/description + Link-based alternate flows |
+| SearchBar / EmptyState / FilterBar / … | Examples only      | Still require promotion evidence               |
 
-- SearchBar
-- EmptyState
-- FilterBar
-- SettingsSection
-- ListHeader
-- SearchPanel
+Auth form screens remain app-owned; Storybook compositions under `Patterns/Auth/*` document the visual contract only.
 
-Patterns require promotion evidence before entering `@nexus/shared-ui` (see Hybrid doc).
+### Level 2 additions (Batch 5.2D)
+
+| Component   | Level | Notes                                                          |
+| ----------- | ----- | -------------------------------------------------------------- |
+| InlineAlert | 2     | Generic inline status (info/success/warning/error) — not Toast |
 
 ### Level 4 — Screens (deferred)
 
-Examples only (app-owned): feature route screens, settings pages, auth flows. Not shared-ui exports. No Screen Storybook category content in Sprint 2.
+Examples only (app-owned): feature route screens, settings pages, auth flows. Not shared-ui exports.
 
 ---
 

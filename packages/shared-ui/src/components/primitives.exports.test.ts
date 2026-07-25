@@ -2,9 +2,12 @@ import { describe, expect, it } from "vitest";
 
 import {
   Button,
+  Checkbox,
   Divider,
+  Icon,
   Input,
   Label,
+  Link,
   Loader,
   Stack,
   Text,
@@ -25,6 +28,12 @@ describe("Level 1 public exports", () => {
     expect(Label).toEqual(expect.any(Function));
     expect(Divider).toEqual(expect.any(Function));
     expect(Loader).toEqual(expect.any(Function));
+  });
+
+  it("exports Batch 5.2C auth-critical primitives", () => {
+    expect(Link).toEqual(expect.any(Function));
+    expect(Checkbox).toEqual(expect.any(Function));
+    expect(Icon).toEqual(expect.any(Function));
   });
 });
 

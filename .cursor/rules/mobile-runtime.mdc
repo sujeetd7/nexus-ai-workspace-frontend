@@ -1,0 +1,12 @@
+---
+description: Cursor globs for apps/mobile runtime work
+globs: apps/mobile/**
+alwaysApply: false
+---
+
+When editing `apps/mobile/**`:
+
+- Follow `AGENTS.md` dependency and provider rules.
+- Prefer existing bootstrap, providers, navigation, and feature layout.
+- Do not import `@sujeetd7/ai-engineering-*` into mobile runtime.
+- Use `@nexus/shared-ui` public API for UI.

@@ -1,0 +1,12 @@
+---
+description: Cursor globs for apps/web runtime work
+globs: apps/web/**
+alwaysApply: false
+---
+
+When editing `apps/web/**`:
+
+- Follow `AGENTS.md` dependency and provider rules.
+- Prefer existing bootstrap, providers, navigation, and feature layout.
+- Do not import `@sujeetd7/ai-engineering-*` into web runtime.
+- Use `@nexus/shared-ui` public API for UI.

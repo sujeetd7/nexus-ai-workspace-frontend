@@ -1,0 +1,8 @@
+---
+description: Cursor validation gate reminder
+alwaysApply: false
+---
+
+Before completing implementation work, apply skill `nexus-validation`.
+Required final gates: `pnpm verify`, `git diff --check`.
+Do not commit or push unless the user explicitly asks.

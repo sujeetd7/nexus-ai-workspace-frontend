@@ -2,6 +2,7 @@ export * from "./components";
 export * from "./context";
 export * from "./foundation";
 export * from "./hooks";
+export * from "./patterns";
 export * from "./platform";
 export * from "./providers";
 export * from "./theme";

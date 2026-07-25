@@ -1,0 +1,11 @@
+---
+description: Cursor globs for engineering-platform tooling
+globs: tooling/engineering-platform/**
+alwaysApply: false
+---
+
+When editing `tooling/engineering-platform/**`:
+
+- Apply skill `nexus-runtime-isolation`.
+- Keep integration tooling-only per `AGENTS.md`.
+- Do not leak `@sujeetd7/ai-engineering-*` into apps or shared-ui.

@@ -1,17 +1,26 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  AuthCard,
+  AuthFooter,
+  AuthHeader,
+  AuthShell,
   Badge,
   Button,
   Card,
+  Checkbox,
   Chip,
   Divider,
   ErrorText,
   FormField,
   HelperText,
+  Icon,
+  InlineAlert,
   Input,
   Label,
+  Link,
   Loader,
+  PasswordField,
   Section,
   Stack,
   Surface,
@@ -44,8 +53,30 @@ describe("Level 1 + Level 2 public exports", () => {
     expect(Section).toEqual(expect.any(Function));
   });
 
+  it("exports Batch 5.2C auth-critical components", () => {
+    expect(Link).toEqual(expect.any(Function));
+    expect(Checkbox).toEqual(expect.any(Function));
+    expect(Icon).toEqual(expect.any(Function));
+    expect(PasswordField).toEqual(expect.any(Function));
+  });
+
+  it("exports Batch 5.2D InlineAlert and auth patterns", () => {
+    expect(InlineAlert).toEqual(expect.any(Function));
+    expect(AuthShell).toEqual(expect.any(Function));
+    expect(AuthCard).toEqual(expect.any(Function));
+    expect(AuthHeader).toEqual(expect.any(Function));
+    expect(AuthFooter).toEqual(expect.any(Function));
+  });
+
   it("does not export Tooltip (deferred — see COMPONENTS.md)", async () => {
     const mod = await import("../index");
     expect("Tooltip" in mod).toBe(false);
+  });
+
+  it("does not export Avatar, Modal, or Toast (deferred / incomplete)", async () => {
+    const mod = await import("../index");
+    expect("Avatar" in mod).toBe(false);
+    expect("Modal" in mod).toBe(false);
+    expect("Toast" in mod).toBe(false);
   });
 });

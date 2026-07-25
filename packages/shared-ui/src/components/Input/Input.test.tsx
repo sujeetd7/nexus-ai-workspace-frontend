@@ -2,6 +2,7 @@ import { cleanup, fireEvent, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { renderWithSharedUI } from "../../testing/render";
+import { Text } from "../Text";
 import { Input } from "./Input";
 
 afterEach(() => {
@@ -48,5 +49,37 @@ describe("Input", () => {
       <Input testID="secret" accessibilityLabel="Password" secureTextEntry />,
     );
     expect(screen.getByTestId("secret")).toBeTruthy();
+  });
+
+  it("forwards autoComplete and maxLength", () => {
+    renderWithSharedUI(
+      <Input
+        testID="user"
+        accessibilityLabel="Username"
+        autoComplete="username"
+        maxLength={32}
+      />,
+    );
+    const node = screen.getByTestId("user") as HTMLInputElement;
+    expect(
+      node.getAttribute("autocomplete") ?? node.getAttribute("autoComplete"),
+    ).toMatch(/username/i);
+    expect(node.getAttribute("maxLength") ?? String(node.maxLength)).toMatch(
+      /32/,
+    );
+  });
+
+  it("renders leading and trailing adornments", () => {
+    renderWithSharedUI(
+      <Input
+        testID="with-slots"
+        accessibilityLabel="Amount"
+        leading={<Text testID="lead">$</Text>}
+        trailing={<Text testID="trail">USD</Text>}
+      />,
+    );
+    expect(screen.getByTestId("lead")).toBeTruthy();
+    expect(screen.getByTestId("trail")).toBeTruthy();
+    expect(screen.getByTestId("with-slots")).toBeTruthy();
   });
 });

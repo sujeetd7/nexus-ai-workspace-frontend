@@ -1,0 +1,10 @@
+---
+description: Cursor behavior for Figma design-to-code
+alwaysApply: false
+---
+
+For Figma work in Cursor:
+
+- Apply skill `nexus-design-to-code`.
+- Figma MCP is IDE-local; do not add OAuth or personal credentials to the repo.
+- `.cursor/settings.json` may enable the Figma plugin flag only — no secrets.

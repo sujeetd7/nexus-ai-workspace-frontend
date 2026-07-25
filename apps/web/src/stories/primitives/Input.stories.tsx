@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Input } from "@nexus/shared-ui";
+import { Icon, Input, Text } from "@nexus/shared-ui";
 
 const meta = {
   title: "Primitives/Input",
@@ -34,5 +34,33 @@ export const Secure: Story = {
     accessibilityLabel: "Password",
     secureTextEntry: true,
     placeholder: "••••••••",
+  },
+};
+
+export const WithAdornments: Story = {
+  args: {
+    accessibilityLabel: "Amount",
+    placeholder: "0.00",
+    leading: (
+      <Icon decorative size="sm" color="textSecondary">
+        <Text variant="label" color="textSecondary">
+          $
+        </Text>
+      </Icon>
+    ),
+    trailing: (
+      <Text variant="label" color="textSecondary">
+        USD
+      </Text>
+    ),
+  },
+};
+
+export const AutoComplete: Story = {
+  args: {
+    accessibilityLabel: "Email",
+    autoComplete: "email",
+    maxLength: 120,
+    placeholder: "you@example.com",
   },
 };

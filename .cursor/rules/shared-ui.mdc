@@ -1,0 +1,12 @@
+---
+description: Cursor globs for @nexus/shared-ui
+globs: packages/shared-ui/**
+alwaysApply: false
+---
+
+When editing `packages/shared-ui/**`:
+
+- Follow `AGENTS.md` design-system ownership rules.
+- Tokens, Tamagui, theme, responsive, and a11y stay in shared-ui.
+- No product business logic, networking, or engineering-platform imports.
+- Prefer Hybrid Enterprise Atomic promotion rules before adding Patterns.

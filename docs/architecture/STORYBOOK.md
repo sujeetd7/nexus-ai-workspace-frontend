@@ -28,8 +28,8 @@ apps/web/
     Introduction.mdx
     primitives/*.stories.tsx
     composites/*.stories.tsx
-    patterns/          # placeholder — no stories in Sprint 2
-    screens/           # placeholder — no stories in Sprint 2
+    patterns/          # AuthShell, AuthCard, Auth/* compositions (Batch 5.2D)
+    screens/           # placeholder — app-owned; catalog deferred
 ```
 
 ## Hierarchy (required titles)
@@ -37,16 +37,16 @@ apps/web/
 ```text
 Primitives
 Composites
-Patterns      ← placeholder (no implemented patterns)
+Patterns      ← Auth patterns + Storybook-only auth compositions (Batch 5.2D)
 Screens       ← placeholder (app-owned; catalog deferred)
 ```
 
-| Prefix              | Level | Current content                                                       |
-| ------------------- | ----- | --------------------------------------------------------------------- |
-| `Primitives/<Name>` | 1     | View, Text, Stack, Button, Input, Label, Divider, Loader              |
-| `Composites/<Name>` | 2     | FormField, HelperText, ErrorText, Badge, Chip, Card, Surface, Section |
-| `Patterns/<Name>`   | 3     | None — examples only in docs                                          |
-| `Screens/<Name>`    | 4     | None in shared Storybook                                              |
+| Prefix              | Level | Current content                                                                                |
+| ------------------- | ----- | ---------------------------------------------------------------------------------------------- |
+| `Primitives/<Name>` | 1     | View, Text, Stack, Button, Input, Label, Divider, Loader                                       |
+| `Composites/<Name>` | 2     | FormField, HelperText, ErrorText, Badge, Chip, Card, Surface, Section, InlineAlert             |
+| `Patterns/<Name>`   | 3     | AuthShell, AuthCard, AuthHeaderFooter, Auth/Login\|Registration\|ForgotPassword\|ResetPassword |
+| `Screens/<Name>`    | 4     | None in shared Storybook                                                                       |
 
 Do not use Atomic labels (atoms/molecules/organisms) in story titles.
 

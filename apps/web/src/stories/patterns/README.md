@@ -1,5 +1,19 @@
 # Patterns (Level 3)
 
-Placeholder for Hybrid Enterprise Atomic **Patterns** stories.
+Hybrid Enterprise Atomic **Patterns** stories for `@nexus/shared-ui`.
 
-No Pattern components are implemented in Sprint 2. See `docs/architecture/HYBRID_ENTERPRISE_ATOMIC.md`.
+## Auth (Batch 5.2D)
+
+| Story title                    | Source                        |
+| ------------------------------ | ----------------------------- |
+| `Patterns/AuthShell`           | Layout shell                  |
+| `Patterns/AuthCard`            | Form card                     |
+| `Patterns/AuthHeaderFooter`    | Header + alternate-flow links |
+| `Patterns/Auth/Login`          | Login composition             |
+| `Patterns/Auth/Registration`   | Registration composition      |
+| `Patterns/Auth/ForgotPassword` | Forgot-password composition   |
+| `Patterns/Auth/ResetPassword`  | Reset-password composition    |
+
+Auth form compositions are Storybook-only contracts (mock local state). They do not add routes, APIs, or session logic.
+
+See `docs/architecture/HYBRID_ENTERPRISE_ATOMIC.md`.

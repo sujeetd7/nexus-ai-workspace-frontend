@@ -2,8 +2,14 @@ import { useId, type FC, type ReactNode } from "react";
 
 import { ErrorText } from "../ErrorText";
 import { HelperText } from "../HelperText";
-import { Input, type InputMode, type InputProps } from "../Input";
+import {
+  Input,
+  type InputAutoComplete,
+  type InputMode,
+  type InputProps,
+} from "../Input";
 import { Label } from "../Label";
+import { PasswordField } from "../PasswordField";
 import { Stack } from "../Stack";
 import type { NexusTestProps } from "../shared/types";
 
@@ -15,13 +21,19 @@ export interface FormFieldProps extends NexusTestProps {
   errorText?: ReactNode;
   required?: boolean;
   disabled?: boolean;
-  /** Controlled value passthrough to Input. */
+  /** Controlled value passthrough to Input / PasswordField. */
   value?: string;
   defaultValue?: string;
   placeholder?: string;
   readOnly?: boolean;
+  /**
+   * When true, renders `PasswordField` (secure by default with show/hide)
+   * instead of a plain `Input`.
+   */
   secureTextEntry?: boolean;
   inputMode?: InputMode;
+  autoComplete?: InputAutoComplete;
+  maxLength?: number;
   onChangeText?: InputProps["onChangeText"];
   onFocus?: InputProps["onFocus"];
   onBlur?: InputProps["onBlur"];
@@ -39,7 +51,7 @@ function resolveLabelString(label: ReactNode): string | undefined {
 }
 
 /**
- * Level 2 form field composite: Label + Input + HelperText / ErrorText.
+ * Level 2 form field composite: Label + Input/PasswordField + HelperText / ErrorText.
  * No form-library integration (React Hook Form stays out of scope).
  */
 export const FormField: FC<FormFieldProps> = ({
@@ -54,6 +66,8 @@ export const FormField: FC<FormFieldProps> = ({
   readOnly,
   secureTextEntry,
   inputMode,
+  autoComplete,
+  maxLength,
   onChangeText,
   onFocus,
   onBlur,
@@ -81,6 +95,27 @@ export const FormField: FC<FormFieldProps> = ({
       ? helperText
       : undefined;
 
+  const fieldTestId = testID ? `${testID}-input` : undefined;
+  const sharedFieldProps = {
+    id: fieldId,
+    testID: fieldTestId,
+    value,
+    defaultValue,
+    placeholder,
+    disabled,
+    readOnly,
+    invalid: hasError,
+    required,
+    autoComplete,
+    maxLength,
+    describedBy,
+    accessibilityLabel: labelName,
+    accessibilityHint,
+    onChangeText,
+    onFocus,
+    onBlur,
+  };
+
   return (
     <Stack
       direction="vertical"
@@ -91,25 +126,11 @@ export const FormField: FC<FormFieldProps> = ({
       <Label htmlFor={fieldId} required={required} disabled={disabled}>
         {label}
       </Label>
-      <Input
-        id={fieldId}
-        testID={testID ? `${testID}-input` : undefined}
-        value={value}
-        defaultValue={defaultValue}
-        placeholder={placeholder}
-        disabled={disabled}
-        readOnly={readOnly}
-        invalid={hasError}
-        required={required}
-        secureTextEntry={secureTextEntry}
-        inputMode={inputMode}
-        describedBy={describedBy}
-        accessibilityLabel={labelName}
-        accessibilityHint={accessibilityHint}
-        onChangeText={onChangeText}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      />
+      {secureTextEntry ? (
+        <PasswordField {...sharedFieldProps} />
+      ) : (
+        <Input {...sharedFieldProps} inputMode={inputMode} />
+      )}
       {hasError ? (
         <ErrorText id={errorId} testID={testID ? `${testID}-error` : undefined}>
           {errorText}

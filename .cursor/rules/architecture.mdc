@@ -1,0 +1,7 @@
+---
+description: Cursor adapter — defer architecture to AGENTS.md
+alwaysApply: true
+---
+
+Follow `AGENTS.md` for all architecture and operating rules.
+Use `.agents/skills/` for workflows. Keep this rule set thin; do not restate architecture here.
