@@ -38,7 +38,70 @@ Reusable workflows live in `.agents/skills/`:
 | `nexus-runtime-isolation`   | Touch engineering-platform or AI packages       |
 | `nexus-design-to-code`      | Implement from Figma                            |
 | `nexus-openapi-integration` | Wire OpenAPI / generated clients (when enabled) |
-| `nexus-validation`          | Validate changed scope before completion        |
+| `nexus-validation`          | User-owned validation reporting & failure-fix   |
+
+## User-owned validation (CTO directive)
+
+Repository validation is executed by the user locally. Agents must not run full validation suites unless the user explicitly requests it.
+
+Applies to all remaining P2–P5 and frontend product batches unless explicitly overridden.
+
+### Developer must
+
+- Inspect approved scope; implement only the approved batch; reuse existing implementations.
+- Add or update tests and documentation required by the batch.
+- Report files created/modified, assumptions, risks, and unresolved issues.
+- Provide exact validation commands for the user.
+- Stop after implementation and reporting.
+
+### Developer must not
+
+- Run full validation (`pnpm verify`, lint, typecheck, tests, builds) unless the user explicitly requests it.
+- Retry validation speculatively or spend agent usage on deterministic gates.
+- Commit or push unless the user explicitly asks.
+- Claim validation passed when it was not run.
+
+### User runs locally (adjust filters to affected packages)
+
+```powershell
+pnpm --filter <affected-package> typecheck
+pnpm --filter <affected-package> test
+git diff --check
+pnpm verify
+```
+
+### Failure-fix workflow
+
+1. Inspect only the supplied failure.
+2. Identify the smallest likely root cause; request extra files only when necessary.
+3. Provide a targeted fix; do not redo unrelated implementation.
+4. Instruct the user which single command to rerun.
+5. Run the full suite only after targeted checks pass and the user requests full validation.
+
+### Completion report language
+
+Report: implementation completed; tests added/updated; docs updated; **validation not run — user-owned**; recommended commands; known risks; git status if inspected.
+
+Do not write “all gates passed”, “validation successful”, or “build verified” unless the user later confirms those results.
+
+## Senior manager batch output
+
+Every batch prompt must include:
+
+1. Exact repository and package scope
+2. Files to inspect
+3. Files to create
+4. Files to modify
+5. Implementation requirements
+6. Tests to add or update
+7. Documentation requirements
+8. Expected file-change summary
+9. Validation commands for the user
+10. Expected results
+11. Stop conditions
+12. Completion-report format
+
+Do not include instructions requiring the developer to execute validation.
 
 ## Default operating rules
 
@@ -46,8 +109,8 @@ Reusable workflows live in `.agents/skills/`:
 - Prefer the smallest change that satisfies acceptance criteria.
 - Do not install packages, update lockfiles, or configure secrets unless the batch requires it.
 - Do not commit or push unless the user explicitly asks.
-- Before completion, follow `nexus-validation` (required gates: `pnpm verify`, `git diff --check`).
+- Before completion, follow `nexus-validation` (report recommended user commands; do not execute gates unless asked).
 
 ## Response discipline
 
-Return only: changed files, validation results, and blockers — unless the user asks for more.
+Return only: changed files, recommended validation commands, assumptions/risks/blockers — unless the user asks for more.

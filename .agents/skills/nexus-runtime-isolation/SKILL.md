@@ -20,7 +20,7 @@ Keep AI Engineering Platform packages out of product runtime.
    - `@nexus/shared-ui`
    - AppProviders / product provider trees
 3. Prefer metadata/capability declarations over enabling deferred platform features.
-4. After changes, rely on `pnpm boundaries:check` and engineering-platform isolation tests via `nexus-validation`.
+4. After changes, recommend `pnpm boundaries:check` and engineering-platform isolation tests via `nexus-validation` (user-owned; do not execute unless asked).
 
 ## Constraints
 

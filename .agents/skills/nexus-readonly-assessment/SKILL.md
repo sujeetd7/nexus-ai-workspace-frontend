@@ -10,6 +10,8 @@ description: >-
 ## Purpose
 
 Produce a grounded, read-only assessment of a batch before implementation.
+Every future batch prompt authored by the Senior Manager must include the
+12-item batch output defined in `AGENTS.md` (user-owned validation).
 
 ## Workflow
 
@@ -18,7 +20,11 @@ Produce a grounded, read-only assessment of a batch before implementation.
 3. Compare intent against `AGENTS.md`, `IMPLEMENTATION_STATUS.md`, and architecture docs.
 4. Classify each proposed change: allowed, constrained, deferred, or ADR-required.
 5. Call out runtime-isolation risks for engineering-platform work.
-6. Do not edit files.
+6. When producing an implementation-ready batch prompt, include all 12 Senior Manager fields from `AGENTS.md`:
+   scope, inspect/create/modify files, requirements, tests, docs, file-change summary,
+   **validation commands for the user**, expected results, stop conditions, completion-report format.
+7. Do not instruct the developer to execute validation.
+8. Do not edit files.
 
 ## Constraints
 
@@ -26,6 +32,7 @@ Produce a grounded, read-only assessment of a batch before implementation.
 - Do not invent features, routes, providers, or packages.
 - Prefer evidence from repo docs over assumptions.
 - Keep the assessment concise and decision-oriented.
+- Do not run validation gates.
 
 ## Expected output
 
@@ -34,3 +41,4 @@ Produce a grounded, read-only assessment of a batch before implementation.
 - Risks and ADR triggers
 - Recommended implementation order
 - Explicit “do not touch” list
+- When emitting a batch prompt: the full 12-item Senior Manager format (including user validation commands)

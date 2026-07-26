@@ -18,7 +18,8 @@ Translate approved Figma designs into Nexus UI using the existing design system.
 3. Map design to `@nexus/shared-ui` primitives/composites and tokens.
 4. Reuse existing components before adding new ones.
 5. Prefer shared-ui public API; keep app screens feature-owned.
-6. Validate visually against the frame and run `nexus-validation`.
+6. Validate visually against the frame.
+7. Apply `nexus-validation` to report recommended user commands — do not execute gates unless asked.
 
 ## Constraints
 
@@ -27,10 +28,11 @@ Translate approved Figma designs into Nexus UI using the existing design system.
 - Do not invent speculative tokens without a real consumer.
 - Patterns promote to shared-ui only with ≥2 real consumers (Hybrid Enterprise Atomic).
 - Repository structure may prepare for Figma MCP; authentication remains unconfigured here.
+- Do not run full validation unless the user explicitly requests it.
 
 ## Expected output
 
 - Components/screens updated or added
 - Mapping notes: Figma nodes → shared-ui building blocks
 - Deviations from design (with rationale)
-- Validation results
+- Validation not run — user-owned; recommended commands
