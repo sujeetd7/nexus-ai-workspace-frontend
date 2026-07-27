@@ -5,6 +5,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import type { MobileRuntime } from "../bootstrap/types";
 import { MobileAuthBootstrap } from "./MobileAuthBootstrap";
+import { MobileWorkspaceBootstrap } from "./MobileWorkspaceBootstrap";
 
 export interface AppProvidersProps extends PropsWithChildren {
   readonly runtime: MobileRuntime;
@@ -20,7 +21,9 @@ export function AppProviders({ children, runtime }: AppProvidersProps) {
     <SafeAreaProvider>
       <SharedUIProvider defaultPreference="system">
         <Provider store={runtime.store}>
-          <MobileAuthBootstrap>{children}</MobileAuthBootstrap>
+          <MobileAuthBootstrap>
+            <MobileWorkspaceBootstrap>{children}</MobileWorkspaceBootstrap>
+          </MobileAuthBootstrap>
         </Provider>
       </SharedUIProvider>
     </SafeAreaProvider>

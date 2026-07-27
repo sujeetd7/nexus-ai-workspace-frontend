@@ -7,7 +7,12 @@ export const baseApi = createApi({
 
   baseQuery: axiosBaseQuery(),
 
-  tagTypes: [],
+  tagTypes: [
+    "UserProfile",
+    "Workspace",
+    "WorkspaceMembers",
+    "WorkspaceInvitations",
+  ],
 
   endpoints: () => ({}),
 });

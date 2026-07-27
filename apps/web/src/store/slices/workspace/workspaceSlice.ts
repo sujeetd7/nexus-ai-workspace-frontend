@@ -1,25 +1,53 @@
+import type { SelectedWorkspaceState } from "@nexus/shared-types";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-interface WorkspaceState {
-  currentWorkspaceId?: string;
-}
-
-const initialState: WorkspaceState = {};
+const initialState: SelectedWorkspaceState = {
+  status: "uninitialized",
+};
 
 const workspaceSlice = createSlice({
   name: "workspace",
   initialState,
   reducers: {
-    setWorkspace(state, action: PayloadAction<string>) {
-      state.currentWorkspaceId = action.payload;
+    workspaceBootstrapStarted(state) {
+      state.status = "loading";
+      state.error = undefined;
     },
 
-    clearWorkspace(state) {
-      state.currentWorkspaceId = undefined;
+    workspaceBootstrapSucceeded(
+      state,
+      action: PayloadAction<string | undefined>,
+    ) {
+      state.workspaceId = action.payload;
+      state.status = "ready";
+      state.error = undefined;
+    },
+
+    workspaceBootstrapFailed(state, action: PayloadAction<string>) {
+      state.status = "error";
+      state.error = action.payload;
+    },
+
+    setSelectedWorkspace(state, action: PayloadAction<string>) {
+      state.workspaceId = action.payload;
+      state.status = "ready";
+      state.error = undefined;
+    },
+
+    clearSelectedWorkspace(state) {
+      state.workspaceId = undefined;
+      state.status = "ready";
+      state.error = undefined;
     },
   },
 });
 
-export const { setWorkspace, clearWorkspace } = workspaceSlice.actions;
+export const {
+  workspaceBootstrapStarted,
+  workspaceBootstrapSucceeded,
+  workspaceBootstrapFailed,
+  setSelectedWorkspace,
+  clearSelectedWorkspace,
+} = workspaceSlice.actions;
 
 export default workspaceSlice.reducer;

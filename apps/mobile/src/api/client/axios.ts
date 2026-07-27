@@ -12,6 +12,16 @@ import {
   setMobileAuthClient,
 } from '../auth/createMobileAuthClient';
 import {
+  createMobileUserClient,
+  resetMobileUserClientForTests,
+  setMobileUserClient,
+} from '../user/createMobileUserClient';
+import {
+  createMobileWorkspaceClient,
+  resetMobileWorkspaceClientForTests,
+  setMobileWorkspaceClient,
+} from '../workspace/createMobileWorkspaceClient';
+import {
   createMobileSessionManager,
   getMobileSessionManager,
   resetMobileSessionManagerForTests,
@@ -55,6 +65,10 @@ export function createMobileHttpClient(
   const authClient = setMobileAuthClient(
     createMobileAuthClient({ client: axiosClient }),
   );
+  setMobileUserClient(createMobileUserClient({ client: axiosClient }));
+  setMobileWorkspaceClient(
+    createMobileWorkspaceClient({ client: axiosClient }),
+  );
   sessionManagerRef = createMobileSessionManager({
     authClient,
     logger: options.logger,
@@ -86,5 +100,7 @@ export function resetMobileHttpClientForTests(): void {
   sessionManagerRef = null;
   axiosClient = undefined as unknown as AxiosInstance;
   resetMobileAuthClientForTests();
+  resetMobileUserClientForTests();
+  resetMobileWorkspaceClientForTests();
   resetMobileSessionManagerForTests();
 }

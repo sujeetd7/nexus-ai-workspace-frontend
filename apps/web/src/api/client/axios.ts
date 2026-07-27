@@ -12,6 +12,16 @@ import {
   setWebAuthClient,
 } from "../auth/createWebAuthClient";
 import {
+  createWebUserClient,
+  resetWebUserClientForTests,
+  setWebUserClient,
+} from "../user/createWebUserClient";
+import {
+  createWebWorkspaceClient,
+  resetWebWorkspaceClientForTests,
+  setWebWorkspaceClient,
+} from "../workspace/createWebWorkspaceClient";
+import {
   createWebSessionManager,
   getWebSessionManager,
   resetWebSessionManagerForTests,
@@ -69,6 +79,8 @@ export function createWebHttpClient(
   const authClient = setWebAuthClient(
     createWebAuthClient({ client: axiosClient })
   );
+  setWebUserClient(createWebUserClient({ client: axiosClient }));
+  setWebWorkspaceClient(createWebWorkspaceClient({ client: axiosClient }));
   sessionManagerRef = createWebSessionManager({
     authClient,
     logger: options.logger,
@@ -101,5 +113,7 @@ export function resetWebHttpClientForTests(): void {
   sessionManagerRef = null;
   axiosClient = undefined as unknown as AxiosInstance;
   resetWebAuthClientForTests();
+  resetWebUserClientForTests();
+  resetWebWorkspaceClientForTests();
   resetWebSessionManagerForTests();
 }

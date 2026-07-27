@@ -6,6 +6,7 @@ import {
 
 import type { WebRuntime } from "../bootstrap/types";
 import { AuthBootstrap } from "./AuthBootstrap";
+import { WorkspaceBootstrap } from "./WorkspaceBootstrap";
 import { ReduxProvider } from "./redux";
 
 export interface AppProvidersProps extends PropsWithChildren {
@@ -24,7 +25,9 @@ export function AppProviders({ children, runtime }: AppProvidersProps) {
       storageKey={THEME_PREFERENCE_STORAGE_KEY}
     >
       <ReduxProvider store={runtime.store}>
-        <AuthBootstrap>{children}</AuthBootstrap>
+        <AuthBootstrap>
+          <WorkspaceBootstrap>{children}</WorkspaceBootstrap>
+        </AuthBootstrap>
       </ReduxProvider>
     </SharedUIProvider>
   );

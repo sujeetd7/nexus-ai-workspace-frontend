@@ -10,6 +10,16 @@ export const WEB_ROUTE_PATHS = {
   resetPassword: "/reset-password",
   verifyEmail: "/verify-email",
   dashboard: "/dashboard",
+  profile: "/profile",
+  profileEdit: "/profile/edit",
+  profilePreferences: "/profile/preferences",
+  workspaces: "/workspaces",
+  workspaceCreate: "/workspaces/new",
+  workspaceDetail: "/workspaces/:workspaceId",
+  workspaceMembers: "/workspaces/:workspaceId/members",
+  workspaceInvitations: "/workspaces/:workspaceId/invitations",
+  workspaceInvite: "/workspaces/:workspaceId/invite",
+  acceptInvitation: "/invitations/accept",
 } as const;
 
 export const AUTH_ROUTE_IDS = {

@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "capabilities": [
+    {
+      "operationId": "userGetMe",
+      "gatewayRoute": "GET /api/v1/users/me",
+      "swaggerDocumented": true,
+      "userClient": "createUserClient.getCurrentUser",
+      "queryOwner": "userApi.getCurrentUser",
+      "webFeature": "ProfileScreen",
+      "mobileFeature": "ProfileScreen",
+      "tests": ["packages/shared-utils/src/user/createUserClient.test.ts"],
+      "maturity": "mobile-wired"
+    },
+    {
+      "operationId": "userUpdateMe",
+      "gatewayRoute": "PATCH /api/v1/users/me",
+      "swaggerDocumented": true,
+      "userClient": "createUserClient.updateCurrentUser",
+      "queryOwner": "userApi.updateCurrentUser",
+      "webFeature": "EditProfileScreen",
+      "mobileFeature": null,
+      "tests": ["packages/shared-utils/src/user/createUserClient.test.ts"],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "userCreate",
+      "gatewayRoute": "POST /api/v1/users",
+      "swaggerDocumented": true,
+      "userClient": "createUserClient.createUser",
+      "queryOwner": "userApi.createUserProfile",
+      "webFeature": "ProfileScreen",
+      "mobileFeature": "ProfileScreen",
+      "tests": [],
+      "maturity": "client-wired"
+    },
+    {
+      "operationId": "userUpdate",
+      "gatewayRoute": "PATCH /api/v1/users/{id}",
+      "swaggerDocumented": true,
+      "userClient": null,
+      "queryOwner": null,
+      "webFeature": null,
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "gateway-wired"
+    }
+  ]
+}

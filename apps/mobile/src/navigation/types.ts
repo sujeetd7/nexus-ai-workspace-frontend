@@ -5,6 +5,8 @@ export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
   Dashboard: undefined;
+  Profile: undefined;
+  Workspaces: undefined;
   NotFound: undefined;
 };
 
@@ -12,6 +14,8 @@ export const MOBILE_ROUTE_NAMES = {
   Home: INFRASTRUCTURE_ROUTES[ROUTE_IDS.HOME].mobileName ?? "Home",
   Login: "Login",
   Dashboard: "Dashboard",
+  Profile: "Profile",
+  Workspaces: "Workspaces",
   NotFound: INFRASTRUCTURE_ROUTES[ROUTE_IDS.NOT_FOUND].mobileName ?? "NotFound",
 } as const satisfies Record<keyof RootStackParamList, string>;
 
@@ -19,5 +23,7 @@ export const MOBILE_ROUTE_IDS: Record<keyof RootStackParamList, RouteId> = {
   Home: ROUTE_IDS.HOME,
   Login: ROUTE_IDS.LOGIN,
   Dashboard: ROUTE_IDS.DASHBOARD,
+  Profile: ROUTE_IDS.PROFILE,
+  Workspaces: ROUTE_IDS.WORKSPACES,
   NotFound: ROUTE_IDS.NOT_FOUND,
 };

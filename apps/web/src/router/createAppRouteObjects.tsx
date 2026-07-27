@@ -9,7 +9,9 @@ import { ApplicationShell } from "../shell";
 import { GuestRoute, ProtectedRoute } from "./guards/AuthRouteGuard";
 import { WEB_ROUTE_PATHS } from "./paths";
 import { authRoutes } from "./routes/auth.routes";
+import { profileRoutes } from "./routes/profile.routes";
 import { privateRoutes } from "./routes/private.routes";
+import { workspaceRoutes } from "./routes/workspace.routes";
 import { publicRoutes } from "./routes";
 
 /** Explicit static route table for React Router v7. */
@@ -67,6 +69,34 @@ export function createAppRouteObjects(): RouteObject[] {
         },
         ...guestAuthChildren,
         ...protectedChildren,
+        ...profileRoutes.map((route) => {
+          const LazyElement = route.element;
+          return {
+            id: route.id,
+            path: route.path,
+            element: (
+              <ProtectedRoute>
+                <Suspense fallback={<RouteLoading />}>
+                  <LazyElement />
+                </Suspense>
+              </ProtectedRoute>
+            ),
+          };
+        }),
+        ...workspaceRoutes.map((route) => {
+          const LazyElement = route.element;
+          return {
+            id: route.id,
+            path: route.path,
+            element: (
+              <ProtectedRoute>
+                <Suspense fallback={<RouteLoading />}>
+                  <LazyElement />
+                </Suspense>
+              </ProtectedRoute>
+            ),
+          };
+        }),
         {
           id: ROUTE_IDS.NOT_FOUND,
           path: WEB_ROUTE_PATHS.notFound,

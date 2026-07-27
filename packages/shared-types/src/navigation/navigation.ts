@@ -13,6 +13,16 @@ export const ROUTE_IDS = {
   RESET_PASSWORD: "reset-password",
   VERIFY_EMAIL: "verify-email",
   DASHBOARD: "dashboard",
+  PROFILE: "profile",
+  PROFILE_EDIT: "profile-edit",
+  PROFILE_PREFERENCES: "profile-preferences",
+  WORKSPACES: "workspaces",
+  WORKSPACE_CREATE: "workspace-create",
+  WORKSPACE_DETAIL: "workspace-detail",
+  WORKSPACE_MEMBERS: "workspace-members",
+  WORKSPACE_INVITATIONS: "workspace-invitations",
+  WORKSPACE_INVITE: "workspace-invite",
+  WORKSPACE_ACCEPT_INVITATION: "workspace-accept-invitation",
 } as const;
 
 export type RouteId = (typeof ROUTE_IDS)[keyof typeof ROUTE_IDS];

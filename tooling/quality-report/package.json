@@ -17,6 +17,7 @@
     "quality:serve": "tsx src/cli.ts serve"
   },
   "devDependencies": {
+    "@types/node": "^24.13.2",
     "@vitest/coverage-v8": "^3.2.4",
     "tsx": "^4.23.1",
     "typescript": "5.9.3",

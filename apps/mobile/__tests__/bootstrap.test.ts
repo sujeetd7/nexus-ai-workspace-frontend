@@ -99,6 +99,6 @@ describe('mobile createAppStore', () => {
     expect(a.store).not.toBe(b.store);
     expect(a.sagaStarted).toBe(true);
     expect(b.sagaStarted).toBe(false);
-    expect(Object.keys(a.store.getState())).toEqual(['auth', 'api']);
+    expect(Object.keys(a.store.getState())).toEqual(['auth', 'workspace', 'api']);
   });
 });

@@ -7,13 +7,16 @@ export default defineConfig({
     environment: "jsdom",
     include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
     setupFiles: ["./vitest.setup.ts"],
-    coverage: coverageEnabled
-      ? {
-          provider: "v8",
-          reporter: ["text", "json", "json-summary", "lcov", "html"],
-          reportsDirectory: "./coverage",
-        }
-      : undefined,
+    coverage: {
+      enabled: coverageEnabled,
+      ...(coverageEnabled
+        ? {
+            provider: "v8",
+            reporter: ["text", "json", "json-summary", "lcov", "html"],
+            reportsDirectory: "./coverage",
+          }
+        : {}),
+    },
   },
   resolve: {
     alias: {

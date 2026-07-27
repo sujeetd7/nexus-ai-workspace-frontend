@@ -10,4 +10,6 @@ export const STORAGE_KEYS = {
   REFRESH_TOKEN: "refreshToken",
 
   THEME: "theme",
+
+  SELECTED_WORKSPACE_ID: "selectedWorkspaceId",
 } as const;

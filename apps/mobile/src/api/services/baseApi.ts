@@ -8,6 +8,11 @@ import { axiosBaseQuery } from '../baseQuery';
 export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: axiosBaseQuery(),
-  tagTypes: [],
+  tagTypes: [
+    'UserProfile',
+    'Workspace',
+    'WorkspaceMembers',
+    'WorkspaceInvitations',
+  ],
   endpoints: () => ({}),
 });

@@ -4,6 +4,8 @@ import { Loader, Stack, Text } from "@nexus/shared-ui";
 
 import { HomeScreen, NotFoundScreen } from "../screens/system";
 import { DashboardScreen, LoginScreen } from "../screens/auth";
+import { ProfileScreen } from "../screens/profile/ProfileScreen";
+import { WorkspaceListScreen } from "../screens/workspaces/WorkspaceListScreen";
 import {
   selectAuthInitialized,
   selectAuthLoading,
@@ -44,6 +46,14 @@ export function RootNavigator() {
           <NativeStack.Screen
             name={MOBILE_ROUTE_NAMES.Dashboard}
             component={DashboardScreen}
+          />
+          <NativeStack.Screen
+            name={MOBILE_ROUTE_NAMES.Profile}
+            component={ProfileScreen}
+          />
+          <NativeStack.Screen
+            name={MOBILE_ROUTE_NAMES.Workspaces}
+            component={WorkspaceListScreen}
           />
           <NativeStack.Screen
             name={MOBILE_ROUTE_NAMES.Home}

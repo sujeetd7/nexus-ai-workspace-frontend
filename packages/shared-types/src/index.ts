@@ -31,6 +31,36 @@ export type {
   UserRole,
   VerifyEmailRequest,
 } from "./auth";
+export type {
+  CreateUserClientOptions,
+  CreateUserProfileRequest,
+  UpdateUserProfileRequest,
+  UserClient,
+  UserHttpClient,
+  UserProfile,
+  UserStatus,
+} from "./user";
+export type {
+  AcceptWorkspaceInvitationRequest,
+  AddWorkspaceMemberRequest,
+  CreateWorkspaceClientOptions,
+  CreateWorkspaceInvitationRequest,
+  CreateWorkspaceRequest,
+  InvitationStatus,
+  RejectWorkspaceInvitationRequest,
+  SelectedWorkspaceState,
+  SelectedWorkspaceStatus,
+  UpdateWorkspaceMemberRoleRequest,
+  UpdateWorkspaceRequest,
+  Workspace,
+  WorkspaceClient,
+  WorkspaceHttpClient,
+  WorkspaceInvitation,
+  WorkspaceListParams,
+  WorkspaceMember,
+  WorkspaceRole,
+  WorkspaceStatus,
+} from "./workspace";
 export type { Logger, StorageAdapter } from "./contracts";
 export type { ISODateString, ISODateTimeString } from "./datetime";
 export {

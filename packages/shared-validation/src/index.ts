@@ -12,6 +12,20 @@ export {
   verifyEmailRequestSchema,
 } from "./auth";
 export {
+  createUserProfileSchema,
+  updateUserProfileSchema,
+  userPreferencesSchema,
+} from "./user";
+export {
+  acceptInvitationSchema,
+  addMemberSchema,
+  createWorkspaceSchema,
+  inviteMemberSchema,
+  rejectInvitationSchema,
+  updateMemberRoleSchema,
+  updateWorkspaceSchema,
+} from "./workspace";
+export {
   parseWithSchema,
   type ParseWithSchemaOptions,
 } from "./parse";

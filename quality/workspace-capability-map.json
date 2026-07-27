@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "capabilities": [
+    {
+      "operationId": "workspaceList",
+      "gatewayRoute": "GET /api/v1/workspaces",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.listWorkspaces",
+      "queryOwner": "workspaceApi.listWorkspaces",
+      "webFeature": "WorkspaceListScreen",
+      "mobileFeature": "WorkspaceListScreen",
+      "tests": [
+        "packages/shared-utils/src/workspace/createWorkspaceClient.test.ts"
+      ],
+      "maturity": "mobile-wired"
+    },
+    {
+      "operationId": "workspaceCreate",
+      "gatewayRoute": "POST /api/v1/workspaces",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.createWorkspace",
+      "queryOwner": "workspaceApi.createWorkspace",
+      "webFeature": "CreateWorkspaceScreen",
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "workspaceGet",
+      "gatewayRoute": "GET /api/v1/workspaces/{id}",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.getWorkspace",
+      "queryOwner": "workspaceApi.getWorkspace",
+      "webFeature": "WorkspaceDetailScreen",
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "workspaceUpdate",
+      "gatewayRoute": "PATCH /api/v1/workspaces/{id}",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.updateWorkspace",
+      "queryOwner": "workspaceApi.updateWorkspace",
+      "webFeature": "WorkspaceDetailScreen",
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "workspaceMemberList",
+      "gatewayRoute": "GET /api/v1/workspaces/{id}/members",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.listMembers",
+      "queryOwner": "workspaceApi.listMembers",
+      "webFeature": "WorkspaceMembersScreen",
+      "mobileFeature": null,
+      "tests": [
+        "packages/shared-utils/src/workspace/createWorkspaceClient.test.ts"
+      ],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "workspaceMemberUpdateRole",
+      "gatewayRoute": "PATCH /api/v1/workspaces/{id}/members/{memberId}",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.updateMemberRole",
+      "queryOwner": "workspaceApi.updateMemberRole",
+      "webFeature": "WorkspaceMembersScreen",
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "workspaceMemberRemove",
+      "gatewayRoute": "DELETE /api/v1/workspaces/{id}/members/{memberId}",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.removeMember",
+      "queryOwner": "workspaceApi.removeMember",
+      "webFeature": "WorkspaceMembersScreen",
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "workspaceInvitationList",
+      "gatewayRoute": "GET /api/v1/workspaces/{id}/invitations",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.listInvitations",
+      "queryOwner": "workspaceApi.listInvitations",
+      "webFeature": "WorkspaceInvitationsScreen",
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "workspaceInvitationCreate",
+      "gatewayRoute": "POST /api/v1/workspaces/{id}/invitations",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.createInvitation",
+      "queryOwner": "workspaceApi.createInvitation",
+      "webFeature": "InviteMemberScreen",
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "workspaceInvitationAccept",
+      "gatewayRoute": "POST /api/v1/workspaces/invitations/accept",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.acceptInvitation",
+      "queryOwner": "workspaceApi.acceptInvitation",
+      "webFeature": "AcceptInvitationScreen",
+      "mobileFeature": null,
+      "tests": [
+        "packages/shared-utils/src/workspace/createWorkspaceClient.test.ts"
+      ],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "workspaceInvitationDelete",
+      "gatewayRoute": "DELETE /api/v1/workspaces/invitations/{invitationId}",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.deleteInvitation",
+      "queryOwner": "workspaceApi.deleteInvitation",
+      "webFeature": "WorkspaceInvitationsScreen",
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "web-wired"
+    }
+  ]
+}
