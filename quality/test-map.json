@@ -1,0 +1,51 @@
+{
+  "requirements": [
+    {
+      "id": "FE-DESIGN-SYSTEM-A11Y",
+      "title": "Design system accessibility coverage",
+      "tags": ["accessibility", "shared-ui"]
+    },
+    {
+      "id": "FE-AUTH-LOGIN",
+      "title": "Web authentication login flows",
+      "tags": ["auth", "web"]
+    }
+  ],
+  "mappings": [
+    {
+      "targetType": "designLevel",
+      "targetId": "primitive",
+      "tests": []
+    },
+    {
+      "targetType": "designLevel",
+      "targetId": "composite",
+      "tests": []
+    },
+    {
+      "targetType": "designLevel",
+      "targetId": "pattern",
+      "tests": []
+    },
+    {
+      "targetType": "designLevel",
+      "targetId": "screen",
+      "tests": []
+    },
+    {
+      "targetType": "requirement",
+      "targetId": "FE-DESIGN-SYSTEM-A11Y",
+      "tests": []
+    },
+    {
+      "targetType": "requirement",
+      "targetId": "FE-AUTH-LOGIN",
+      "tests": []
+    },
+    {
+      "targetType": "package",
+      "targetId": "@nexus/shared-ui",
+      "tests": []
+    }
+  ]
+}

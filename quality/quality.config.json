@@ -1,0 +1,21 @@
+{
+  "repository": {
+    "id": "frontend",
+    "name": "nexus-ai-workspace-frontend",
+    "kind": "frontend"
+  },
+  "port": 4173,
+  "artifactRoot": "artifacts/quality",
+  "testMapPath": "quality/test-map.json",
+  "includeGeneratedAt": false,
+  "thresholds": {
+    "noRegression": true,
+    "repository": {},
+    "packages": {},
+    "criticalFiles": {},
+    "target": {
+      "line": 60,
+      "branch": 50
+    }
+  }
+}

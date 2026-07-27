@@ -1,0 +1,25 @@
+{
+  "name": "@nexus/quality-report",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Normalized quality report contract, framework adapters, and static dashboard generator (shared architecture with engineering-platform)",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "quality-report": "./src/cli.ts"
+  },
+  "scripts": {
+    "test": "vitest run --config vitest.config.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "quality:report": "tsx src/cli.ts report",
+    "quality:serve": "tsx src/cli.ts serve"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^3.2.4",
+    "tsx": "^4.23.1",
+    "typescript": "5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

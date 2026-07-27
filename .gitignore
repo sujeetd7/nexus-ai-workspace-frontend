@@ -39,6 +39,11 @@ coverage
 !testing/coverage/
 !testing/coverage/README.md
 
+# Quality dashboard generated outputs (keep README)
+artifacts/quality/**
+!artifacts/quality/README.md
+!artifacts/quality/**/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

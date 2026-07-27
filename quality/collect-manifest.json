@@ -1,0 +1,28 @@
+{
+  "packages": [
+    {
+      "packageName": "web",
+      "framework": "vitest",
+      "application": "web",
+      "platform": "web",
+      "resultsPath": "artifacts/quality/frontend/raw/web/results.json",
+      "coverageSummaryPath": "artifacts/quality/frontend/raw/web/coverage-summary.json"
+    },
+    {
+      "packageName": "mobile",
+      "framework": "jest",
+      "application": "mobile",
+      "platform": "react-native",
+      "resultsPath": "artifacts/quality/frontend/raw/mobile/results.json",
+      "coverageSummaryPath": "artifacts/quality/frontend/raw/mobile/coverage-summary.json"
+    },
+    {
+      "packageName": "@nexus/shared-ui",
+      "framework": "vitest",
+      "application": "design-system",
+      "platform": "web",
+      "resultsPath": "artifacts/quality/frontend/raw/shared-ui/results.json",
+      "coverageSummaryPath": "artifacts/quality/frontend/raw/shared-ui/coverage-summary.json"
+    }
+  ]
+}

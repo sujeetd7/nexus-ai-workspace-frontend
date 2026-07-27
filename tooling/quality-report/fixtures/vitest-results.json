@@ -1,0 +1,22 @@
+{
+  "testResults": [
+    {
+      "name": "src/example.test.ts",
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Example"],
+          "title": "passes",
+          "status": "passed",
+          "duration": 3
+        },
+        {
+          "ancestorTitles": ["Example"],
+          "title": "fails",
+          "status": "failed",
+          "duration": 5,
+          "failureMessages": ["expected true"]
+        }
+      ]
+    }
+  ]
+}

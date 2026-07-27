@@ -1,0 +1,22 @@
+{
+  "total": {
+    "statements": { "pct": 80 },
+    "branches": { "pct": 70 },
+    "functions": { "pct": 75 },
+    "lines": { "pct": 82 }
+  },
+  "src/example.ts": {
+    "statements": { "pct": 80 },
+    "branches": { "pct": 70 },
+    "functions": { "pct": 75 },
+    "lines": { "pct": 82 },
+    "uncoveredLines": [12, 18]
+  },
+  "src/uncovered.ts": {
+    "statements": { "pct": 0 },
+    "branches": { "pct": 0 },
+    "functions": { "pct": 0 },
+    "lines": { "pct": 0 },
+    "uncoveredLines": [1, 2, 3]
+  }
+}

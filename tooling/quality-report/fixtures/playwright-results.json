@@ -1,0 +1,22 @@
+{
+  "suites": [
+    {
+      "title": "auth",
+      "specs": [
+        {
+          "title": "login",
+          "file": "tests/login.spec.ts",
+          "tests": [
+            {
+              "status": "passed",
+              "results": [
+                { "status": "failed", "duration": 10, "retry": 0 },
+                { "status": "passed", "duration": 12, "retry": 1 }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
