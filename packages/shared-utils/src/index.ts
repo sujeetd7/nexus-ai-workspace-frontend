@@ -1,4 +1,5 @@
 export { assertNever } from "./assert";
+export * from "./auth";
 export * from "./errors";
 export * from "./id";
 export * from "./logging";

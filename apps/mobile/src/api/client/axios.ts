@@ -1,8 +1,23 @@
-import { createHttpClient, type ManagedHttpClient } from "@nexus/shared-network";
-import type { Logger, PublicClientConfig } from "@nexus/shared-types";
-import type { AxiosInstance } from "axios";
+import {
+  createHttpClient,
+  type ManagedHttpClient,
+} from '@nexus/shared-network';
+import type { Logger, PublicClientConfig } from '@nexus/shared-types';
+import type { SessionManager } from '@nexus/shared-utils';
+import type { AxiosInstance } from 'axios';
 
-import { createNetworkLoggerAdapter } from "../../platform/logging/createNetworkLoggerAdapter";
+import {
+  createMobileAuthClient,
+  resetMobileAuthClientForTests,
+  setMobileAuthClient,
+} from '../auth/createMobileAuthClient';
+import {
+  createMobileSessionManager,
+  getMobileSessionManager,
+  resetMobileSessionManagerForTests,
+} from '../../platform/auth/createMobileSessionManager';
+import { createMobileTokenStorage } from '../../platform/auth/createMobileTokenStorage';
+import { createNetworkLoggerAdapter } from '../../platform/logging/createNetworkLoggerAdapter';
 
 export interface CreateMobileHttpClientOptions {
   readonly config: PublicClientConfig;
@@ -10,12 +25,10 @@ export interface CreateMobileHttpClientOptions {
 }
 
 let managedHttpClient: ManagedHttpClient | null = null;
+let sessionManagerRef: SessionManager | null = null;
 
 export let axiosClient!: AxiosInstance;
 
-/**
- * Creates the mobile HTTP client once. No auth token wiring in Sprint 3.
- */
 export function createMobileHttpClient(
   options: CreateMobileHttpClientOptions,
 ): AxiosInstance {
@@ -23,20 +36,42 @@ export function createMobileHttpClient(
     return managedHttpClient.client;
   }
 
+  const tokenStorage = createMobileTokenStorage();
+
   managedHttpClient = createHttpClient({
     baseURL: options.config.apiBaseUrl,
+    tokenProvider: {
+      getAccessToken: () => tokenStorage.getAccessToken(),
+    },
+    refreshHandler: {
+      tryRefresh: async () => sessionManagerRef?.tryRefresh() ?? null,
+      shouldSkipRefresh: url =>
+        sessionManagerRef?.shouldSkipRefresh?.(url) ?? false,
+    },
     logger: createNetworkLoggerAdapter(options.logger),
   });
 
   axiosClient = managedHttpClient.client;
+  const authClient = setMobileAuthClient(
+    createMobileAuthClient({ client: axiosClient }),
+  );
+  sessionManagerRef = createMobileSessionManager({
+    authClient,
+    logger: options.logger,
+  });
+
   return axiosClient;
 }
 
 export function getMobileHttpClient(): AxiosInstance {
   if (!managedHttpClient) {
-    throw new Error("Mobile HTTP client has not been initialized.");
+    throw new Error('Mobile HTTP client has not been initialized.');
   }
   return managedHttpClient.client;
+}
+
+export function getMobileSession(): SessionManager {
+  return getMobileSessionManager();
 }
 
 export function ejectHttpInterceptors(): void {
@@ -48,5 +83,8 @@ export function resetMobileHttpClientForTests(): void {
     managedHttpClient.ejectInterceptors();
   }
   managedHttpClient = null;
+  sessionManagerRef = null;
   axiosClient = undefined as unknown as AxiosInstance;
+  resetMobileAuthClientForTests();
+  resetMobileSessionManagerForTests();
 }

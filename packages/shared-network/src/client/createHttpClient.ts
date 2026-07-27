@@ -24,6 +24,7 @@ import {
 } from "../retry";
 import type {
   NetworkLogger,
+  RefreshHandler,
   TokenProvider,
   UnauthorizedHandler,
 } from "../types";
@@ -34,6 +35,7 @@ export interface CreateHttpClientOptions {
   withCredentials?: boolean;
   tokenProvider?: TokenProvider;
   unauthorizedHandler?: UnauthorizedHandler;
+  refreshHandler?: RefreshHandler;
   retryPolicy?: RetryPolicy;
   logger?: NetworkLogger;
 }
@@ -47,8 +49,35 @@ export interface ManagedHttpClient {
 
 type RetriableConfig = AxiosRequestConfig & {
   __retryCount?: number;
+  __authReplay?: boolean;
   idempotent?: boolean;
 };
+
+const AUTH_SKIP_PATHS = [
+  "/auth/login",
+  "/auth/register",
+  "/auth/refresh",
+  "/auth/logout",
+  "/auth/forgot-password",
+  "/auth/reset-password",
+  "/auth/verify-email",
+  "/auth/resend-verification",
+];
+
+function shouldSkipAuthRefresh(
+  url: string | undefined,
+  refreshHandler?: RefreshHandler,
+): boolean {
+  if (refreshHandler?.shouldSkipRefresh?.(url)) {
+    return true;
+  }
+
+  if (!url) {
+    return false;
+  }
+
+  return AUTH_SKIP_PATHS.some((path) => url.includes(path));
+}
 
 function sleep(ms: number, signal?: AbortSignal | null): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -77,6 +106,7 @@ function attachInterceptors(
   options: {
     tokenProvider?: TokenProvider;
     unauthorizedHandler?: UnauthorizedHandler;
+    refreshHandler?: RefreshHandler;
     retryPolicy: RetryPolicy;
     logger?: NetworkLogger;
   },
@@ -85,7 +115,8 @@ function attachInterceptors(
     return;
   }
 
-  const { tokenProvider, unauthorizedHandler, retryPolicy, logger } = options;
+  const { tokenProvider, unauthorizedHandler, refreshHandler, retryPolicy, logger } =
+    options;
 
   const requestInterceptorId = client.interceptors.request.use(
     async (config: InternalAxiosRequestConfig & { idempotent?: boolean }) => {
@@ -118,6 +149,30 @@ function attachInterceptors(
     (response) => response,
     async (error: AxiosError) => {
       const config = error.config as RetriableConfig | undefined;
+      const status = error.response?.status;
+
+      if (
+        status === 401 &&
+        config &&
+        !config.__authReplay &&
+        refreshHandler &&
+        !shouldSkipAuthRefresh(config.url, refreshHandler)
+      ) {
+        const nextToken = await refreshHandler.tryRefresh();
+
+        if (nextToken) {
+          config.__authReplay = true;
+          config.headers = config.headers ?? {};
+          if (typeof config.headers.set === "function") {
+            config.headers.set("Authorization", `Bearer ${nextToken}`);
+          } else {
+            (config.headers as Record<string, string>).Authorization =
+              `Bearer ${nextToken}`;
+          }
+          return client.request(config);
+        }
+      }
+
       const retryCount = config?.__retryCount ?? 0;
       const shouldRetry =
         retryPolicy.shouldRetry?.(error) ?? defaultShouldRetry(error);
@@ -187,6 +242,7 @@ export function createHttpClient(
     withCredentials = true,
     tokenProvider,
     unauthorizedHandler,
+    refreshHandler,
     retryPolicy = defaultRetryPolicy,
     logger,
   } = options;
@@ -204,6 +260,7 @@ export function createHttpClient(
   const interceptorOptions = {
     tokenProvider,
     unauthorizedHandler,
+    refreshHandler,
     retryPolicy,
     logger,
   };

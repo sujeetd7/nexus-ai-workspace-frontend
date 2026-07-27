@@ -7,9 +7,24 @@
 export const ROUTE_IDS = {
   HOME: "home",
   NOT_FOUND: "not-found",
+  LOGIN: "login",
+  REGISTER: "register",
+  FORGOT_PASSWORD: "forgot-password",
+  RESET_PASSWORD: "reset-password",
+  VERIFY_EMAIL: "verify-email",
+  DASHBOARD: "dashboard",
 } as const;
 
 export type RouteId = (typeof ROUTE_IDS)[keyof typeof ROUTE_IDS];
+
+/** Infrastructure-only route identifiers for shared catalogs. */
+export const INFRASTRUCTURE_ROUTE_IDS = {
+  HOME: ROUTE_IDS.HOME,
+  NOT_FOUND: ROUTE_IDS.NOT_FOUND,
+} as const;
+
+export type InfrastructureRouteId =
+  (typeof INFRASTRUCTURE_ROUTE_IDS)[keyof typeof INFRASTRUCTURE_ROUTE_IDS];
 
 /** Route classification — metadata only; no auth/RBAC evaluation in this package. */
 export type RouteKind = "public" | "protected" | "system";
@@ -47,9 +62,9 @@ export const INFRASTRUCTURE_ROUTES = {
     webPath: "*",
     mobileName: "NotFound",
   },
-} as const satisfies Record<RouteId, RouteReference>;
+} as const satisfies Record<InfrastructureRouteId, RouteReference>;
 
-export type InfrastructureRouteId = keyof typeof INFRASTRUCTURE_ROUTES;
+export type InfrastructureRouteKey = keyof typeof INFRASTRUCTURE_ROUTES;
 
 /**
  * Generic navigation guard outcome.

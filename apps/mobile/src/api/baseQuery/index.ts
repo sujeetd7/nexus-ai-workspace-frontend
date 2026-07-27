@@ -1,1 +1,1 @@
-export { axiosBaseQuery } from "./axiosBaseQuery";
+export { axiosBaseQuery } from './axiosBaseQuery';

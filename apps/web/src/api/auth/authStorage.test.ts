@@ -24,7 +24,7 @@ describe("authStorage", () => {
 
     expect(getAccessToken()).toBe("access-token");
     expect(window.localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN)).toBe(
-      "access-token",
+      "access-token"
     );
   });
 

@@ -14,7 +14,7 @@ export type MobilePublicConfigSource = {
 
 export const mobilePublicConfigSource: MobilePublicConfigSource = {
   buildMode: "development",
-  apiBaseUrl: "http://localhost:3000/api",
+  apiBaseUrl: "http://localhost:3000/api/v1",
   graphqlUrl: "http://localhost:3000/graphql",
   appName: "Nexus AI Workspace",
 };

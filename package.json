@@ -51,6 +51,7 @@
     "adr:check": "node scripts/check-adr-ids.mjs",
     "android": "pnpm --filter mobile android",
     "boundaries:check": "node scripts/check-import-boundaries.mjs",
+    "contract:sync": "tsx scripts/contract-sync.ts",
     "build": "turbo run build",
     "build:web": "pnpm --filter web build",
     "clean": "turbo run clean",

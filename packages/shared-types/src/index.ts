@@ -10,6 +10,27 @@ export {
   type BootstrapStatus,
 } from "./bootstrap";
 export type { BuildMode, PublicClientConfig } from "./config";
+export type {
+  AuthClient,
+  AuthHttpClient,
+  AuthResponse,
+  AuthSessionInfo,
+  AuthSessionStatus,
+  AuthState,
+  AuthTokens,
+  AuthUser,
+  CreateAuthClientOptions,
+  ForgotPasswordRequest,
+  LoginRequest,
+  LogoutRequest,
+  MessageResponse,
+  RefreshTokenRequest,
+  RegisterRequest,
+  ResendVerificationRequest,
+  ResetPasswordRequest,
+  UserRole,
+  VerifyEmailRequest,
+} from "./auth";
 export type { Logger, StorageAdapter } from "./contracts";
 export type { ISODateString, ISODateTimeString } from "./datetime";
 export {
@@ -50,6 +71,7 @@ export {
   findDuplicateRouteIds,
   isNavigationAllowed,
   type InfrastructureRouteId,
+  type InfrastructureRouteKey,
   type NavigationDecision,
   type RouteId,
   type RouteKind,

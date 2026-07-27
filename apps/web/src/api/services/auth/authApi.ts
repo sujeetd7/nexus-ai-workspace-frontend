@@ -1,4 +1,3 @@
-import { baseApi } from "../../../api/services";
 import type {
   AuthResponse,
   ForgotPasswordRequest,
@@ -10,7 +9,9 @@ import type {
   ResendVerificationRequest,
   ResetPasswordRequest,
   VerifyEmailRequest,
-} from "../types";
+} from "@nexus/shared-types";
+
+import { baseApi } from "../baseApi";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

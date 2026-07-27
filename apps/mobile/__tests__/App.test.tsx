@@ -28,6 +28,9 @@ jest.mock('@nexus/shared-ui', () => {
     }) => ReactLocal.createElement('Button', { onPress }, children),
     Text: ({ children }: { children?: React.ReactNode }) =>
       ReactLocal.createElement('Text', null, children),
+    FormField: () => null,
+    InlineAlert: ({ children }: { children?: React.ReactNode }) =>
+      ReactLocal.createElement('Text', null, children),
     Stack: ({ children }: { children?: React.ReactNode }) =>
       ReactLocal.createElement('View', null, children),
     View: ({ children }: { children?: React.ReactNode }) =>
@@ -138,19 +141,22 @@ test('renders bootstrap gate with navigation without throwing', async () => {
 
   const flat = JSON.stringify(json);
   expect(flat).toContain('NavigationContainerMarker');
-  // Exactly one NavigationContainer marker in the tree.
   expect(flat.split('NavigationContainerMarker').length - 1).toBe(1);
-  expect(flat).toContain('Home');
+  expect(flat).toContain('Sign in');
 });
 
 test('exposes typed infrastructure route names and linking shape', () => {
   expect(MOBILE_ROUTE_NAMES.Home).toBe('Home');
+  expect(MOBILE_ROUTE_NAMES.Login).toBe('Login');
   expect(MOBILE_ROUTE_NAMES.NotFound).toBe('NotFound');
   expect(MOBILE_ROUTE_IDS.Home).toBe(ROUTE_IDS.HOME);
+  expect(MOBILE_ROUTE_IDS.Login).toBe(ROUTE_IDS.LOGIN);
   expect(MOBILE_ROUTE_IDS.NotFound).toBe(ROUTE_IDS.NOT_FOUND);
 
   expect(navigationLinking.prefixes).toEqual([]);
   expect(navigationLinking.config?.screens).toMatchObject({
+    Login: 'login',
+    Dashboard: 'dashboard',
     Home: '',
     NotFound: '*',
   });

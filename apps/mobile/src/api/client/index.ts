@@ -4,4 +4,4 @@ export {
   ejectHttpInterceptors,
   getMobileHttpClient,
   resetMobileHttpClientForTests,
-} from "./axios";
+} from './axios';

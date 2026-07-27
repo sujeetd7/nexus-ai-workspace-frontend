@@ -2,25 +2,28 @@ import {
   createAxiosBaseQuery,
   type AxiosBaseQueryArgs,
   type BaseQueryError,
-} from "@nexus/shared-network";
-import type { BaseQueryFn } from "@reduxjs/toolkit/query";
+} from '@nexus/shared-network';
+import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 
-import { axiosClient } from "../client";
+import { axiosClient } from '../client';
 
 export type { AxiosBaseQueryArgs, BaseQueryError };
 
-export const axiosBaseQuery =
-  (): BaseQueryFn<AxiosBaseQueryArgs, unknown, BaseQueryError> => {
-    return async (args, api, extraOptions) => {
-      const run = createAxiosBaseQuery(axiosClient);
+export const axiosBaseQuery = (): BaseQueryFn<
+  AxiosBaseQueryArgs,
+  unknown,
+  BaseQueryError
+> => {
+  return async (args, api, extraOptions) => {
+    const run = createAxiosBaseQuery(axiosClient);
 
-      return run(
-        {
-          ...args,
-          signal: args.signal ?? api.signal,
-        },
-        api,
-        extraOptions,
-      );
-    };
+    return run(
+      {
+        ...args,
+        signal: args.signal ?? api.signal,
+      },
+      api,
+      extraOptions,
+    );
   };
+};

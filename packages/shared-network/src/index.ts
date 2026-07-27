@@ -4,5 +4,7 @@ export * from "./errors";
 export * from "./graphql";
 export * from "./interceptors";
 export * from "./logging";
+export * from "./multipart";
 export * from "./retry";
+export * from "./streaming";
 export * from "./types";

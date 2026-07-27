@@ -1,11 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
 import { baseApi } from "../api/services";
+import authReducer from "./slices/auth/authSlice";
 
-/**
- * Mobile root reducer — RTK Query infrastructure only (no feature/auth state).
- */
 export const rootReducer = combineReducers({
+  auth: authReducer,
   [baseApi.reducerPath]: baseApi.reducer,
 });
 

@@ -11,6 +11,8 @@ export const navigationLinking: LinkingOptions<RootStackParamList> = {
   prefixes: [],
   config: {
     screens: {
+      [MOBILE_ROUTE_NAMES.Login]: "login",
+      [MOBILE_ROUTE_NAMES.Dashboard]: "dashboard",
       [MOBILE_ROUTE_NAMES.Home]: "",
       [MOBILE_ROUTE_NAMES.NotFound]: "*",
     },

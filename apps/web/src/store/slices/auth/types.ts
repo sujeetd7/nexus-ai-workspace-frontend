@@ -1,82 +1,20 @@
-export type UserRole = "USER" | "ADMIN" | "MANAGER";
+export type {
+  AuthResponse,
+  AuthState,
+  AuthTokens,
+  AuthUser,
+  ForgotPasswordRequest,
+  LoginRequest,
+  LogoutRequest,
+  MessageResponse,
+  RefreshTokenRequest,
+  RegisterRequest,
+  ResendVerificationRequest,
+  ResetPasswordRequest,
+  UserRole,
+  VerifyEmailRequest,
+} from "@nexus/shared-types";
 
-export interface AuthUser {
-  id: string;
-  email: string;
-  role: UserRole | string;
-  firstName?: string;
-  lastName?: string;
-  emailVerified: boolean;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+export type AuthStatus = AuthState["status"];
 
-export interface AuthTokens {
-  accessToken: string;
-  refreshToken: string;
-}
-
-export interface AuthResponse {
-  user: AuthUser;
-  tokens: AuthTokens;
-}
-
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-export interface RegisterRequest {
-  email: string;
-  password: string;
-  firstName?: string;
-  lastName?: string;
-}
-
-export interface RefreshTokenRequest {
-  refreshToken: string;
-}
-
-export interface LogoutRequest {
-  refreshToken: string;
-}
-
-export interface ForgotPasswordRequest {
-  email: string;
-}
-
-export interface ResetPasswordRequest {
-  token: string;
-  password: string;
-}
-
-export interface VerifyEmailRequest {
-  token: string;
-}
-
-export interface ResendVerificationRequest {
-  email: string;
-}
-
-export interface MessageResponse {
-  success?: boolean;
-  message: string;
-}
-
-export type AuthStatus =
-  | "idle"
-  | "restoring"
-  | "authenticated"
-  | "unauthenticated";
-
-export interface AuthState {
-  accessToken: string | null;
-  refreshToken: string | null;
-  user: AuthUser | null;
-  authenticated: boolean;
-  loading: boolean;
-  initialized: boolean;
-  status: AuthStatus;
-  error: string | null;
-}
+import type { AuthState } from "@nexus/shared-types";

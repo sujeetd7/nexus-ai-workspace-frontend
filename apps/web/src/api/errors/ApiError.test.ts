@@ -48,7 +48,7 @@ describe("normalizeApiError", () => {
           message: "Email or password is incorrect.",
           requestId: "body-request-id",
         },
-      },
+      }
     );
 
     const normalized = normalizeApiError(axiosError);
@@ -78,7 +78,7 @@ describe("normalizeApiError", () => {
           code: "INTERNAL_ERROR",
           message: "Something went wrong.",
         },
-      },
+      }
     );
 
     const normalized = normalizeApiError(axiosError);
@@ -107,7 +107,7 @@ describe("normalizeApiError", () => {
           },
           requestId: "request-123",
         },
-      },
+      }
     );
 
     const normalized = normalizeApiError(axiosError);

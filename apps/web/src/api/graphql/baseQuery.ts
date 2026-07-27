@@ -7,7 +7,7 @@ const runGraphQLBaseQuery = createGraphQLBaseQuery(graphqlClient);
 
 export async function graphqlBaseQuery<T>(
   request: GraphQLRequest,
-  signal?: AbortSignal,
+  signal?: AbortSignal
 ): Promise<T> {
   return runGraphQLBaseQuery<T>(request, signal);
 }

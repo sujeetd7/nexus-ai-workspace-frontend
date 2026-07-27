@@ -4,6 +4,7 @@ export {
   findDuplicateRouteIds,
   isNavigationAllowed,
   type InfrastructureRouteId,
+  type InfrastructureRouteKey,
   type NavigationDecision,
   type RouteId,
   type RouteKind,

@@ -3,7 +3,7 @@ import type { InternalAxiosRequestConfig } from "axios";
 import { getAccessToken } from "./authStorage";
 
 export function attachAuthorizationHeader(
-  config: InternalAxiosRequestConfig,
+  config: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig {
   const token = getAccessToken();
 

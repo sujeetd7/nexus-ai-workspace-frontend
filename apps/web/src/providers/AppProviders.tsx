@@ -5,6 +5,7 @@ import {
 } from "@nexus/shared-ui";
 
 import type { WebRuntime } from "../bootstrap/types";
+import { AuthBootstrap } from "./AuthBootstrap";
 import { ReduxProvider } from "./redux";
 
 export interface AppProvidersProps extends PropsWithChildren {
@@ -22,7 +23,9 @@ export function AppProviders({ children, runtime }: AppProvidersProps) {
       storage={runtime.themeStorage}
       storageKey={THEME_PREFERENCE_STORAGE_KEY}
     >
-      <ReduxProvider store={runtime.store}>{children}</ReduxProvider>
+      <ReduxProvider store={runtime.store}>
+        <AuthBootstrap>{children}</AuthBootstrap>
+      </ReduxProvider>
     </SharedUIProvider>
   );
 }

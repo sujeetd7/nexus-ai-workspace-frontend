@@ -12,7 +12,7 @@ function createRequestId(): string {
 }
 
 export function requestInterceptor(
-  config: InternalAxiosRequestConfig,
+  config: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig {
   if (!config.headers.has("X-Request-Id")) {
     config.headers.set("X-Request-Id", createRequestId());

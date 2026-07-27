@@ -1,0 +1,8 @@
+{
+  "source": "http://localhost:3000/docs/json",
+  "owner": "frontend-platform",
+  "syncedAt": "2026-07-27T00:00:00.000Z",
+  "operationCount": 12,
+  "excludedServices": ["admin", "analytics", "notification"],
+  "notes": "Curated Auth types live in packages/shared-types/src/auth. Snapshot metadata only; no generated runtime dependency."
+}

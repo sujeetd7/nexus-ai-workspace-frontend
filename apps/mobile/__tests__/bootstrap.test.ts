@@ -31,7 +31,7 @@ describe('bootstrapMobileApp', () => {
     }
 
     expect(first.runtime.store.getState()).toHaveProperty('api');
-    expect(first.runtime.store.getState()).not.toHaveProperty('auth');
+    expect(first.runtime.store.getState()).toHaveProperty('auth');
     expect(first.runtime.httpClient).toBeTruthy();
 
     const second = bootstrapMobileApp();
@@ -99,6 +99,6 @@ describe('mobile createAppStore', () => {
     expect(a.store).not.toBe(b.store);
     expect(a.sagaStarted).toBe(true);
     expect(b.sagaStarted).toBe(false);
-    expect(Object.keys(a.store.getState())).toEqual(['api']);
+    expect(Object.keys(a.store.getState())).toEqual(['auth', 'api']);
   });
 });

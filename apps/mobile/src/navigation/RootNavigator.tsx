@@ -1,33 +1,65 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useSelector } from "react-redux";
+import { Loader, Stack, Text } from "@nexus/shared-ui";
 
 import { HomeScreen, NotFoundScreen } from "../screens/system";
+import { DashboardScreen, LoginScreen } from "../screens/auth";
+import {
+  selectAuthInitialized,
+  selectAuthLoading,
+  selectIsAuthenticated,
+} from "../store/slices/auth/selectors";
 import type { RootStackParamList } from "./types";
 import { MOBILE_ROUTE_NAMES } from "./types";
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const NativeStack = createNativeStackNavigator<RootStackParamList>();
 
-/**
- * Single native-stack root navigator — infrastructure routes only.
- */
-export function RootNavigator() {
+function AuthLoadingScreen() {
   return (
-    <Stack.Navigator
-      initialRouteName={MOBILE_ROUTE_NAMES.Home}
-      screenOptions={{
-        headerShown: false,
-        animation: "fade",
-      }}
+    <Stack align="center" justify="center" padding="xl" gap="md">
+      <Loader accessibilityLabel="Checking session" />
+      <Text>Checking session…</Text>
+    </Stack>
+  );
+}
+
+export function RootNavigator() {
+  const initialized = useSelector(selectAuthInitialized);
+  const loading = useSelector(selectAuthLoading);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+
+  if (!initialized || loading) {
+    return <AuthLoadingScreen />;
+  }
+
+  return (
+    <NativeStack.Navigator
+      initialRouteName={
+        isAuthenticated ? MOBILE_ROUTE_NAMES.Dashboard : MOBILE_ROUTE_NAMES.Login
+      }
+      screenOptions={{ headerShown: false, animation: "fade" }}
     >
-      <Stack.Screen
-        name={MOBILE_ROUTE_NAMES.Home}
-        component={HomeScreen}
-        options={{ title: "Home" }}
-      />
-      <Stack.Screen
+      {isAuthenticated ? (
+        <>
+          <NativeStack.Screen
+            name={MOBILE_ROUTE_NAMES.Dashboard}
+            component={DashboardScreen}
+          />
+          <NativeStack.Screen
+            name={MOBILE_ROUTE_NAMES.Home}
+            component={HomeScreen}
+          />
+        </>
+      ) : (
+        <NativeStack.Screen
+          name={MOBILE_ROUTE_NAMES.Login}
+          component={LoginScreen}
+        />
+      )}
+      <NativeStack.Screen
         name={MOBILE_ROUTE_NAMES.NotFound}
         component={NotFoundScreen}
-        options={{ title: "Not Found" }}
       />
-    </Stack.Navigator>
+    </NativeStack.Navigator>
   );
 }

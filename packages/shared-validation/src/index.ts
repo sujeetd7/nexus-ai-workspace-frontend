@@ -4,6 +4,14 @@ export {
   publicClientConfigSchema,
 } from "./config";
 export {
+  forgotPasswordRequestSchema,
+  loginRequestSchema,
+  registerRequestSchema,
+  resendVerificationRequestSchema,
+  resetPasswordRequestSchema,
+  verifyEmailRequestSchema,
+} from "./auth";
+export {
   parseWithSchema,
   type ParseWithSchemaOptions,
 } from "./parse";

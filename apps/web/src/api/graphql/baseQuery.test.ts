@@ -73,7 +73,7 @@ describe("graphqlBaseQuery", () => {
     });
 
     await expect(
-      graphqlBaseQuery({ query: "{ secret }" }),
+      graphqlBaseQuery({ query: "{ secret }" })
     ).rejects.toBeInstanceOf(ApiError);
   });
 });

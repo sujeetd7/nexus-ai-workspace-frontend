@@ -1,1 +1,1 @@
-export * from "./authApi";
+export * from "../../../api/services/auth";

@@ -124,7 +124,7 @@ describe("GraphQL client network logger wiring", () => {
       redactSensitive({
         Authorization: "Bearer secret",
         cookie: "session=1",
-      }),
+      })
     ).toEqual({
       Authorization: "[REDACTED]",
       cookie: "[REDACTED]",

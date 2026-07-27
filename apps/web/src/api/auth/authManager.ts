@@ -5,7 +5,7 @@ export type UnauthorizedHandler = () => void;
 let unauthorizedHandler: UnauthorizedHandler | undefined;
 
 export function setUnauthorizedHandler(
-  handler: UnauthorizedHandler | undefined,
+  handler: UnauthorizedHandler | undefined
 ): void {
   unauthorizedHandler = handler;
 }

@@ -44,7 +44,7 @@ export default defineConfig({
     // Cap workers so web Vitest stays deterministic without skipping tests.
     maxWorkers: 1,
     env: {
-      VITE_API_URL: "http://localhost:3000/api",
+      VITE_API_URL: "http://localhost:3000/api/v1",
       VITE_GRAPHQL_URL: "http://localhost:3000/graphql",
       VITE_APP_NAME: "Nexus AI Workspace",
     },

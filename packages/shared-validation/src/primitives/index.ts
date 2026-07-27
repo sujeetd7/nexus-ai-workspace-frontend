@@ -1,5 +1,7 @@
 export {
   nonEmptyTrimmedStringSchema,
+  emailSchema,
+  passwordSchema,
   optionalTrimmedStringSchema,
 } from "./strings";
 export { positiveIntSchema, nonNegativeIntSchema } from "./numbers";

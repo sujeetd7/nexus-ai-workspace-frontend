@@ -29,7 +29,7 @@ describe("axiosBaseQuery", () => {
         method: "GET",
       },
       { signal } as never,
-      {},
+      {}
     );
 
     expect(result).toEqual({
@@ -71,7 +71,7 @@ describe("axiosBaseQuery", () => {
         },
       },
       {} as never,
-      {},
+      {}
     );
 
     expect(axiosClient).toHaveBeenCalledWith({
@@ -108,7 +108,7 @@ describe("axiosBaseQuery", () => {
           message: "Authentication failed.",
           requestId: "request-123",
         },
-      },
+      }
     );
 
     vi.mocked(axiosClient).mockRejectedValue(axiosError);
@@ -120,7 +120,7 @@ describe("axiosBaseQuery", () => {
         url: "/profile",
       },
       {} as never,
-      {},
+      {}
     );
 
     expect(result).toEqual({

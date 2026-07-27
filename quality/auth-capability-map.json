@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "capabilities": [
+    {
+      "operationId": "authRegister",
+      "gatewayRoute": "POST /api/v1/auth/register",
+      "swaggerDocumented": true,
+      "authClient": "createAuthClient.register",
+      "sessionOwner": "createSessionManager.register",
+      "webFeature": "RegisterScreen",
+      "mobileFeature": null,
+      "tests": ["packages/shared-utils/src/auth/createAuthClient.test.ts"],
+      "maturity": "client-wired"
+    },
+    {
+      "operationId": "authLogin",
+      "gatewayRoute": "POST /api/v1/auth/login",
+      "swaggerDocumented": true,
+      "authClient": "createAuthClient.login",
+      "sessionOwner": "createSessionManager.login",
+      "webFeature": "LoginScreen",
+      "mobileFeature": "LoginScreen",
+      "tests": [
+        "packages/shared-utils/src/auth/createAuthClient.test.ts",
+        "apps/web/src/features/auth/screens/LoginScreen.test.tsx"
+      ],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "authRefresh",
+      "gatewayRoute": "POST /api/v1/auth/refresh",
+      "swaggerDocumented": true,
+      "authClient": "createAuthClient.refresh",
+      "sessionOwner": "createSessionManager.tryRefresh",
+      "webFeature": "AuthBootstrap",
+      "mobileFeature": "MobileAuthBootstrap",
+      "tests": ["packages/shared-utils/src/auth/createSessionManager.test.ts"],
+      "maturity": "integration-tested"
+    },
+    {
+      "operationId": "authLogout",
+      "gatewayRoute": "POST /api/v1/auth/logout",
+      "swaggerDocumented": true,
+      "authClient": "createAuthClient.logout",
+      "sessionOwner": "createSessionManager.logout",
+      "webFeature": "DashboardScreen",
+      "mobileFeature": "DashboardScreen",
+      "tests": ["packages/shared-utils/src/auth/createAuthClient.test.ts"],
+      "maturity": "client-wired"
+    },
+    {
+      "operationId": "authLogoutAll",
+      "gatewayRoute": "DELETE /api/v1/auth/sessions",
+      "swaggerDocumented": true,
+      "authClient": "createAuthClient.logoutAll",
+      "sessionOwner": "createSessionManager.logoutAll",
+      "webFeature": null,
+      "mobileFeature": null,
+      "tests": ["packages/shared-utils/src/auth/createAuthClient.test.ts"],
+      "maturity": "client-wired"
+    },
+    {
+      "operationId": "authForgotPassword",
+      "gatewayRoute": "POST /api/v1/auth/forgot-password",
+      "swaggerDocumented": true,
+      "authClient": "createAuthClient.forgotPassword",
+      "sessionOwner": null,
+      "webFeature": "ForgotPasswordScreen",
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "authResetPassword",
+      "gatewayRoute": "POST /api/v1/auth/reset-password",
+      "swaggerDocumented": true,
+      "authClient": "createAuthClient.resetPassword",
+      "sessionOwner": null,
+      "webFeature": "ResetPasswordScreen",
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "authVerifyEmail",
+      "gatewayRoute": "POST /api/v1/auth/verify-email",
+      "swaggerDocumented": true,
+      "authClient": "createAuthClient.verifyEmail",
+      "sessionOwner": null,
+      "webFeature": "VerifyEmailScreen",
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "web-wired"
+    },
+    {
+      "operationId": "authResendVerification",
+      "gatewayRoute": "POST /api/v1/auth/resend-verification",
+      "swaggerDocumented": true,
+      "authClient": "createAuthClient.resendVerification",
+      "sessionOwner": null,
+      "webFeature": null,
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "client-wired"
+    }
+  ]
+}

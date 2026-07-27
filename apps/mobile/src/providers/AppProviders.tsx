@@ -4,6 +4,7 @@ import { SharedUIProvider } from "@nexus/shared-ui";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import type { MobileRuntime } from "../bootstrap/types";
+import { MobileAuthBootstrap } from "./MobileAuthBootstrap";
 
 export interface AppProvidersProps extends PropsWithChildren {
   readonly runtime: MobileRuntime;
@@ -18,7 +19,9 @@ export function AppProviders({ children, runtime }: AppProvidersProps) {
   return (
     <SafeAreaProvider>
       <SharedUIProvider defaultPreference="system">
-        <Provider store={runtime.store}>{children}</Provider>
+        <Provider store={runtime.store}>
+          <MobileAuthBootstrap>{children}</MobileAuthBootstrap>
+        </Provider>
       </SharedUIProvider>
     </SafeAreaProvider>
   );
