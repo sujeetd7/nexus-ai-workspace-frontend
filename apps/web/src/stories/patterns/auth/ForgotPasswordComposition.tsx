@@ -43,14 +43,15 @@ export const ForgotPasswordComposition: FC<ForgotPasswordCompositionProps> = ({
       testID="forgot-shell"
       brand={
         <Text variant="h2" align="center" weight="bold">
-          Nexus
+          Nexus AI Workspace
         </Text>
       }
     >
       <AuthCard
         testID="forgot-card"
         title="Forgot password"
-        description="Enter your email and we'll send a reset link."
+        description="We'll email reset instructions if the account exists."
+        headingLevel={2}
         status={
           apiError ? (
             <InlineAlert tone="error" title="Unable to send link">
@@ -87,6 +88,17 @@ export const ForgotPasswordComposition: FC<ForgotPasswordCompositionProps> = ({
                 fieldErrors ? "Enter a valid email address" : undefined
               }
             />
+            {apiError ? (
+              <Button
+                fullWidth
+                variant="secondary"
+                type="button"
+                disabled={disabled}
+                onPress={() => undefined}
+              >
+                Try again
+              </Button>
+            ) : null}
             <Button
               fullWidth
               type="submit"
@@ -97,7 +109,16 @@ export const ForgotPasswordComposition: FC<ForgotPasswordCompositionProps> = ({
               Send reset link
             </Button>
           </>
-        ) : null}
+        ) : (
+          <Button
+            fullWidth
+            variant="secondary"
+            type="button"
+            onPress={() => undefined}
+          >
+            Send another link
+          </Button>
+        )}
       </AuthCard>
     </AuthShell>
   );

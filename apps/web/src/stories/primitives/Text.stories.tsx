@@ -22,7 +22,16 @@ export const Variants: Story = {
   render: () => (
     <>
       {(
-        ["display", "h1", "h2", "h3", "body", "caption", "label"] as const
+        [
+          "display",
+          "h1",
+          "h2",
+          "h3",
+          "body",
+          "caption",
+          "sectionLabel",
+          "label",
+        ] as const
       ).map((variant) => (
         <Text key={variant} variant={variant}>
           {variant}

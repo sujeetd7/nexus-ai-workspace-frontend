@@ -14,6 +14,7 @@ import type {
 const backgroundMap = {
   background: "$background",
   surface: "$surface",
+  surfaceMuted: "$surfaceMuted",
   transparent: "transparent",
 } as const;
 

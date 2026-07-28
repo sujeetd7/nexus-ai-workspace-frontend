@@ -5,7 +5,6 @@ import {
   AuthFooter,
   AuthShell,
   Button,
-  Checkbox,
   FormField,
   InlineAlert,
   Text,
@@ -24,22 +23,20 @@ export interface RegistrationCompositionProps {
 }
 
 /**
- * Storybook-only registration composition — mock local state, no API or routes.
+ * Storybook-only registration composition — mirrors backend RegisterRequest
+ * (email, password, optional firstName/lastName). No invented terms/confirm fields.
  */
 export const RegistrationComposition: FC<RegistrationCompositionProps> = ({
   state = "default",
 }) => {
-  const [name, setName] = useState(state === "fieldErrors" ? "" : "Alex Rivera");
+  const [firstName, setFirstName] = useState("Alex");
+  const [lastName, setLastName] = useState("Rivera");
   const [email, setEmail] = useState(
     state === "fieldErrors" ? "bad" : "alex@example.com",
   );
   const [password, setPassword] = useState(
     state === "fieldErrors" ? "123" : "password123",
   );
-  const [confirm, setConfirm] = useState(
-    state === "fieldErrors" ? "456" : "password123",
-  );
-  const [terms, setTerms] = useState(state !== "fieldErrors");
 
   const disabled = state === "disabled" || state === "submitting";
   const submitting = state === "submitting";
@@ -52,14 +49,15 @@ export const RegistrationComposition: FC<RegistrationCompositionProps> = ({
       testID="register-shell"
       brand={
         <Text variant="h2" align="center" weight="bold">
-          Nexus
+          Nexus AI Workspace
         </Text>
       }
     >
       <AuthCard
         testID="register-card"
         title="Create account"
-        description="Set up your Nexus workspace credentials."
+        description="Register to access Nexus AI Workspace."
+        headingLevel={2}
         status={
           apiError ? (
             <InlineAlert tone="error" title="Unable to register">
@@ -78,69 +76,63 @@ export const RegistrationComposition: FC<RegistrationCompositionProps> = ({
           />
         }
       >
-        <FormField
-          label="Name"
-          placeholder="Your full name"
-          value={name}
-          onChangeText={setName}
-          disabled={disabled}
-          required
-          autoComplete="name"
-          errorText={fieldErrors ? "Name is required" : undefined}
-        />
-        <FormField
-          label="Email"
-          placeholder="you@example.com"
-          value={email}
-          onChangeText={setEmail}
-          disabled={disabled}
-          required
-          autoComplete="email"
-          inputMode="email"
-          errorText={fieldErrors ? "Enter a valid email address" : undefined}
-        />
-        <FormField
-          label="Password"
-          placeholder="Create a password"
-          value={password}
-          onChangeText={setPassword}
-          disabled={disabled}
-          required
-          secureTextEntry
-          autoComplete="new-password"
-          errorText={
-            fieldErrors ? "Password must be at least 8 characters" : undefined
-          }
-        />
-        <FormField
-          label="Confirm password"
-          placeholder="Re-enter your password"
-          value={confirm}
-          onChangeText={setConfirm}
-          disabled={disabled}
-          required
-          secureTextEntry
-          autoComplete="new-password"
-          errorText={fieldErrors ? "Passwords do not match" : undefined}
-        />
-        <Checkbox
-          label="I agree to the Terms of Service"
-          checked={terms}
-          disabled={disabled}
-          onCheckedChange={setTerms}
-        />
-        {fieldErrors && !terms ? (
-          <InlineAlert tone="error">You must accept the terms.</InlineAlert>
+        {!success ? (
+          <>
+            <FormField
+              label="First name"
+              placeholder="Optional"
+              value={firstName}
+              onChangeText={setFirstName}
+              disabled={disabled}
+              autoComplete="given-name"
+            />
+            <FormField
+              label="Last name"
+              placeholder="Optional"
+              value={lastName}
+              onChangeText={setLastName}
+              disabled={disabled}
+              autoComplete="family-name"
+            />
+            <FormField
+              label="Email"
+              placeholder="you@example.com"
+              value={email}
+              onChangeText={setEmail}
+              disabled={disabled}
+              required
+              autoComplete="email"
+              inputMode="email"
+              errorText={
+                fieldErrors ? "Enter a valid email address" : undefined
+              }
+            />
+            <FormField
+              label="Password"
+              placeholder="Create a password"
+              value={password}
+              onChangeText={setPassword}
+              disabled={disabled}
+              required
+              secureTextEntry
+              autoComplete="new-password"
+              errorText={
+                fieldErrors
+                  ? "Password must be at least 8 characters"
+                  : undefined
+              }
+            />
+            <Button
+              fullWidth
+              type="submit"
+              loading={submitting}
+              disabled={disabled && !submitting}
+              onPress={() => undefined}
+            >
+              Create account
+            </Button>
+          </>
         ) : null}
-        <Button
-          fullWidth
-          type="submit"
-          loading={submitting}
-          disabled={disabled && !submitting}
-          onPress={() => undefined}
-        >
-          Create account
-        </Button>
       </AuthCard>
     </AuthShell>
   );

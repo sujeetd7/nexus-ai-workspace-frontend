@@ -1,6 +1,10 @@
 /**
  * Typography tokens — single source of truth for type scale.
  * Flat size keys remain for Batch 2.1 compatibility.
+ *
+ * `sectionLabel` (Batch 5.DS.1) aliases caption metrics for sidebar / settings /
+ * history group headings. Prefer `fontWeight.medium` + `textSecondary` at use sites.
+ * Not a new raw size — semantic role only.
  */
 export const typography = {
   fontFamily: "Inter",
@@ -11,6 +15,8 @@ export const typography = {
   h3: 24,
   body: 16,
   caption: 12,
+  /** Semantic alias of caption size for grouped UI labels (5.DS.1). */
+  sectionLabel: 12,
   label: 14,
 
   size: {
@@ -20,6 +26,7 @@ export const typography = {
     h3: 24,
     body: 16,
     caption: 12,
+    sectionLabel: 12,
     label: 14,
   },
 
@@ -37,6 +44,7 @@ export const typography = {
     h3: 32,
     body: 24,
     caption: 16,
+    sectionLabel: 16,
     label: 20,
   },
 
@@ -47,6 +55,7 @@ export const typography = {
     h3: 0,
     body: 0,
     caption: 0.2,
+    sectionLabel: 0.2,
     label: 0.1,
   },
 } as const;

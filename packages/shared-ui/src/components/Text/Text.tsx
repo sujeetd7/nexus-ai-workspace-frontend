@@ -15,6 +15,7 @@ export type TextVariant =
   | "h3"
   | "body"
   | "caption"
+  | "sectionLabel"
   | "label";
 
 /** @deprecated Stub aliases — prefer `h2` / `h3`. Kept for unused stub compatibility. */
@@ -80,6 +81,12 @@ const variantStyles = {
     lineHeight: "$caption",
     letterSpacing: "$caption",
     fontWeight: "$4",
+  },
+  sectionLabel: {
+    fontSize: "$sectionLabel",
+    lineHeight: "$sectionLabel",
+    letterSpacing: "$sectionLabel",
+    fontWeight: "$5",
   },
   label: {
     fontSize: "$label",

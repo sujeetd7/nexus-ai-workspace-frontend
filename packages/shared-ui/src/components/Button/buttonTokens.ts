@@ -4,7 +4,7 @@ import { radius } from "../../theme/radius";
 import { spacing } from "../../theme/spacing";
 import { typography } from "../../theme/typography";
 import type { Theme } from "../../types/theme";
-import type { ButtonSize, ButtonVariant } from "./Button.types";
+import type { ButtonShape, ButtonSize, ButtonVariant } from "./Button.types";
 
 export const labelColor: Record<
   ButtonVariant,
@@ -69,13 +69,17 @@ export function resolveButtonSurface(
   }
 }
 
-export function resolveButtonLayout(size: ButtonSize, fullWidth: boolean) {
+export function resolveButtonLayout(
+  size: ButtonSize,
+  fullWidth: boolean,
+  shape: ButtonShape = "default",
+) {
   const padding = sizePadding[size];
   return {
     ...padding,
     minHeight: MIN_TOUCH_TARGET_SIZE,
     minWidth: MIN_TOUCH_TARGET_SIZE,
-    borderRadius: radius.md,
+    borderRadius: shape === "pill" ? radius.pill : radius.md,
     borderWidth: 1,
     fontFamily: typography.fontFamily,
     fontSize:

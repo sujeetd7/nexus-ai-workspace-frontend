@@ -51,4 +51,35 @@ describe("Chip", () => {
       MIN_TOUCH_TARGET_SIZE,
     );
   });
+
+  it("uses pill radius by default and muted tone when requested", () => {
+    renderWithSharedUI(<Chip testID="pill">Quick</Chip>);
+    expect(
+      (screen.getByTestId("pill") as HTMLElement).style.borderRadius,
+    ).toBe("999px");
+
+    renderWithSharedUI(
+      <Chip testID="muted" tone="muted">
+        Muted
+      </Chip>,
+    );
+    const muted = screen.getByTestId("muted") as HTMLElement;
+    expect(muted.style.backgroundColor.toLowerCase()).toBe(
+      "rgb(243, 244, 246)",
+    );
+    expect(muted.style.borderColor.toLowerCase()).toBe("rgb(243, 244, 246)");
+  });
+
+  it("keeps selected chips on Nexus primary regardless of tone", () => {
+    renderWithSharedUI(
+      <Chip testID="sel" selected tone="muted">
+        On
+      </Chip>,
+    );
+    const node = screen.getByTestId("sel") as HTMLElement;
+    expect(node.getAttribute("aria-pressed")).toBe("true");
+    expect(node.style.backgroundColor.toLowerCase()).toBe(
+      "rgb(37, 99, 235)",
+    );
+  });
 });

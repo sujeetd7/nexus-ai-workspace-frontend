@@ -1,3 +1,4 @@
+import { normalizeFrontendApiError } from "@nexus/shared-network";
 import { takeLatest, put, call } from "redux-saga/effects";
 
 import { getWebSession } from "../../../api/client/axios";
@@ -73,11 +74,7 @@ function* loginWorker(action: { payload: LoginPayload }) {
 
     yield put(authFailure("Unable to sign in."));
   } catch (error) {
-    yield put(
-      authFailure(
-        error instanceof Error ? error.message : "Unable to sign in.",
-      ),
-    );
+    yield put(authFailure(normalizeFrontendApiError(error).message));
   }
 }
 

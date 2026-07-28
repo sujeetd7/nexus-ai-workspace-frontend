@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 type ParseResult<T> =
   | { readonly success: true; readonly data: T }
@@ -24,16 +24,19 @@ export function useAuthForm<T extends Record<string, string>>({
   initialValues,
 }: UseAuthFormOptions<T>) {
   const [values, setValues] = useState<T>(initialValues);
-  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof T, string>>>(
-    {},
-  );
+  const [fieldErrors, setFieldErrors] = useState<
+    Partial<Record<keyof T, string>>
+  >({});
 
-  const setField = <K extends keyof T>(field: K, value: T[K]) => {
+  const setField = useCallback(<K extends keyof T>(field: K, value: T[K]) => {
     setValues((current) => ({ ...current, [field]: value }));
     setFieldErrors((current) => ({ ...current, [field]: undefined }));
-  };
+  }, []);
 
-  const validate = (): boolean => {
+  const validate = useCallback((): {
+    ok: boolean;
+    errors: Partial<Record<keyof T, string>>;
+  } => {
     const result = schema.safeParse(values);
     if (result.success === false) {
       const nextErrors: Partial<Record<keyof T, string>> = {};
@@ -44,24 +47,23 @@ export function useAuthForm<T extends Record<string, string>>({
         }
       }
       setFieldErrors(nextErrors);
-      return false;
+      return { ok: false, errors: nextErrors };
     }
 
     setFieldErrors({});
-    return true;
-  };
+    return { ok: true, errors: {} };
+  }, [schema, values]);
 
-  return useMemo(
-    () => ({
-      values,
-      fieldErrors,
-      setField,
-      validate,
-      reset: () => {
-        setValues(initialValues);
-        setFieldErrors({});
-      },
-    }),
-    [fieldErrors, initialValues, values],
-  );
+  const reset = useCallback(() => {
+    setValues(initialValues);
+    setFieldErrors({});
+  }, [initialValues]);
+
+  return {
+    values,
+    fieldErrors,
+    setField,
+    validate,
+    reset,
+  };
 }

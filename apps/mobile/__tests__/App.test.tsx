@@ -15,6 +15,12 @@ import { ROUTE_IDS } from '@nexus/shared-types';
 
 jest.mock('@nexus/shared-ui', () => {
   const ReactLocal = require('react');
+  const wrapText = (children: React.ReactNode) => {
+    if (typeof children === 'string' || typeof children === 'number') {
+      return ReactLocal.createElement('Text', null, children);
+    }
+    return children;
+  };
   return {
     SharedUIProvider: ({ children }: { children: React.ReactNode }) =>
       ReactLocal.createElement(ReactLocal.Fragment, null, children),
@@ -38,6 +44,46 @@ jest.mock('@nexus/shared-ui', () => {
     Divider: () => null,
     Section: ({ children }: { children?: React.ReactNode }) =>
       ReactLocal.createElement('View', null, children),
+    AuthShell: ({
+      children,
+      brand,
+    }: {
+      children?: React.ReactNode;
+      brand?: React.ReactNode;
+    }) => ReactLocal.createElement('View', null, brand, children),
+    AuthCard: ({
+      children,
+      title,
+      footer,
+    }: {
+      children?: React.ReactNode;
+      title?: React.ReactNode;
+      footer?: React.ReactNode;
+    }) =>
+      ReactLocal.createElement(
+        'View',
+        null,
+        wrapText(title),
+        children,
+        footer,
+      ),
+    AuthFooter: ({
+      link,
+    }: {
+      link: { label: React.ReactNode; onPress?: () => void };
+    }) =>
+      ReactLocal.createElement(
+        'View',
+        { onPress: link.onPress },
+        wrapText(link.label),
+      ),
+    Link: ({
+      children,
+      onPress,
+    }: {
+      children?: React.ReactNode;
+      onPress?: () => void;
+    }) => ReactLocal.createElement('View', { onPress }, wrapText(children)),
   };
 });
 
@@ -60,6 +106,8 @@ jest.mock('@react-navigation/native', () => {
         children,
         ReactLocal.createElement('NavigationContainerMarker'),
       ),
+    useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+    useRoute: () => ({ key: 'Login', name: 'Login', params: undefined }),
   };
 });
 

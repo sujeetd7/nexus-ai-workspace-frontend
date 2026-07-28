@@ -59,6 +59,22 @@ export const Loading: Story = {
   args: { loading: true, accessibilityLabel: "Continue", children: "Continue" },
 };
 
+export const PillShape: Story = {
+  render: (args) => (
+    <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+      <Button {...args} shape="default">
+        Default shape
+      </Button>
+      <Button {...args} shape="pill">
+        Pill shape
+      </Button>
+      <Button {...args} shape="pill" variant="secondary">
+        Pill secondary
+      </Button>
+    </div>
+  ),
+};
+
 export const Accessibility: Story = {
   args: {
     accessibilityLabel: "Save changes",

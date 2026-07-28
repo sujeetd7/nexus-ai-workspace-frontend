@@ -59,6 +59,7 @@ export const Button: FC<ButtonProps> = ({
   children,
   variant = "primary",
   size = "md",
+  shape = "default",
   loading = false,
   disabled = false,
   fullWidth = false,
@@ -74,7 +75,7 @@ export const Button: FC<ButtonProps> = ({
 
   const { theme } = useTheme();
   const surface = resolveButtonSurface(theme, variant);
-  const layout = resolveButtonLayout(size, fullWidth);
+  const layout = resolveButtonLayout(size, fullWidth, shape);
   const name = resolveAccessibleName(loading, accessibilityLabel, children);
   const blocksActivation = disabled || loading;
 

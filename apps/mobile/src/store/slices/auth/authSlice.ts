@@ -64,6 +64,20 @@ const authSlice = createSlice({
       state.initialized = true;
       state.status = "unauthenticated";
     },
+    sessionExpired(state) {
+      state.accessToken = null;
+      state.refreshToken = null;
+      state.user = null;
+      state.authenticated = false;
+      state.loading = false;
+      state.initialized = true;
+      state.status = "session-expired";
+      state.error = "Your session has expired. Please sign in again.";
+    },
+    sessionExpiredAcknowledged(state) {
+      state.status = "unauthenticated";
+      state.error = null;
+    },
     logoutCompleted(state) {
       state.accessToken = null;
       state.refreshToken = null;
@@ -88,6 +102,8 @@ export const {
   sessionTokensRestored,
   sessionUserUpdated,
   sessionRestoreFailed,
+  sessionExpired,
+  sessionExpiredAcknowledged,
   logoutCompleted,
   clearAuthError,
 } = authSlice.actions;

@@ -5,6 +5,7 @@
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Suspense, type ReactElement } from "react";
+import { Provider } from "react-redux";
 import {
   createMemoryRouter,
   RouterProvider,
@@ -18,8 +19,21 @@ import { applyNavigationDecision } from "../guards";
 import { createAppRouteObjects } from "../createAppRouteObjects";
 import { WEB_ROUTE_PATHS } from "../paths";
 import { publicRoutes } from "../routes";
+import { createAppStore } from "../../store/createAppStore";
 
 function renderRouter(initialEntry = "/") {
+  const { store } = createAppStore({
+    config: {
+      buildMode: "test",
+      apiBaseUrl: "http://localhost:3000/api/v1",
+      graphqlUrl: "http://localhost:3000/graphql",
+      appName: "Nexus",
+      isDevelopment: false,
+      isProduction: false,
+    },
+    startSaga: false,
+  });
+
   const router = createMemoryRouter(createAppRouteObjects(), {
     initialEntries: [initialEntry],
   });
@@ -28,7 +42,9 @@ function renderRouter(initialEntry = "/") {
     router,
     ...render(
       <SharedUIProvider defaultPreference="light">
-        <RouterProvider router={router} />
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
       </SharedUIProvider>,
     ),
   };
@@ -47,7 +63,7 @@ describe("web navigation foundation", () => {
     renderRouter("/");
 
     expect(screen.getByTestId("application-shell")).toBeTruthy();
-    expect(screen.getByTestId("application-shell-header")).toBeTruthy();
+    expect(screen.queryByTestId("app-shell-topbar")).toBeNull();
     expect(screen.getByTestId("application-shell-main")).toBeTruthy();
 
     await waitFor(() => {

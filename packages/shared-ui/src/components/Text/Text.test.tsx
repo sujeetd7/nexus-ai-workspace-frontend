@@ -31,4 +31,13 @@ describe("Text", () => {
     renderWithSharedUI(<Text variant="title">Legacy</Text>);
     expect(screen.getByText("Legacy")).toBeTruthy();
   });
+
+  it("exposes additive sectionLabel variant without forcing muted color", () => {
+    renderWithSharedUI(
+      <Text variant="sectionLabel" testID="section">
+        Today
+      </Text>,
+    );
+    expect(screen.getByTestId("section").textContent).toBe("Today");
+  });
 });

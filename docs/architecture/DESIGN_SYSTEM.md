@@ -41,6 +41,101 @@ Do not create `shared-theme` or `ui-kit` packages. Tokens and themes stay in `sh
 - Do not add speculative tokens without a real consumer.
 - Components must consume tokens/theme context (enforced as stubs migrate in later batches).
 
+### Batch 5.DS.1 — semantic token gap remediation
+
+Screenshot visual grammar (Sprint 5 temporary SoT) informed **additive** semantic aliases only. Nexus brand palette and `primary` (`#2563EB`) remain authoritative — not ChatGPT colors, names, or lavender accents.
+
+| Candidate                    | Decision                           | Resolution                                                                                                   |
+| ---------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Muted surface                | **ADD** `surfaceMuted`             | Light `gray.100`; dark `gray.800` — composer wells, bubbles, list grouping                                   |
+| Elevated surface             | **REUSE** `background` / `surface` | White content on sidebar chrome needs no third fill                                                          |
+| Tertiary text                | **DEFER**                          | No palette step more muted than `textSecondary` that meets WCAG AA on light `surfaceMuted` and dark surfaces |
+| Subtle border                | **ADD** `borderSubtle`             | Light/dark alias of soft hairlines (`gray.100` / `gray.800`)                                                 |
+| Strong border                | **DEFER**                          | `border` + `primary` composition covers outline/selected emphasis                                            |
+| Selected surface/border/text | **REUSE**                          | Compose `surface`/`surfaceMuted` + `primary` border/badge (see workspace mapping)                            |
+| Section-label type role      | **ADD** `typography.sectionLabel`  | Caption-size alias; use `fontWeight.medium` + `textSecondary` at call sites                                  |
+| Sheet / modal radius         | **DEFER**                          | TD-056 overlays; no two non-overlay consumers yet                                                            |
+| Neutral / inverse action     | **DEFER**                          | Insufficient multi-consumer evidence; must not replace Nexus primary                                         |
+| Composer elevation           | **REUSE** `shadows.sm`             | Soft composer lift maps to existing shadow                                                                   |
+
+**Component wiring** (Batch **5.DS.2**): View/Surface/Card expose `surfaceMuted`; Text exposes `sectionLabel`; Button adds additive `shape="pill"`; Chip adds additive `tone="muted"`. Inverse/neutral Button colors remain deferred.
+
+Light / dark mappings live in `theme/semanticColors.ts` and Tamagui `themes` in `tamagui/mapTokens.ts`. Contrast pairs include `text` / `textSecondary` on `surfaceMuted`.
+
+### Batch 5.DS.2 — existing component visual alignment
+
+Screenshot grammar applied to **existing** components only (no new composites).
+
+| Component                  | Decision                          | Change                                                                                |
+| -------------------------- | --------------------------------- | ------------------------------------------------------------------------------------- |
+| Button                     | **ADD NON-BREAKING VARIANT**      | `shape?: "default" \| "pill"` — default remains `radius.md`; primary stays Nexus blue |
+| Card                       | **ADD NON-BREAKING TOKEN OPTION** | `background?`, `borderTone?` forwarded to Surface                                     |
+| Chip                       | **ADD NON-BREAKING TOKEN OPTION** | `tone?: "default" \| "muted"`; pill radius already default (**REUSE**)                |
+| View                       | **ADD NON-BREAKING TOKEN OPTION** | `SemanticBackground` includes `surfaceMuted`                                          |
+| Surface                    | **ADD NON-BREAKING TOKEN OPTION** | `background?`, `borderTone?`                                                          |
+| Text                       | **ADD NON-BREAKING VARIANT**      | `variant="sectionLabel"` (medium weight; color consumer-controlled)                   |
+| Inverse / black CTA        | **DEFER**                         | Needs multi-consumer inverse tokens (5.DS.1 deferred)                                 |
+| ActionPill / WorkspaceCard | **DO NOT IMPLEMENT**              | Duplicate of Chip / Card                                                              |
+
+### Batch 5.DS.3 — shared UI foundation expansion
+
+Level 2 composites added for multi-consumer gaps (no product widgets).
+
+| Component      | Purpose                          | Key consumers                                     | Public API (summary)                                                     | Accessibility                                        |
+| -------------- | -------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------- |
+| **Avatar**     | Image / initials / icon fallback | Workspace cards, profile, user lists, future chat | `size` xs–xl, `src`, `initials`, `icon`, `alt`, `decorative`             | Decorative hide or labeled `img`; no presence badges |
+| **Skeleton**   | Static loading bones             | Workspace/profile/dashboard loading               | `variant` text\|title\|avatar\|rectangle\|rounded\|card                  | `progress` + Loading label; no shimmer lib           |
+| **Switch**     | Controlled on/off                | Preferences, settings, feature flags              | `checked`, `onCheckedChange`, `disabled`, required `accessibilityLabel`  | `role=switch`, keyboard Space/Enter, 44pt min        |
+| **IconButton** | Icon-only actions                | Headers, toolbars, cards, settings                | Button variants + `shape` default\|pill\|circle; required label; loading | Focus-visible web; 44pt min                          |
+
+Presence indicators and overlays remain deferred.
+
+### Batch 5.DS.4 — shared UI composite completion
+
+Level 2 composites for multi-consumer list / search / empty presentation (no product screens or business logic).
+
+| Component       | Purpose                          | Key consumers                                               | Public API (summary)                                                                         | Accessibility                                                                                            |
+| --------------- | -------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **SearchField** | Controlled search input chrome   | Workspace / user / member / future document & prompt search | `value`, `onChangeText`, `placeholder`, `leadingIcon`, clear, `loading`, `disabled`          | Required `accessibilityLabel`; clear is labeled IconButton; `inputMode=search`; no autocomplete/debounce |
+| **ListRow**     | Presentation list row            | Workspace, members, documents, prompts, future agents/MCP   | `leading`, `title`, `subtitle`, `description`, `trailing`, `selected`, `disabled`, `onPress` | Pressable → `button`; static → `listitem`; selected/disabled state; 44pt min height                      |
+| **SettingsRow** | ListRow settings composition     | Preferences, notifications, privacy, workspace settings     | `value`, `badge`, `showChevron`, controlled `switchChecked` / `onSwitchCheckedChange`        | Switch requires `switchAccessibilityLabel`; reuses ListRow a11y                                          |
+| **EmptyState**  | Empty / zero-result presentation | Workspace, profile, documents, prompts, search, future chat | `illustration`, `icon`, `title`, `description`, `primaryAction`, `secondaryAction`           | Labeled region from title; action slots are consumer-controlled                                          |
+
+Examples:
+
+```tsx
+<SearchField
+  value={query}
+  onChangeText={setQuery}
+  placeholder="Search workspaces"
+  accessibilityLabel="Search workspaces"
+/>
+
+<ListRow
+  title="Acme"
+  subtitle="Owner"
+  leading={<Avatar initials="ac" alt="Acme" />}
+  trailing={<Badge>Active</Badge>}
+  selected
+  onPress={onSelect}
+/>
+
+<SettingsRow
+  title="Email notifications"
+  switchChecked={enabled}
+  onSwitchCheckedChange={setEnabled}
+  switchAccessibilityLabel="Email notifications"
+/>
+
+<EmptyState
+  title="No results"
+  description="Try a different query."
+  primaryAction={<Button>Clear filters</Button>}
+/>
+```
+
+Dialogs, menus, sheets, toasts, selects, and product widgets remain out of scope.
+
 ### Token governance (Batch 2.2 audit)
 
 Batch 2.2 recorded stub numeric defaults (Loader size, Divider hairline). Those stubs were migrated in Batch 2.4 (TD-047 closed). Components must consume tokens/theme context; no hard-coded hex/rgba in shared-ui components.
@@ -134,7 +229,8 @@ Stable package-root exports include:
 - Accessibility roles, touch-target constants, reduced-motion helpers
 - Motion transition helpers (`resolveTransitionDuration`, `createCssTransition`, …)
 - Level 1 primitives: View, Text, Stack, Button, Input, Label, Divider, Loader
-- Level 2 composites: FormField, HelperText, ErrorText, Badge, Chip, Card, Surface, Section
+- Level 2 composites: FormField, HelperText, ErrorText, Badge, Chip, Card, Surface, Section,
+  Avatar, Skeleton, Switch, IconButton, InlineAlert, SearchField, ListRow, SettingsRow, EmptyState
   (`Tooltip` deferred — see `COMPONENTS.md` Tamagui full-kit evaluation)
 
 Approved export subpaths:
@@ -189,6 +285,21 @@ Batch 2.5 completed Level 2 composites (FormField, HelperText, ErrorText, Badge,
 Batch 2.6 completed motion helpers + Web Storybook + quality layer — see `MOTION.md`, `STORYBOOK.md`, ADR-0013.
 
 Batch 2.7 completed Hybrid Enterprise Atomic governance + Design System / Storybook / generator / public-API docs — no production UI changes.
+
+### Batch 5.DS.8 — web application shell (app-owned screen)
+
+Production authenticated shell lives in `apps/web/src/screens/AppShell/` — **not** in `@nexus/shared-ui`.
+
+| Area            | Decision                                                                                                                           |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Shell ownership | App screen module; `ApplicationShell` re-exports `AppShell`                                                                        |
+| UI composition  | Reuse Level 2 composites only (Avatar, SearchField, ListRow, Badge, Divider, IconButton, Stack, Text, Surface, EmptyState, Loader) |
+| Navigation      | Existing React Router paths only — no duplicate routing framework                                                                  |
+| Workspace       | Reuse `WorkspaceBootstrap` + workspace slice + `useWorkspaceSwitch`                                                                |
+| Search          | Visual SearchField placeholder — disabled; no backend                                                                              |
+| Recent / Pinned | EmptyState until APIs exist — no mock data                                                                                         |
+| Responsive      | Shared breakpoint scale (`md`/`lg`) — desktop sidebar, tablet collapse, mobile drawer                                              |
+| Theme toggle    | Deferred — Storybook toolbar only                                                                                                  |
 
 ## Deferred
 

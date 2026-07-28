@@ -4,16 +4,26 @@ import { radius } from "../../theme/radius";
 import { spacing } from "../../theme/spacing";
 import { typography } from "../../theme/typography";
 import type { Theme } from "../../types/theme";
+import type { ChipTone } from "./Chip.types";
 
 export function resolveChipSurface(
   theme: Theme,
   selected: boolean,
+  tone: ChipTone = "default",
 ): { backgroundColor: string; borderColor: string; color: string } {
   if (selected) {
     return {
       backgroundColor: theme.semantic.primary,
       borderColor: theme.semantic.primary,
       color: theme.semantic.onPrimary,
+    };
+  }
+
+  if (tone === "muted") {
+    return {
+      backgroundColor: theme.semantic.surfaceMuted,
+      borderColor: theme.semantic.borderSubtle,
+      color: theme.semantic.text,
     };
   }
 

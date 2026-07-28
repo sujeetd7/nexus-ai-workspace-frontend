@@ -1,18 +1,75 @@
 {
-  "version": 1,
+  "version": 2,
+  "batch": "5D.1-R2",
   "capabilities": [
     {
       "operationId": "workspaceList",
+      "capability": "Workspace Selection",
+      "backendRoute": "GET /api/v1/workspaces",
       "gatewayRoute": "GET /api/v1/workspaces",
       "swaggerDocumented": true,
+      "authorization": "Bearer JWT; membership-scoped (ownerId OR WorkspaceMember)",
+      "sharedType": "@nexus/shared-types Workspace / WorkspaceListParams",
+      "sharedSchema": "@nexus/shared-validation workspace schemas (create/update forms)",
       "workspaceClient": "createWorkspaceClient.listWorkspaces",
       "queryOwner": "workspaceApi.listWorkspaces",
-      "webFeature": "WorkspaceListScreen",
-      "mobileFeature": "WorkspaceListScreen",
+      "rtkQuery": "workspaceApi.listWorkspaces",
+      "webFeature": "WorkspaceListScreen + WorkspaceBootstrap + ProtectedRoute",
+      "webScreen": "apps/web/src/features/workspaces/screens/WorkspaceListScreen.tsx",
+      "mobileFeature": "WorkspaceListScreen + MobileWorkspaceBootstrap + RootNavigator",
+      "mobileScreen": "apps/mobile/src/screens/workspaces/WorkspaceListScreen.tsx",
+      "storybook": "Patterns/Workspace/WorkspaceSelection (Default, Loading, Empty, Multiple, Single, Selected, Unauthorized, Forbidden, Retry, ApiError)",
+      "figma": {
+        "fileKey": "FsvUWNEF0SJAvYEawUBuqg",
+        "fileUrl": "https://www.figma.com/design/FsvUWNEF0SJAvYEawUBuqg",
+        "page": "Sprint 5 — Workspace Selection",
+        "pageNodeId": "1:21",
+        "nodeId": "1:21",
+        "canonical": true,
+        "evidence": "docs/sprint-5/WORKSPACE_FIGMA_MAPPING.md",
+        "mcp": "authenticated; canonical file + Nexus Tokens + page created in 5D.1-R2; frame nodes pending MCP quota reset"
+      },
       "tests": [
-        "packages/shared-utils/src/workspace/createWorkspaceClient.test.ts"
+        "backend/services/workspace-service/tests/unit/workspace-list-membership.spec.ts",
+        "backend/services/workspace-service/tests/unit/workspace.repository.spec.ts",
+        "backend/gateway/api-gateway/tests/integration/gateway.swagger.spec.ts",
+        "packages/shared-utils/src/workspace/createWorkspaceClient.test.ts",
+        "apps/web/src/providers/WorkspaceBootstrap.test.tsx",
+        "apps/web/src/features/workspaces/screens/WorkspaceListScreen.test.tsx",
+        "apps/web/src/router/guards/AuthRouteGuard.test.tsx",
+        "apps/web/src/system/classifySystemFailure.test.ts",
+        "apps/web/src/platform/workspace/createWebSelectedWorkspaceStorage.test.ts",
+        "apps/mobile/__tests__/workspaceStorage.test.ts",
+        "apps/mobile/__tests__/WorkspaceListScreen.test.tsx",
+        "apps/mobile/__tests__/classifySystemFailure.test.ts",
+        "apps/mobile/__tests__/RootNavigator.systemFailure.test.tsx"
       ],
-      "maturity": "mobile-wired"
+      "systemFailureStates": [
+        "sessionExpired",
+        "unauthorized",
+        "forbidden",
+        "networkUnavailable",
+        "retryableApi"
+      ],
+      "errorClassification": "apps/*/src/system/classifySystemFailure.ts via mapApiError",
+      "traceability": [
+        "Workspace Selection",
+        "Backend Route GET /api/v1/workspaces",
+        "Gateway GET /api/v1/workspaces",
+        "Swagger documented",
+        "RTK Query workspaceApi.listWorkspaces",
+        "Web WorkspaceListScreen",
+        "Mobile WorkspaceListScreen",
+        "Storybook Patterns/Workspace/WorkspaceSelection",
+        "Tests (web + mobile list screens)",
+        "Figma node 1:21 (file FsvUWNEF0SJAvYEawUBuqg)"
+      ],
+      "maturity": "mobile-wired",
+      "residualRisks": [
+        "Mobile selected-workspace persistence is session-scoped (TD-032 durable KV ADR pending)",
+        "Figma MCP Starter quota blocked finishing individual state frames; token page + design contract are canonical until frames are painted",
+        "Gateway swagger aggregation depends on workspace-service OpenAPI build artifact"
+      ]
     },
     {
       "operationId": "workspaceCreate",

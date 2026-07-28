@@ -51,7 +51,7 @@ export const ResetPasswordComposition: FC<ResetPasswordCompositionProps> = ({
       testID="reset-shell"
       brand={
         <Text variant="h2" align="center" weight="bold">
-          Nexus
+          Nexus AI Workspace
         </Text>
       }
     >
@@ -63,6 +63,7 @@ export const ResetPasswordComposition: FC<ResetPasswordCompositionProps> = ({
             ? "This reset link cannot be used."
             : "Choose a new password for your account."
         }
+        headingLevel={2}
         status={
           invalidToken ? (
             <InlineAlert

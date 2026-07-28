@@ -28,4 +28,20 @@ describe("Surface", () => {
     );
     expect(screen.getByTestId("surface-dark").textContent).toContain("Dark");
   });
+
+  it("exposes additive surfaceMuted background and subtle border", () => {
+    renderWithSharedUI(
+      <Surface
+        testID="muted"
+        background="surfaceMuted"
+        borderTone="subtle"
+        elevation="none"
+      >
+        <Text>Muted</Text>
+      </Surface>,
+    );
+    const node = screen.getByTestId("muted") as HTMLElement;
+    expect(node.textContent).toContain("Muted");
+    expect(node.style.borderColor.toLowerCase()).toBe("rgb(243, 244, 246)");
+  });
 });

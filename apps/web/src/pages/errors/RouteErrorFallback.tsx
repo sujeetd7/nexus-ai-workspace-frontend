@@ -4,7 +4,7 @@ import {
   useNavigate,
   useRouteError,
 } from "react-router-dom";
-import { Button, Stack, Text } from "@nexus/shared-ui";
+import { Button, EmptyState, Stack } from "@nexus/shared-ui";
 import { logAppError } from "@nexus/shared-utils";
 
 import { webLogger } from "../../platform/logging";
@@ -12,6 +12,7 @@ import { webLogger } from "../../platform/logging";
 /**
  * React Router route error fallback.
  * Distinct from NotFound (unknown path) and root ErrorBoundary.
+ * Render/route failures only — not transport API classification.
  */
 export function RouteErrorFallback() {
   const error = useRouteError();
@@ -50,18 +51,23 @@ export function RouteErrorFallback() {
       align="center"
       gap="md"
       accessibilityRole="alert"
-      accessibilityLabel="Page error"
+      accessibilityLabel="Something went wrong"
       testID="route-error"
     >
-      <Text variant="h2" accessibilityRole="heading">
-        Something went wrong
-      </Text>
-      <Text color="textSecondary">
-        This page could not be displayed. You can return to the home page.
-      </Text>
-      <Button onPress={handleReturnHome} accessibilityLabel="Return to home">
-        Return home
-      </Button>
+      <EmptyState
+        testID="route-error-empty"
+        title="Something went wrong"
+        description="This page could not be displayed. You can return to the home page."
+        primaryAction={
+          <Button
+            onPress={handleReturnHome}
+            accessibilityLabel="Return to home"
+          >
+            Return home
+          </Button>
+        }
+        accessibilityLabel="Something went wrong"
+      />
     </Stack>
   );
 }

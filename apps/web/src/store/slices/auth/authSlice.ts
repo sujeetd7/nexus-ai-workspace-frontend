@@ -92,6 +92,11 @@ const authSlice = createSlice({
       state.error = "Your session has expired. Please sign in again.";
     },
 
+    sessionExpiredAcknowledged(state) {
+      state.status = "unauthenticated";
+      state.error = null;
+    },
+
     logoutCompleted(state) {
       state.accessToken = null;
       state.refreshToken = null;
@@ -120,6 +125,7 @@ export const {
   logoutCompleted,
   clearAuthError,
   sessionExpired,
+  sessionExpiredAcknowledged,
 } = authSlice.actions;
 
 export default authSlice.reducer;

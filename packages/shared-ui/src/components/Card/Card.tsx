@@ -2,12 +2,13 @@ import type { FC, ReactNode } from "react";
 
 import { Divider } from "../Divider";
 import { Stack } from "../Stack";
-import { Surface } from "../Surface";
+import { Surface, type SurfaceBorderTone } from "../Surface";
 import { View } from "../View";
 import type {
   ElevationToken,
   NexusA11yProps,
   NexusTestProps,
+  SemanticBackground,
   SpacingToken,
 } from "../shared/types";
 
@@ -20,6 +21,16 @@ export interface CardProps extends NexusA11yProps, NexusTestProps {
   footer?: ReactNode;
   elevation?: ElevationToken;
   padding?: SpacingToken;
+  /**
+   * Additive (Batch 5.DS.2) — defaults to Surface `"surface"`.
+   * Use `surfaceMuted` for recessed / grouped fills from 5.DS.1.
+   */
+  background?: SemanticBackground;
+  /**
+   * Additive (Batch 5.DS.2) — defaults to `"none"`.
+   * Use `subtle` for softer hairline borders (`borderSubtle`).
+   */
+  borderTone?: SurfaceBorderTone;
 }
 
 /**
@@ -32,6 +43,8 @@ export const Card: FC<CardProps> = ({
   footer,
   elevation = "sm",
   padding = "lg",
+  background,
+  borderTone,
   testID,
   accessibilityLabel,
   accessibilityHint,
@@ -46,6 +59,8 @@ export const Card: FC<CardProps> = ({
       elevation={elevation}
       padding={padding}
       borderRadius="lg"
+      background={background}
+      borderTone={borderTone}
       testID={testID}
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}

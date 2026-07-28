@@ -21,6 +21,7 @@ const meta = {
         "disabled",
         "fieldErrors",
         "apiError",
+        "networkError",
         "success",
       ] satisfies LoginCompositionState[],
     },
@@ -48,6 +49,10 @@ export const FieldValidationErrors: Story = {
 
 export const ApiError: Story = {
   args: { state: "apiError" },
+};
+
+export const NetworkError: Story = {
+  args: { state: "networkError" },
 };
 
 export const Success: Story = {

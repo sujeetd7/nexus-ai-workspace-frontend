@@ -122,11 +122,11 @@ The quality workflow does not inject `VITE_*` secrets. Vite **build** transforms
 
 ## Troubleshooting
 
-| Symptom                                             | Likely cause                                    |
-| --------------------------------------------------- | ----------------------------------------------- |
-| `Invalid public client configuration.` on Web start | Missing/invalid `VITE_*` or unsupported `MODE`  |
-| Relative URL rejected                               | Use absolute `http://` or `https://` URLs       |
-| Mobile config drift                                 | Update `publicConfig.ts` (`.env` is not loaded) |
+| Symptom                                             | Likely cause                                                                                                                                                                |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Invalid public client configuration.` on Web start | Missing/invalid `VITE_*`, unsupported `MODE`, or Vite `envPrefix` excluding `VITE_` (Tamagui plugin) — keep `envPrefix: ["VITE_", "TAMAGUI_"]` in `apps/web/vite.config.ts` |
+| Relative URL rejected                               | Use absolute `http://` or `https://` URLs                                                                                                                                   |
+| Mobile config drift                                 | Update `publicConfig.ts` (`.env` is not loaded)                                                                                                                             |
 
 ## Future native injection
 

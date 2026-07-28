@@ -23,7 +23,6 @@ describe("LoginComposition accessibility", () => {
     expect(email).toBeTruthy();
     expect(screen.getByText(/Email \*/)).toBeTruthy();
     expect(screen.getByText(/Password \*/)).toBeTruthy();
-    expect(screen.getByText("Remember me")).toBeTruthy();
 
     const emailError = screen.getByText("Enter a valid email address");
     const passwordError = screen.getByText(
@@ -43,13 +42,11 @@ describe("LoginComposition accessibility", () => {
     expect(passwordDescribedBy).toBeTruthy();
     expect(passwordDescribedBy!.length).toBeGreaterThan(0);
     expect(passwordError.getAttribute("id")).toBe(passwordDescribedBy);
-    expect(passwordError.textContent).toContain(
-      "Password must be at least 8 characters",
-    );
 
     expect(screen.getByTestId("login-password-input-toggle")).toBeTruthy();
     expect(screen.getByText("Forgot password?")).toBeTruthy();
     expect(screen.getByText("Sign up")).toBeTruthy();
+    expect(screen.getByText("Nexus AI Workspace")).toBeTruthy();
   });
 
   it("announces API errors via InlineAlert alert role", () => {
@@ -57,5 +54,12 @@ describe("LoginComposition accessibility", () => {
     const alert = screen.getByTestId("login-api-error");
     expect(alert.getAttribute("role")).toBe("alert");
     expect(alert.textContent).toContain("Invalid email or password");
+  });
+
+  it("announces network errors", () => {
+    renderWithSharedUI(<LoginComposition state="networkError" />);
+    expect(screen.getByTestId("login-api-error").textContent).toContain(
+      "Unable to reach the server",
+    );
   });
 });

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { getMobileSession } from "../api/client/axios";
 import {
+  sessionExpired,
   sessionRestoreFailed,
   sessionRestoreStarted,
   sessionTokensRestored,
@@ -14,6 +15,17 @@ export function MobileAuthBootstrap({ children }: PropsWithChildren) {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    let unsubscribe: (() => void) | undefined;
+    try {
+      unsubscribe = getMobileSession().subscribe((snapshot) => {
+        if (snapshot.status === "session-expired") {
+          dispatch(sessionExpired());
+        }
+      });
+    } catch {
+      // Session manager may be unavailable in isolated unit harnesses.
+    }
+
     const bootstrap = async () => {
       dispatch(sessionRestoreStarted());
       try {
@@ -41,6 +53,10 @@ export function MobileAuthBootstrap({ children }: PropsWithChildren) {
     };
 
     void bootstrap();
+
+    return () => {
+      unsubscribe?.();
+    };
   }, [dispatch]);
 
   return children;

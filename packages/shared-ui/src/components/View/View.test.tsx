@@ -61,4 +61,13 @@ describe("View", () => {
     expect(unknownPropWarnings).toHaveLength(0);
     error.mockRestore();
   });
+
+  it("exposes additive surfaceMuted semantic background", () => {
+    renderWithSharedUI(
+      <View testID="muted" background="surfaceMuted" padding="md">
+        Muted fill
+      </View>,
+    );
+    expect(screen.getByTestId("muted").textContent).toContain("Muted fill");
+  });
 });

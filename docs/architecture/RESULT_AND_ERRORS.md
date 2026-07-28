@@ -105,7 +105,7 @@ Prefer `logAppError` from `@nexus/shared-utils` when writing AppErrors to a `Log
 
 - React Hook Form ↔ Zod adapter (outside shared-validation)
 - Feature/form schema ownership enforcement beyond documentation
-- Refresh-token orchestration mapping
+- Auth cold-start bootstrap cause exposure (`createSessionManager.bootstrap` still maps refresh failure → `unauthenticated` without network vs expiry distinction; mid-session refresh expiry is wired — see `docs/sprint-5/SYSTEM_AUTH_FAILURE_UX.md`)
 - Telemetry / remote logging sinks
 - Secure mobile storage adapters
 - Automatic interceptor conversion of all Axios failures to `AppError`

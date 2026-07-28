@@ -120,4 +120,32 @@ describe("Button (web native <button>)", () => {
   it("documents touch-target policy constant", () => {
     expect(MIN_TOUCH_TARGET_SIZE).toBe(44);
   });
+
+  it("defaults to radius.md and supports additive pill shape", () => {
+    const { rerender } = renderWithSharedUI(
+      <Button testID="shape">Continue</Button>,
+    );
+    const defaultNode = screen.getByTestId("shape") as HTMLElement;
+    expect(defaultNode.style.borderRadius).toBe("8px");
+
+    rerender(
+      <Button testID="shape" shape="pill">
+        Continue
+      </Button>,
+    );
+    const pillNode = screen.getByTestId("shape") as HTMLElement;
+    expect(pillNode.style.borderRadius).toBe("999px");
+  });
+
+  it("keeps Nexus primary brand on default primary variant", () => {
+    renderWithSharedUI(
+      <Button testID="brand" variant="primary">
+        Go
+      </Button>,
+    );
+    const node = screen.getByTestId("brand") as HTMLElement;
+    expect(node.style.backgroundColor.toLowerCase()).toBe(
+      "rgb(37, 99, 235)",
+    );
+  });
 });

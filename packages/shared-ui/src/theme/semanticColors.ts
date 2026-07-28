@@ -4,13 +4,24 @@ import { darkColors } from "./darkColors";
 /**
  * Semantic color roles for light mode.
  * Values are derived from the palette source of truth — no new hex literals.
+ *
+ * Batch 5.DS.1 additive roles (`surfaceMuted`, `borderSubtle`) map screenshot
+ * visual grammar (sidebar fills, bubbles, composer, hairline separators) without
+ * replacing Nexus brand `primary` or introducing a second brand palette.
  */
 export const lightSemanticColors = {
   background: colors.white,
   surface: colors.gray[50],
+  /**
+   * Recessed / grouped fills: composer wells, user bubbles, list grouping.
+   * Distinct from `surface` (cards/sidebar chrome). Palette: gray.100.
+   */
+  surfaceMuted: colors.gray[100],
   text: colors.gray[900],
   textSecondary: colors.gray[600],
   border: colors.gray[200],
+  /** Softer hairline separators than `border`. Palette: gray.100. */
+  borderSubtle: colors.gray[100],
   primary: colors.primary,
   secondary: colors.secondary,
   success: colors.success,
@@ -32,9 +43,13 @@ export const lightSemanticColors = {
 export const darkSemanticColors = {
   background: darkColors.background,
   surface: darkColors.surface,
+  /** Recessed / grouped fills — gray.800 (palette), distinct from `surface`. */
+  surfaceMuted: colors.gray[800],
   text: darkColors.text,
   textSecondary: colors.gray[400],
   border: darkColors.border,
+  /** Softer separator than `border` — gray.800. */
+  borderSubtle: colors.gray[800],
   primary: darkColors.primary,
   secondary: darkColors.secondary,
   success: darkColors.success,

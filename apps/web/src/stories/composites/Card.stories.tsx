@@ -31,3 +31,14 @@ export const Elevated: Story = {
     elevation: "md",
   },
 };
+
+export const MutedSurface: Story = {
+  args: {
+    background: "surfaceMuted",
+    borderTone: "subtle",
+    elevation: "none",
+    header: <Text variant="sectionLabel">Grouped</Text>,
+    children: <Text>Muted surface with subtle border.</Text>,
+    footer: undefined,
+  },
+};

@@ -15,7 +15,12 @@ export type RadiusToken = "none" | "sm" | "md" | "lg" | "xl" | "pill";
 
 export type ElevationToken = "none" | "xs" | "sm" | "md" | "lg" | "xl";
 
-export type SemanticBackground = "background" | "surface" | "transparent";
+export type SemanticBackground =
+  | "background"
+  | "surface"
+  | "surfaceMuted"
+  | "transparent";
+
 
 
 export type SemanticTextColor =

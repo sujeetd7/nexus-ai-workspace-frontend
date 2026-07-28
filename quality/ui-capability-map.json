@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "batch": "5.DS.9",
+  "capabilities": [
+    {
+      "id": "FE-APPLICATION-SHELL",
+      "title": "Web application shell",
+      "description": "Authenticated sidebar + top bar + content shell composing shared-ui and existing bootstrap infrastructure",
+      "webScreen": "apps/web/src/screens/AppShell/AppShell.tsx",
+      "storybook": "Patterns/AppShell (Default, Loading, Collapsed, Empty, Unauthorized, Error)",
+      "traceability": [
+        "AppShell",
+        "Navigation",
+        "WorkspaceSwitcher",
+        "ProtectedRoute",
+        "Shared UI"
+      ],
+      "components": [
+        "apps/web/src/screens/AppShell/components/Sidebar/Sidebar.tsx",
+        "apps/web/src/screens/AppShell/components/TopBar/TopBar.tsx",
+        "apps/web/src/screens/AppShell/components/Navigation/Navigation.tsx",
+        "apps/web/src/screens/AppShell/components/WorkspaceSwitcher/WorkspaceSwitcher.tsx",
+        "apps/web/src/screens/AppShell/components/ProfileMenu/ProfileMenu.tsx",
+        "apps/web/src/screens/AppShell/components/Breadcrumbs/Breadcrumbs.tsx",
+        "apps/web/src/screens/AppShell/components/ContentArea/ContentArea.tsx"
+      ],
+      "sharedUi": [
+        "Avatar",
+        "SearchField",
+        "ListRow",
+        "Badge",
+        "Divider",
+        "IconButton",
+        "Stack",
+        "Text",
+        "Surface",
+        "EmptyState",
+        "Loader"
+      ],
+      "deferred": [
+        "Documents",
+        "Prompt Library",
+        "AI Chat",
+        "Agents",
+        "Admin",
+        "Notification center backend",
+        "Search backend",
+        "Recent/pinned data",
+        "Theme toggle product control"
+      ],
+      "tests": [
+        "apps/web/src/screens/AppShell/AppShell.test.tsx",
+        "apps/web/src/screens/AppShell/components/Sidebar/Sidebar.test.tsx",
+        "apps/web/src/screens/AppShell/components/Navigation/Navigation.test.tsx",
+        "apps/web/src/screens/AppShell/hooks/useShellResponsive.test.tsx",
+        "apps/web/src/screens/AppShell/utils/profileDisplay.test.ts"
+      ]
+    },
+    {
+      "id": "FE-MOBILE-APPLICATION-SHELL",
+      "title": "Mobile application shell",
+      "description": "Authenticated header + drawer + content shell composing shared-ui and existing bootstrap infrastructure",
+      "mobileScreen": "apps/mobile/src/screens/AppShell/MobileAppShell.tsx",
+      "storybook": "Deferred (TD-057) — web Patterns/AppShell remains design verification source",
+      "traceability": [
+        "MobileAppShell",
+        "Drawer",
+        "Navigation",
+        "WorkspaceSwitcher",
+        "Protected Routes",
+        "Shared UI"
+      ],
+      "components": [
+        "apps/mobile/src/screens/AppShell/components/Drawer/Drawer.tsx",
+        "apps/mobile/src/screens/AppShell/components/Header/Header.tsx",
+        "apps/mobile/src/screens/AppShell/components/Navigation/Navigation.tsx",
+        "apps/mobile/src/screens/AppShell/components/WorkspaceSwitcher/WorkspaceSwitcher.tsx",
+        "apps/mobile/src/screens/AppShell/components/ProfileSection/ProfileSection.tsx",
+        "apps/mobile/src/screens/AppShell/components/DrawerFooter/DrawerFooter.tsx",
+        "apps/mobile/src/screens/AppShell/components/ContentArea/ContentArea.tsx"
+      ],
+      "sharedUi": [
+        "Avatar",
+        "SearchField",
+        "ListRow",
+        "Badge",
+        "Divider",
+        "IconButton",
+        "Stack",
+        "Text",
+        "Surface",
+        "EmptyState",
+        "Loader"
+      ],
+      "deferred": [
+        "Documents",
+        "Prompt Library",
+        "AI Chat",
+        "Agents",
+        "Admin",
+        "Notification center backend",
+        "Search backend",
+        "Recent/pinned data",
+        "React Native Storybook (TD-057)",
+        "Tab bar navigation"
+      ],
+      "tests": [
+        "apps/mobile/src/screens/AppShell/MobileAppShell.test.tsx",
+        "apps/mobile/src/screens/AppShell/hooks/useDrawer.test.tsx",
+        "apps/mobile/src/screens/AppShell/utils/profileDisplay.test.ts"
+      ]
+    }
+  ]
+}

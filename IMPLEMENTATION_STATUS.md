@@ -2,10 +2,105 @@
 
 ## Current Phase
 
+Sprint 5 — Workspace Bootstrap remediation (5D.1-R1): **Implemented — validation user-owned**
 Sprint 5 — AI Engineering Platform Consumer Wiring: **In progress** (Batch 5.1G complete; Batch 5.2D auth UI composition contract complete; Batch 5.2E a11y prop adapter complete)
-Batch 5.1G — Frontend Consumer Wiring: **Complete**
-Batch 5.2D — Authentication UI Composition Contract: **Complete** (patterns + Storybook only; no routes/APIs/session)
-Batch 5.2E — Cross-Platform Accessibility Prop Adapter: **Complete**
+Sprint 5 — Design System screenshot SoT: **In progress** (5.DS.0–5.DS.9 complete — validation user-owned)
+Batch 5.DS.9 — Mobile Application Shell: **Implemented — validation user-owned**
+Batch 5.DS.8 — Web Application Shell: **Implemented — validation user-owned**
+
+## Sprint 5 — Batch 5.DS.9 (Mobile Application Shell)
+
+- Production mobile AppShell at `apps/mobile/src/screens/AppShell/` (feature-first screen module)
+- Header: hamburger, route title, workspace summary, notification placeholder, profile avatar
+- Drawer: logo, workspace switcher, search placeholder, primary nav (existing routes), recent/pinned EmptyState, settings, profile, version
+- ContentArea: loading/empty/error/protected presentation states; authenticated screens wrapped via `createShellScreen`
+- Safe-area + keyboard patterns; drawer overlay with accessibility announcements
+- Reuses RootNavigator, MobileAuthBootstrap, MobileWorkspaceBootstrap, workspace/auth selectors — no new slices
+- RN Storybook deferred (TD-057); web Storybook remains design verification source
+- Docs: `docs/sprint-5/MOBILE_APPLICATION_SHELL.md`, `docs/architecture/APPLICATION_SHELL.md`
+- QI: `quality/ui-capability-map.json`, `quality/test-map.json` (FE-MOBILE-APPLICATION-SHELL)
+- Deferred: feature pages, search/notifications backend, recent/pinned data, RN Storybook
+
+## Sprint 5 — Batch 5.DS.8 (Web Application Shell)
+
+- Production web AppShell at `apps/web/src/screens/AppShell/` (feature-first screen module)
+- Sidebar: logo, workspace switcher, search placeholder, primary nav (existing routes), recent/pinned EmptyState, settings, profile, version
+- TopBar: title, breadcrumbs, workspace summary, notification placeholder, profile
+- ContentArea: loading/empty/error presentation states; route Outlet unchanged
+- Responsive: desktop sidebar, tablet collapse, mobile drawer (`@nexus/shared-ui` breakpoints)
+- Reuses ProtectedRoute, AuthBootstrap, WorkspaceBootstrap, workspace/auth selectors — no new slices
+- Storybook: `Patterns/AppShell` (Default, Loading, Collapsed, Empty, Unauthorized, Error)
+- Docs: `docs/sprint-5/APPLICATION_SHELL.md`, `docs/architecture/APPLICATION_SHELL.md`
+- QI: `quality/ui-capability-map.json`, `quality/test-map.json` (FE-APPLICATION-SHELL)
+- Deferred: feature pages, search/notifications backend, recent/pinned data, theme toggle product control
+
+## Sprint 5 — Batch 5.DS.7 (System Authentication and Failure-State UX)
+
+- Cross-platform system states: Session Expired, Unauthorized, Forbidden, Retryable API, Network/Service Unavailable
+- App-owned `classifySystemFailure` + `SystemFailureView` (web + mobile); reuses EmptyState/InlineAlert/Button only
+- SessionManager `session-expired` subscribed into Redux (`sessionExpired`) on web AuthBootstrap + mobile MobileAuthBootstrap
+- Web `ProtectedRoute` and Mobile `RootNavigator` gate terminal session expiry (no stale shell); workspace bootstrap errors classified with retry busy state
+- Docs: `docs/sprint-5/SYSTEM_AUTH_FAILURE_UX.md`; QI auth/workspace/test maps updated
+- No shared-ui / token / backend / auth form changes
+
+## Sprint 5 — Batch 5.DS.6 (Mobile Authentication Parity)
+
+- Mobile auth screens at parity with Web 5.DS.5: Login, Register, Forgot Password, Reset Password, Verify Email
+- Compose only existing DS patterns (`AuthShell`/`AuthCard`/`FormField`/`InlineAlert`/…) via `AuthScreenLayout`
+- Same backend contracts as Web (`SessionManager` + `AuthClient`); no OAuth / biometrics / remember-me / invented resend UI
+- Navigation: unauthenticated stack + deep-link path shapes (prefixes still empty)
+- Docs: `docs/sprint-5/AUTH_MOBILE_PARITY.md`; QI auth capability + test-map updated for mobile
+- No shared-ui / theme / token / Web screen changes
+
+## Sprint 5 — Batch 5.DS.5 (Web Authentication Experience Refinement)
+
+- Product screens refined: Login, Register, Forgot Password, Reset Password, Verify Email
+- Compose only existing DS patterns (`AuthShell`/`AuthCard`/`FormField`/`InlineAlert`/…)
+- Backend-aligned fields only; remember-me omitted; confirm password is client-side on reset
+- Token invalid/expired UX on Reset/Verify (no separate screens — API cannot always distinguish)
+- Docs: `docs/sprint-5/AUTH_WEB_REFINEMENT.md`; QI auth capability + test-map updated
+- No shared-ui / theme / token changes
+
+## Sprint 5 — Batch 5.DS.4 (Shared UI Composite Completion)
+
+- Level 2: `SearchField`, `ListRow`, `SettingsRow`, `EmptyState` (presentation only)
+- SearchField controlled-only (no autocomplete/debounce/filter); ListRow/SettingsRow no routing/API; EmptyState no SVG/product copy
+- Stories under `Composites/{SearchField,ListRow,SettingsRow,EmptyState}`
+- No dialogs/menus/sheets/toasts/selects/product screens
+
+## Sprint 5 — Batch 5.DS.3 (Shared UI Foundation Expansion)
+
+- Level 2: `Avatar`, `Skeleton`, `Switch`, `IconButton` (web + native parity)
+- Presence badges deferred; Switch controlled-only; IconButton requires `accessibilityLabel`
+- Stories under `Composites/{Avatar,Skeleton,Switch,IconButton}`
+- No SearchField/ListRow/EmptyState/overlays/product widgets
+
+## Sprint 5 — Batch 5.DS.2 (Existing Component Visual Alignment)
+
+- Additive APIs: Button `shape`, Chip `tone`, View/Surface/Card `surfaceMuted` + Surface/Card `borderTone`, Text `sectionLabel`
+- Defaults unchanged (Button `radius.md`, Chip already pill, Surface background `surface`)
+- Nexus primary unchanged; inverse/black CTA deferred
+- Stories updated for Button/Card/Chip/Text/View/Surface
+- No new components; no product screens
+
+## Sprint 5 — Batch 5.DS.1 (Semantic Token Gap Remediation)
+
+- Additive semantics only: `surfaceMuted`, `borderSubtle`; typography `sectionLabel` (caption-size alias)
+- Deferred: `textTertiary`, `borderStrong`, selected-\* trio, sheet radius, inverse/onInverse, `shadow.composer`
+- Reused: elevated fill → `background`/`surface`; composer lift → `shadows.sm`; selected → `primary` + surface composition
+- No component/screen changes; Nexus primary unchanged
+- Docs: `docs/architecture/DESIGN_SYSTEM.md` (5.DS.1 section)
+- Tests: `packages/shared-ui/src/theme/semanticTokens.batch51.test.ts`; contrast pairs for `surfaceMuted`
+
+## Sprint 5 — Batch 5D.1-R1 (Workspace Bootstrap, Mobile Parity, Figma Alignment)
+
+- Backend `GET /api/v1/workspaces` membership-scoped (`ownerId` OR `WorkspaceMember`) with `authenticate`
+- Gateway route unchanged (`requireAuth: true`); OpenAPI `workspaceList` summary clarified
+- Web/mobile bootstrap: auth init → profile → workspace list → persisted selection validation → shell gate
+- Auto-select only when exactly one permitted workspace; otherwise show selector
+- Web/mobile list screens aligned to Nexus Card/Stack tokens (see `docs/sprint-5/WORKSPACE_FIGMA_MAPPING.md`)
+- QI: `quality/workspace-capability-map.json`, `quality/test-map.json` (FE-WORKSPACE-BOOTSTRAP)
+- Residual: TD-032 mobile durable KV; no approved live Figma node in-repo
 
 ## Sprint 5 — Batch 5.2E (Cross-Platform Accessibility Prop Adapter)
 

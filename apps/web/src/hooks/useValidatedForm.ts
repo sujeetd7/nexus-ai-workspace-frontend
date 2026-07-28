@@ -23,9 +23,9 @@ export function useValidatedForm<T>({
   initialValues,
 }: UseValidatedFormOptions<T>) {
   const [values, setValues] = useState<T>(initialValues);
-  const [fieldErrors, setFieldErrors] = useState<Partial<Record<string, string>>>(
-    {},
-  );
+  const [fieldErrors, setFieldErrors] = useState<
+    Partial<Record<string, string>>
+  >({});
 
   const setField = <K extends keyof T>(field: K, value: T[K]) => {
     setValues((current) => ({ ...current, [field]: value }));
@@ -61,6 +61,6 @@ export function useValidatedForm<T>({
         setFieldErrors({});
       },
     }),
-    [fieldErrors, initialValues, values],
+    [fieldErrors, initialValues, values, setField, validate]
   );
 }

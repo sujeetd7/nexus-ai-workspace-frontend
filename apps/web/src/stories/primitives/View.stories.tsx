@@ -28,6 +28,9 @@ export const Backgrounds: Story = {
       <View background="surface" padding="md" testID="surface">
         surface
       </View>
+      <View background="surfaceMuted" padding="md" testID="surfaceMuted">
+        surfaceMuted
+      </View>
       <View background="transparent" padding="md" testID="transparent">
         transparent
       </View>

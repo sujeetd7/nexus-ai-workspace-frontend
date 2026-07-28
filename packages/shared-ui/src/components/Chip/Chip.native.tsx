@@ -17,13 +17,14 @@ export const Chip: FC<ChipProps> = ({
   children,
   selected = false,
   disabled = false,
+  tone = "default",
   onPress,
   accessibilityLabel,
   accessibilityHint,
   testID,
 }) => {
   const { theme } = useTheme();
-  const surface = resolveChipSurface(theme, selected);
+  const surface = resolveChipSurface(theme, selected, tone);
   const layout = resolveChipLayout();
   const name = resolveChipAccessibleName(
     accessibilityLabel,

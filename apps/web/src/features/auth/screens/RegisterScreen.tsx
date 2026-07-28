@@ -1,6 +1,5 @@
 import { useEffect, useState, type FC, type FormEvent } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import {
   AuthCard,
   AuthFooter,
@@ -16,28 +15,59 @@ import { getWebSession } from "../../../api/client/axios";
 import { WEB_ROUTE_PATHS } from "../../../router/paths";
 import { authSuccess } from "../../../store/slices/auth/authSlice";
 import type { AppDispatch } from "../../../store/createAppStore";
+import { AuthBrand } from "../components/AuthBrand";
 import { mapApiError } from "../hooks/useApiErrorMessage";
 import { useAuthForm } from "../hooks/useAuthForm";
+import type { MappedAuthError } from "../utils/authErrorPresentation";
+import {
+  focusAuthStatus,
+  focusFirstFieldError,
+} from "../utils/focusAuthFeedback";
+
+type RegisterFormValues = {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+};
+
+/** Coerce empty optional name fields to undefined before schema parse. */
+const registerFormSchema = {
+  safeParse(value: RegisterFormValues) {
+    return registerRequestSchema.safeParse({
+      email: value.email,
+      password: value.password,
+      firstName: value.firstName.trim() || undefined,
+      lastName: value.lastName.trim() || undefined,
+    });
+  },
+};
 
 export const RegisterScreen: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
-  const [apiError, setApiError] = useState<string | undefined>();
+  const [apiError, setApiError] = useState<MappedAuthError | undefined>();
   const [success, setSuccess] = useState(false);
   const form = useAuthForm({
-    schema: registerRequestSchema,
+    schema: registerFormSchema,
     initialValues: { email: "", password: "", firstName: "", lastName: "" },
   });
 
   useEffect(() => {
-    if (success) {
-      form.reset();
+    if (apiError) {
+      focusAuthStatus("register");
     }
-  }, [success]);
+  }, [apiError]);
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (!form.validate()) {
+    const result = form.validate();
+    if (!result.ok) {
+      focusFirstFieldError(
+        result.errors as Partial<Record<string, string>>,
+        ["email", "password", "firstName", "lastName"],
+        "register",
+      );
       return;
     }
 
@@ -48,8 +78,8 @@ export const RegisterScreen: FC = () => {
       const snapshot = await getWebSession().register({
         email: form.values.email,
         password: form.values.password,
-        firstName: form.values.firstName || undefined,
-        lastName: form.values.lastName || undefined,
+        firstName: form.values.firstName.trim() || undefined,
+        lastName: form.values.lastName.trim() || undefined,
       });
 
       if (snapshot.user && snapshot.accessToken && snapshot.refreshToken) {
@@ -63,26 +93,41 @@ export const RegisterScreen: FC = () => {
           }),
         );
         setSuccess(true);
+        form.reset();
       }
     } catch (error) {
-      setApiError(mapApiError(error).message);
+      setApiError(mapApiError(error));
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <AuthShell testID="register-shell">
+    <AuthShell testID="register-shell" brand={<AuthBrand />}>
       <AuthCard
+        testID="register-card"
         title="Create account"
         description="Register to access Nexus AI Workspace."
+        headingLevel={2}
         status={
           apiError ? (
-            <InlineAlert tone="error" title="Unable to register">
-              {apiError}
+            <InlineAlert
+              tone="error"
+              title={
+                apiError.kind === "network"
+                  ? "Connection problem"
+                  : "Unable to register"
+              }
+              testID="register-api-error"
+            >
+              {apiError.message}
             </InlineAlert>
           ) : success ? (
-            <InlineAlert tone="success" title="Account created">
+            <InlineAlert
+              tone="success"
+              title="Account created"
+              testID="register-success"
+            >
               Check your email if verification is required.
             </InlineAlert>
           ) : undefined
@@ -94,16 +139,65 @@ export const RegisterScreen: FC = () => {
           />
         }
       >
-        <form onSubmit={onSubmit}>
-          <Stack gap="md">
-            <FormField label="Email" value={form.values.email} onChangeText={(value) => form.setField("email", value)} errorText={form.fieldErrors.email} required inputMode="email" />
-            <FormField label="Password" value={form.values.password} onChangeText={(value) => form.setField("password", value)} errorText={form.fieldErrors.password} required secureTextEntry />
-            <Button fullWidth type="submit" loading={loading}>
-              Register
-            </Button>
-            <Link to={WEB_ROUTE_PATHS.login}>Back to sign in</Link>
-          </Stack>
-        </form>
+        {!success ? (
+          <form onSubmit={onSubmit} noValidate>
+            <Stack gap="md">
+              <FormField
+                testID="register-firstName"
+                label="First name"
+                placeholder="Optional"
+                value={form.values.firstName}
+                onChangeText={(value) => form.setField("firstName", value)}
+                disabled={loading}
+                autoComplete="given-name"
+                errorText={form.fieldErrors.firstName}
+              />
+              <FormField
+                testID="register-lastName"
+                label="Last name"
+                placeholder="Optional"
+                value={form.values.lastName}
+                onChangeText={(value) => form.setField("lastName", value)}
+                disabled={loading}
+                autoComplete="family-name"
+                errorText={form.fieldErrors.lastName}
+              />
+              <FormField
+                testID="register-email"
+                label="Email"
+                placeholder="you@example.com"
+                value={form.values.email}
+                onChangeText={(value) => form.setField("email", value)}
+                disabled={loading}
+                required
+                autoComplete="email"
+                inputMode="email"
+                errorText={form.fieldErrors.email}
+              />
+              <FormField
+                testID="register-password"
+                label="Password"
+                placeholder="Create a password"
+                value={form.values.password}
+                onChangeText={(value) => form.setField("password", value)}
+                disabled={loading}
+                required
+                secureTextEntry
+                autoComplete="new-password"
+                errorText={form.fieldErrors.password}
+              />
+              <Button
+                testID="register-submit"
+                fullWidth
+                type="submit"
+                loading={loading}
+                disabled={loading}
+              >
+                Create account
+              </Button>
+            </Stack>
+          </form>
+        ) : null}
       </AuthCard>
     </AuthShell>
   );

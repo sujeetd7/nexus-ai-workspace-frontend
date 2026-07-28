@@ -9,6 +9,31 @@
       "id": "FE-AUTH-LOGIN",
       "title": "Web authentication login flows",
       "tags": ["auth", "web"]
+    },
+    {
+      "id": "FE-AUTH-MOBILE",
+      "title": "Mobile authentication parity flows",
+      "tags": ["auth", "mobile"]
+    },
+    {
+      "id": "FE-WORKSPACE-BOOTSTRAP",
+      "title": "Workspace bootstrap, selection, and membership-scoped list",
+      "tags": ["workspace", "bootstrap", "web", "mobile"]
+    },
+    {
+      "id": "FE-SYSTEM-AUTH-FAILURE",
+      "title": "System authentication and failure-state UX",
+      "tags": ["auth", "errors", "web", "mobile", "bootstrap"]
+    },
+    {
+      "id": "FE-APPLICATION-SHELL",
+      "title": "Web application shell (sidebar, top bar, content)",
+      "tags": ["shell", "web", "navigation", "workspace"]
+    },
+    {
+      "id": "FE-MOBILE-APPLICATION-SHELL",
+      "title": "Mobile application shell (header, drawer, content)",
+      "tags": ["shell", "mobile", "navigation", "workspace"]
     }
   ],
   "mappings": [
@@ -30,7 +55,12 @@
     {
       "targetType": "designLevel",
       "targetId": "screen",
-      "tests": []
+      "tests": [
+        "apps/web/src/features/workspaces/screens/WorkspaceListScreen.test.tsx",
+        "apps/mobile/__tests__/WorkspaceListScreen.test.tsx",
+        "apps/web/src/screens/AppShell/AppShell.test.tsx",
+        "apps/mobile/src/screens/AppShell/MobileAppShell.test.tsx"
+      ]
     },
     {
       "targetType": "requirement",
@@ -40,7 +70,67 @@
     {
       "targetType": "requirement",
       "targetId": "FE-AUTH-LOGIN",
-      "tests": []
+      "tests": [
+        "apps/web/src/features/auth/screens/LoginScreen.test.tsx",
+        "apps/web/src/features/auth/screens/AuthScreens.test.tsx",
+        "apps/web/src/features/auth/utils/authErrorPresentation.test.ts",
+        "apps/web/src/stories/patterns/auth/LoginComposition.test.tsx",
+        "apps/web/src/stories/patterns/auth/ResetPasswordComposition.test.tsx",
+        "apps/web/src/stories/patterns/auth/VerifyEmailComposition.test.tsx"
+      ]
+    },
+    {
+      "targetType": "requirement",
+      "targetId": "FE-AUTH-MOBILE",
+      "tests": [
+        "apps/mobile/__tests__/AuthScreens.test.tsx",
+        "apps/mobile/__tests__/authErrorPresentation.test.ts",
+        "apps/mobile/__tests__/navigation.test.ts"
+      ]
+    },
+    {
+      "targetType": "requirement",
+      "targetId": "FE-WORKSPACE-BOOTSTRAP",
+      "tests": [
+        "apps/web/src/providers/WorkspaceBootstrap.test.tsx",
+        "apps/web/src/features/workspaces/screens/WorkspaceListScreen.test.tsx",
+        "apps/web/src/platform/workspace/createWebSelectedWorkspaceStorage.test.ts",
+        "apps/mobile/__tests__/workspaceStorage.test.ts",
+        "apps/mobile/__tests__/WorkspaceListScreen.test.tsx",
+        "packages/shared-utils/src/workspace/createWorkspaceClient.test.ts"
+      ]
+    },
+    {
+      "targetType": "requirement",
+      "targetId": "FE-SYSTEM-AUTH-FAILURE",
+      "tests": [
+        "apps/web/src/system/classifySystemFailure.test.ts",
+        "apps/web/src/router/guards/AuthRouteGuard.test.tsx",
+        "apps/web/src/features/workspaces/screens/WorkspaceListScreen.test.tsx",
+        "apps/mobile/__tests__/classifySystemFailure.test.ts",
+        "apps/mobile/__tests__/RootNavigator.systemFailure.test.tsx",
+        "apps/mobile/__tests__/WorkspaceListScreen.test.tsx"
+      ]
+    },
+    {
+      "targetType": "requirement",
+      "targetId": "FE-APPLICATION-SHELL",
+      "tests": [
+        "apps/web/src/screens/AppShell/AppShell.test.tsx",
+        "apps/web/src/screens/AppShell/components/Sidebar/Sidebar.test.tsx",
+        "apps/web/src/screens/AppShell/components/Navigation/Navigation.test.tsx",
+        "apps/web/src/screens/AppShell/hooks/useShellResponsive.test.tsx",
+        "apps/web/src/screens/AppShell/utils/profileDisplay.test.ts"
+      ]
+    },
+    {
+      "targetType": "requirement",
+      "targetId": "FE-MOBILE-APPLICATION-SHELL",
+      "tests": [
+        "apps/mobile/src/screens/AppShell/MobileAppShell.test.tsx",
+        "apps/mobile/src/screens/AppShell/hooks/useDrawer.test.tsx",
+        "apps/mobile/src/screens/AppShell/utils/profileDisplay.test.ts"
+      ]
     },
     {
       "targetType": "package",

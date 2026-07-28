@@ -1,2 +1,2 @@
 export { Surface } from "./Surface";
-export type { SurfaceProps } from "./Surface";
+export type { SurfaceBorderTone, SurfaceProps } from "./Surface";

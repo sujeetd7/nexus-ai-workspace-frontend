@@ -33,3 +33,15 @@ export const States: Story = {
     </Stack>
   ),
 };
+
+export const MutedTone: Story = {
+  render: () => (
+    <Stack direction="horizontal" gap="sm" wrap>
+      <Chip tone="muted">Brainstorm</Chip>
+      <Chip tone="muted" selected>
+        Code
+      </Chip>
+      <Chip tone="default">Default</Chip>
+    </Stack>
+  ),
+};

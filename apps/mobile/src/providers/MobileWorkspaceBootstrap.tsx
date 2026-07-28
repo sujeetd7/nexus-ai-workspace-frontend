@@ -1,12 +1,14 @@
 import { useEffect, type PropsWithChildren } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useGetCurrentUserQuery } from '../api/services/user/userApi';
 import { useListWorkspacesQuery } from '../api/services/workspace/workspaceApi';
+import { mapApiError } from '../hooks/useApiErrorMessage';
 import { createMobileSelectedWorkspaceStorage } from '../platform/workspace/createMobileSelectedWorkspaceStorage';
 import type { AppDispatch } from '../store/createAppStore';
 import {
+  selectAuthInitialized,
   selectIsAuthenticated,
-  selectUser,
 } from '../store/slices/auth/selectors';
 import {
   workspaceBootstrapFailed,
@@ -16,30 +18,105 @@ import {
 
 const workspaceStorage = createMobileSelectedWorkspaceStorage();
 
+/**
+ * Deterministic post-auth sequence (parity with web WorkspaceBootstrap):
+ * auth restored → current profile → membership-scoped workspaces →
+ * validate persisted selection → ready for shell.
+ *
+ * Persistence is session-scoped (TD-032); durable KV requires ADR.
+ */
 export function MobileWorkspaceBootstrap({ children }: PropsWithChildren) {
   const dispatch = useDispatch<AppDispatch>();
+  const authInitialized = useSelector(selectAuthInitialized);
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const authUser = useSelector(selectUser);
-  const { data: workspaces, error, isLoading } = useListWorkspacesQuery(
-    undefined,
-    { skip: !isAuthenticated },
-  );
+
+  const {
+    data: profile,
+    error: profileError,
+    isLoading: profileLoading,
+    isFetching: profileFetching,
+  } = useGetCurrentUserQuery(undefined, {
+    skip: !authInitialized || !isAuthenticated,
+  });
+
+  const profileStatus = profileError
+    ? mapApiError(profileError).status
+    : undefined;
+  const profileAuthBlocked =
+    profileStatus === 401 || profileStatus === 403;
+  const profileSettled =
+    !isAuthenticated ||
+    (!profileLoading &&
+      !profileFetching &&
+      (Boolean(profile) || Boolean(profileError)));
+
+  const {
+    data: workspaces,
+    error: workspaceError,
+    isLoading: workspacesLoading,
+    isFetching: workspacesFetching,
+  } = useListWorkspacesQuery(undefined, {
+    skip:
+      !authInitialized ||
+      !isAuthenticated ||
+      !profileSettled ||
+      profileAuthBlocked,
+  });
 
   useEffect(() => {
+    if (!authInitialized) {
+      return;
+    }
+
     if (!isAuthenticated) {
-      workspaceStorage.clearSelectedWorkspaceId();
+      void workspaceStorage.clearSelectedWorkspaceId();
       dispatch(workspaceBootstrapSucceeded(undefined));
       return;
     }
 
-    if (isLoading) {
+    if (!profileSettled || profileLoading || profileFetching) {
       dispatch(workspaceBootstrapStarted());
       return;
     }
 
-    if (error) {
+    if (profileAuthBlocked) {
       dispatch(
-        workspaceBootstrapFailed('Unable to load workspaces.'),
+        workspaceBootstrapFailed(
+          profileStatus === 403
+            ? 'You do not have permission to load your profile.'
+            : 'Your session has expired. Sign in again to continue.',
+        ),
+      );
+      return;
+    }
+
+    if (workspacesLoading || workspacesFetching) {
+      dispatch(workspaceBootstrapStarted());
+      return;
+    }
+
+    if (workspaceError) {
+      const apiError = mapApiError(workspaceError);
+      if (apiError.status === 401) {
+        dispatch(
+          workspaceBootstrapFailed(
+            'Your session has expired. Sign in again to continue.',
+          ),
+        );
+        return;
+      }
+      if (apiError.status === 403) {
+        dispatch(
+          workspaceBootstrapFailed(
+            'You do not have permission to list workspaces.',
+          ),
+        );
+        return;
+      }
+      dispatch(
+        workspaceBootstrapFailed(
+          apiError.message || 'Unable to load workspaces.',
+        ),
       );
       return;
     }
@@ -56,20 +133,35 @@ export function MobileWorkspaceBootstrap({ children }: PropsWithChildren) {
         return;
       }
 
-      const defaultWorkspace =
-        accessible.find(workspace => workspace.ownerId === authUser?.id) ??
-        accessible[0];
+      if (storedId && !stillAllowed) {
+        await workspaceStorage.clearSelectedWorkspaceId();
+      }
 
-      if (defaultWorkspace) {
-        await workspaceStorage.setSelectedWorkspaceId(defaultWorkspace.id);
-        dispatch(workspaceBootstrapSucceeded(defaultWorkspace.id));
+      if (accessible.length === 1) {
+        const only = accessible[0];
+        await workspaceStorage.setSelectedWorkspaceId(only.id);
+        dispatch(workspaceBootstrapSucceeded(only.id));
         return;
       }
 
       await workspaceStorage.clearSelectedWorkspaceId();
       dispatch(workspaceBootstrapSucceeded(undefined));
     })();
-  }, [authUser, dispatch, error, isAuthenticated, isLoading, workspaces]);
+  }, [
+    authInitialized,
+    dispatch,
+    isAuthenticated,
+    profile,
+    profileAuthBlocked,
+    profileFetching,
+    profileLoading,
+    profileSettled,
+    profileStatus,
+    workspaceError,
+    workspaces,
+    workspacesFetching,
+    workspacesLoading,
+  ]);
 
   return children;
 }

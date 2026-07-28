@@ -9,13 +9,21 @@ import type {
   NexusA11yProps,
   NexusTestProps,
   RadiusToken,
+  SemanticBackground,
   SpacingToken,
 } from "../shared/types";
+
+/** Additive border grammar (Batch 5.DS.2). Default `none` preserves pre-batch Surface. */
+export type SurfaceBorderTone = "none" | "default" | "subtle";
 
 export interface SurfaceProps extends NexusA11yProps, NexusTestProps {
   children?: ReactNode;
   /** Semantic elevation level — maps to shadow (web) / elevation (RN). */
   elevation?: ElevationToken;
+  /** Additive — defaults to `"surface"`. Supports `surfaceMuted` from 5.DS.1. */
+  background?: SemanticBackground;
+  /** Additive — defaults to `"none"` (no border). */
+  borderTone?: SurfaceBorderTone;
   padding?: SpacingToken;
   paddingHorizontal?: SpacingToken;
   paddingVertical?: SpacingToken;
@@ -28,6 +36,8 @@ export interface SurfaceProps extends NexusA11yProps, NexusTestProps {
 export const Surface: FC<SurfaceProps> = ({
   children,
   elevation = "none",
+  background = "surface",
+  borderTone = "none",
   padding,
   paddingHorizontal,
   paddingVertical,
@@ -44,9 +54,26 @@ export const Surface: FC<SurfaceProps> = ({
     isWeb ? "web" : "native",
   );
 
+  const borderStyle =
+    borderTone === "none"
+      ? undefined
+      : {
+          borderWidth: 1,
+          borderStyle: "solid" as const,
+          borderColor:
+            borderTone === "subtle"
+              ? theme.semantic.borderSubtle
+              : theme.semantic.border,
+        };
+
+  const style =
+    elevationStyle || borderStyle
+      ? { ...elevationStyle, ...borderStyle }
+      : undefined;
+
   return (
     <View
-      background="surface"
+      background={background}
       padding={padding}
       paddingHorizontal={paddingHorizontal}
       paddingVertical={paddingVertical}
@@ -55,7 +82,7 @@ export const Surface: FC<SurfaceProps> = ({
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
       accessibilityRole={accessibilityRole}
-      style={elevationStyle}
+      style={style}
     >
       {children}
     </View>

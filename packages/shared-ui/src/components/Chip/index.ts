@@ -1,2 +1,2 @@
 export { Chip } from "./Chip";
-export type { ChipProps } from "./Chip.types";
+export type { ChipProps, ChipTone } from "./Chip.types";

@@ -8,9 +8,13 @@
       "authClient": "createAuthClient.register",
       "sessionOwner": "createSessionManager.register",
       "webFeature": "RegisterScreen",
-      "mobileFeature": null,
-      "tests": ["packages/shared-utils/src/auth/createAuthClient.test.ts"],
-      "maturity": "client-wired"
+      "mobileFeature": "RegisterScreen",
+      "tests": [
+        "packages/shared-utils/src/auth/createAuthClient.test.ts",
+        "apps/web/src/features/auth/screens/AuthScreens.test.tsx",
+        "apps/mobile/__tests__/AuthScreens.test.tsx"
+      ],
+      "maturity": "cross-platform-wired"
     },
     {
       "operationId": "authLogin",
@@ -22,9 +26,11 @@
       "mobileFeature": "LoginScreen",
       "tests": [
         "packages/shared-utils/src/auth/createAuthClient.test.ts",
-        "apps/web/src/features/auth/screens/LoginScreen.test.tsx"
+        "apps/web/src/features/auth/screens/LoginScreen.test.tsx",
+        "apps/web/src/stories/patterns/auth/LoginComposition.test.tsx",
+        "apps/mobile/__tests__/AuthScreens.test.tsx"
       ],
-      "maturity": "web-wired"
+      "maturity": "cross-platform-wired"
     },
     {
       "operationId": "authRefresh",
@@ -32,10 +38,15 @@
       "swaggerDocumented": true,
       "authClient": "createAuthClient.refresh",
       "sessionOwner": "createSessionManager.tryRefresh",
-      "webFeature": "AuthBootstrap",
-      "mobileFeature": "MobileAuthBootstrap",
-      "tests": ["packages/shared-utils/src/auth/createSessionManager.test.ts"],
-      "maturity": "integration-tested"
+      "webFeature": "AuthBootstrap + ProtectedRoute session-expired gate",
+      "mobileFeature": "MobileAuthBootstrap + RootNavigator session-expired gate",
+      "systemFailure": "docs/sprint-5/SYSTEM_AUTH_FAILURE_UX.md",
+      "tests": [
+        "packages/shared-utils/src/auth/createSessionManager.test.ts",
+        "apps/web/src/router/guards/AuthRouteGuard.test.tsx",
+        "apps/mobile/__tests__/RootNavigator.systemFailure.test.tsx"
+      ],
+      "maturity": "cross-platform-wired"
     },
     {
       "operationId": "authLogout",
@@ -45,8 +56,11 @@
       "sessionOwner": "createSessionManager.logout",
       "webFeature": "DashboardScreen",
       "mobileFeature": "DashboardScreen",
-      "tests": ["packages/shared-utils/src/auth/createAuthClient.test.ts"],
-      "maturity": "client-wired"
+      "tests": [
+        "packages/shared-utils/src/auth/createAuthClient.test.ts",
+        "apps/mobile/__tests__/DashboardScreen.test.tsx"
+      ],
+      "maturity": "cross-platform-wired"
     },
     {
       "operationId": "authLogoutAll",
@@ -66,9 +80,12 @@
       "authClient": "createAuthClient.forgotPassword",
       "sessionOwner": null,
       "webFeature": "ForgotPasswordScreen",
-      "mobileFeature": null,
-      "tests": [],
-      "maturity": "web-wired"
+      "mobileFeature": "ForgotPasswordScreen",
+      "tests": [
+        "apps/web/src/features/auth/screens/AuthScreens.test.tsx",
+        "apps/mobile/__tests__/AuthScreens.test.tsx"
+      ],
+      "maturity": "cross-platform-wired"
     },
     {
       "operationId": "authResetPassword",
@@ -77,9 +94,13 @@
       "authClient": "createAuthClient.resetPassword",
       "sessionOwner": null,
       "webFeature": "ResetPasswordScreen",
-      "mobileFeature": null,
-      "tests": [],
-      "maturity": "web-wired"
+      "mobileFeature": "ResetPasswordScreen",
+      "tests": [
+        "apps/web/src/features/auth/screens/AuthScreens.test.tsx",
+        "apps/web/src/stories/patterns/auth/ResetPasswordComposition.test.tsx",
+        "apps/mobile/__tests__/AuthScreens.test.tsx"
+      ],
+      "maturity": "cross-platform-wired"
     },
     {
       "operationId": "authVerifyEmail",
@@ -88,9 +109,13 @@
       "authClient": "createAuthClient.verifyEmail",
       "sessionOwner": null,
       "webFeature": "VerifyEmailScreen",
-      "mobileFeature": null,
-      "tests": [],
-      "maturity": "web-wired"
+      "mobileFeature": "VerifyEmailScreen",
+      "tests": [
+        "apps/web/src/features/auth/screens/AuthScreens.test.tsx",
+        "apps/web/src/stories/patterns/auth/VerifyEmailComposition.test.tsx",
+        "apps/mobile/__tests__/AuthScreens.test.tsx"
+      ],
+      "maturity": "cross-platform-wired"
     },
     {
       "operationId": "authResendVerification",

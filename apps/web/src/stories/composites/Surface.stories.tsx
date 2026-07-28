@@ -29,3 +29,13 @@ export const Elevations: Story = {
     </Stack>
   ),
 };
+
+export const MutedBackground: Story = {
+  args: {
+    background: "surfaceMuted",
+    borderTone: "subtle",
+    elevation: "none",
+    padding: "lg",
+    children: <Text>Muted surface with subtle border</Text>,
+  },
+};

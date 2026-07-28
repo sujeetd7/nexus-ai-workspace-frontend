@@ -5,7 +5,6 @@ import {
   AuthFooter,
   AuthShell,
   Button,
-  Checkbox,
   FormField,
   InlineAlert,
   Link,
@@ -19,6 +18,7 @@ export type LoginCompositionState =
   | "disabled"
   | "fieldErrors"
   | "apiError"
+  | "networkError"
   | "success";
 
 export interface LoginCompositionProps {
@@ -27,6 +27,7 @@ export interface LoginCompositionProps {
 
 /**
  * Storybook-only login composition — mock local state, no API or routes.
+ * Remember-me omitted — LoginRequest has no remember field.
  */
 export const LoginComposition: FC<LoginCompositionProps> = ({
   state = "default",
@@ -37,12 +38,12 @@ export const LoginComposition: FC<LoginCompositionProps> = ({
   const [password, setPassword] = useState(
     state === "fieldErrors" ? "short" : "password123",
   );
-  const [remember, setRemember] = useState(false);
 
   const disabled = state === "disabled" || state === "submitting";
   const submitting = state === "submitting";
   const fieldErrors = state === "fieldErrors";
   const apiError = state === "apiError";
+  const networkError = state === "networkError";
   const success = state === "success";
 
   return (
@@ -50,7 +51,7 @@ export const LoginComposition: FC<LoginCompositionProps> = ({
       testID="login-shell"
       brand={
         <Text variant="h2" align="center" weight="bold">
-          Nexus
+          Nexus AI Workspace
         </Text>
       }
     >
@@ -58,13 +59,30 @@ export const LoginComposition: FC<LoginCompositionProps> = ({
         testID="login-card"
         title="Sign in"
         description="Enter your email and password to continue."
+        headingLevel={2}
         status={
           apiError ? (
-            <InlineAlert tone="error" title="Unable to sign in" testID="login-api-error">
+            <InlineAlert
+              tone="error"
+              title="Unable to sign in"
+              testID="login-api-error"
+            >
               Invalid email or password. Please try again.
             </InlineAlert>
+          ) : networkError ? (
+            <InlineAlert
+              tone="error"
+              title="Connection problem"
+              testID="login-api-error"
+            >
+              Unable to reach the server. Check your connection and try again.
+            </InlineAlert>
           ) : success ? (
-            <InlineAlert tone="success" title="Signed in" testID="login-success">
+            <InlineAlert
+              tone="success"
+              title="Signed in"
+              testID="login-success"
+            >
               Redirecting to your workspace…
             </InlineAlert>
           ) : undefined
@@ -104,20 +122,7 @@ export const LoginComposition: FC<LoginCompositionProps> = ({
             fieldErrors ? "Password must be at least 8 characters" : undefined
           }
         />
-        <Stack
-          direction="horizontal"
-          gap="md"
-          align="center"
-          justify="space-between"
-          wrap
-        >
-          <Checkbox
-            testID="login-remember"
-            label="Remember me"
-            checked={remember}
-            disabled={disabled}
-            onCheckedChange={setRemember}
-          />
+        <Stack direction="horizontal" justify="end">
           <Link href="#forgot-password">Forgot password?</Link>
         </Stack>
         <Button

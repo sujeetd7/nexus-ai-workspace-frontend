@@ -35,4 +35,20 @@ describe("Card", () => {
     expect(screen.queryByTestId("simple-header")).toBeNull();
     expect(screen.queryByTestId("simple-footer")).toBeNull();
   });
+
+  it("accepts additive muted background and subtle border without raw colors", () => {
+    renderWithSharedUI(
+      <Card
+        testID="muted"
+        background="surfaceMuted"
+        borderTone="subtle"
+        elevation="none"
+      >
+        <Text>Muted</Text>
+      </Card>,
+    );
+    const node = screen.getByTestId("muted") as HTMLElement;
+    expect(node.textContent).toContain("Muted");
+    expect(node.style.borderColor.toLowerCase()).toBe("rgb(243, 244, 246)");
+  });
 });

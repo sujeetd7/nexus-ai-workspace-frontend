@@ -5,25 +5,33 @@ import {
   AuthFooter,
   AuthHeader,
   AuthShell,
+  Avatar,
   Badge,
   Button,
   Card,
   Checkbox,
   Chip,
   Divider,
+  EmptyState,
   ErrorText,
   FormField,
   HelperText,
   Icon,
+  IconButton,
   InlineAlert,
   Input,
   Label,
   Link,
+  ListRow,
   Loader,
   PasswordField,
+  SearchField,
   Section,
+  SettingsRow,
+  Skeleton,
   Stack,
   Surface,
+  Switch,
   Text,
   View,
   XStack,
@@ -53,6 +61,20 @@ describe("Level 1 + Level 2 public exports", () => {
     expect(Section).toEqual(expect.any(Function));
   });
 
+  it("exports Batch 5.DS.3 foundation composites", () => {
+    expect(Avatar).toEqual(expect.any(Function));
+    expect(Skeleton).toEqual(expect.any(Function));
+    expect(Switch).toEqual(expect.any(Function));
+    expect(IconButton).toEqual(expect.any(Function));
+  });
+
+  it("exports Batch 5.DS.4 shared composites", () => {
+    expect(SearchField).toEqual(expect.any(Function));
+    expect(ListRow).toEqual(expect.any(Function));
+    expect(SettingsRow).toEqual(expect.any(Function));
+    expect(EmptyState).toEqual(expect.any(Function));
+  });
+
   it("exports Batch 5.2C auth-critical components", () => {
     expect(Link).toEqual(expect.any(Function));
     expect(Checkbox).toEqual(expect.any(Function));
@@ -73,9 +95,8 @@ describe("Level 1 + Level 2 public exports", () => {
     expect("Tooltip" in mod).toBe(false);
   });
 
-  it("does not export Avatar, Modal, or Toast (deferred / incomplete)", async () => {
+  it("does not export Modal or Toast (deferred / incomplete)", async () => {
     const mod = await import("../index");
-    expect("Avatar" in mod).toBe(false);
     expect("Modal" in mod).toBe(false);
     expect("Toast" in mod).toBe(false);
   });

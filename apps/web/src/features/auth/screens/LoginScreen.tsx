@@ -1,6 +1,5 @@
 import { useEffect, type FC, type FormEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import {
   AuthCard,
   AuthFooter,
@@ -8,8 +7,8 @@ import {
   Button,
   FormField,
   InlineAlert,
+  Link,
   Stack,
-  Text,
 } from "@nexus/shared-ui";
 import { loginRequestSchema } from "@nexus/shared-validation";
 
@@ -21,7 +20,16 @@ import {
 } from "../../../store/slices/auth/selectors";
 import { createLoginAction } from "../../../store/sagas/auth/authSaga";
 import type { AppDispatch } from "../../../store/createAppStore";
+import { AuthBrand } from "../components/AuthBrand";
 import { useAuthForm } from "../hooks/useAuthForm";
+import {
+  classifyAuthError,
+  loginErrorTitle,
+} from "../utils/authErrorPresentation";
+import {
+  focusAuthStatus,
+  focusFirstFieldError,
+} from "../utils/focusAuthFeedback";
 
 export const LoginScreen: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,13 +40,32 @@ export const LoginScreen: FC = () => {
     initialValues: { email: "", password: "" },
   });
 
+  const classified = apiError
+    ? classifyAuthError({
+        message: apiError,
+        retryable: false,
+      })
+    : undefined;
+
   useEffect(() => {
     dispatch(clearAuthError());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (apiError) {
+      focusAuthStatus("login");
+    }
+  }, [apiError]);
+
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
-    if (!form.validate()) {
+    const result = form.validate();
+    if (!result.ok) {
+      focusFirstFieldError(
+        result.errors as Partial<Record<string, string>>,
+        ["email", "password"],
+        "login",
+      );
       return;
     }
 
@@ -51,22 +78,20 @@ export const LoginScreen: FC = () => {
   };
 
   return (
-    <AuthShell
-      testID="login-shell"
-      brand={
-        <Text variant="h2" align="center" weight="bold">
-          Nexus
-        </Text>
-      }
-    >
+    <AuthShell testID="login-shell" brand={<AuthBrand />}>
       <AuthCard
         testID="login-card"
         title="Sign in"
         description="Enter your email and password to continue."
+        headingLevel={2}
         status={
-          apiError ? (
-            <InlineAlert tone="error" title="Unable to sign in" testID="login-api-error">
-              {apiError}
+          classified ? (
+            <InlineAlert
+              tone="error"
+              title={loginErrorTitle(classified.kind)}
+              testID="login-api-error"
+            >
+              {classified.message}
             </InlineAlert>
           ) : undefined
         }
@@ -77,7 +102,7 @@ export const LoginScreen: FC = () => {
           />
         }
       >
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} noValidate>
           <Stack gap="md">
             <FormField
               testID="login-email"
@@ -103,7 +128,9 @@ export const LoginScreen: FC = () => {
               autoComplete="current-password"
               errorText={form.fieldErrors.password}
             />
-            <Link to={WEB_ROUTE_PATHS.forgotPassword}>Forgot password?</Link>
+            <Stack direction="horizontal" justify="end">
+              <Link href={WEB_ROUTE_PATHS.forgotPassword}>Forgot password?</Link>
+            </Stack>
             <Button
               testID="login-submit"
               fullWidth

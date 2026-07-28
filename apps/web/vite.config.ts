@@ -8,6 +8,9 @@ const isVitest = process.env.VITEST === "true";
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Tamagui's vite plugin sets envPrefix to TAMAGUI_ only, which hides VITE_*.
+  // Keep both so public client config (VITE_API_URL, …) still reaches the browser.
+  envPrefix: ["VITE_", "TAMAGUI_"],
   plugins: [
     react(),
     // Skip config bundling in Vitest workers; runtime apps use the plugin.

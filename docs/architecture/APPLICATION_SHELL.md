@@ -1,53 +1,110 @@
 # Application Shell
 
 Sprint 3 Batch 3.3 — application-owned shells for Web and React Native.
+Sprint 5 Batch 5.DS.8 — production web AppShell screen module.
+Sprint 5 Batch 5.DS.9 — production mobile AppShell screen module.
 
 ## Ownership
 
-| Concern                 | Owner                   |
-| ----------------------- | ----------------------- |
-| Web shell chrome        | `apps/web/src/shell`    |
-| Mobile shell chrome     | `apps/mobile/src/shell` |
-| Primitives / composites | `@nexus/shared-ui`      |
+| Concern                 | Owner                                        |
+| ----------------------- | -------------------------------------------- |
+| Web shell chrome        | `apps/web/src/screens/AppShell/`             |
+| Web shell export        | `apps/web/src/shell/ApplicationShell.tsx`    |
+| Mobile shell chrome     | `apps/mobile/src/screens/AppShell/`          |
+| Mobile shell export     | `apps/mobile/src/shell/ApplicationShell.tsx` |
+| Primitives / composites | `@nexus/shared-ui`                           |
 
 Shells are **not** shared packages and must not move into `@nexus/shared-ui`.
 
-## Web shell (`ApplicationShell`)
+## Web shell (`AppShell`)
 
-Allowed regions implemented:
+Authenticated chrome (sidebar + top bar + content) renders when:
 
-- Root container
-- Skip-to-content link (`#main-content`)
-- Header with brand text + navigation placeholder
-- Main content region with route `Outlet`
-- Route-level `Suspense` fallback (`RouteLoading`)
+- User is authenticated, and
+- Current path is not a guest/public auth route (`/`, `/login`, register/forgot/reset/verify)
 
-Not implemented (intentionally): dashboard chrome, workspace sidebar, profile, notifications, search, command palette, AI/MCP/agent controls, auth controls, product menus.
+Guest and public routes render a content-only main region (auth screens keep `AuthShell` ownership).
 
-`MainLayout` delegates to `ApplicationShell` for compatibility with existing layout folders. `AuthLayout` / `BlankLayout` remain pass-through stubs and are unwired.
+### Regions
 
-## Mobile shell (`ApplicationShell`)
+- Root container + skip-to-content (`#main-content`)
+- **Sidebar:** logo, workspace switcher, search placeholder, primary navigation (existing routes), recent/pinned empty states, settings, profile summary, version
+- **Top bar:** page title, breadcrumbs, compact workspace, notification placeholder, profile avatar
+- **Main:** `ContentArea` + route `Outlet` with `Suspense` fallback (`RouteLoading`)
 
-Allowed regions implemented:
+### Reuse (no duplication)
+
+- React Router route table unchanged
+- `ProtectedRoute` / `GuestRoute` unchanged
+- `AuthBootstrap`, `WorkspaceBootstrap`, workspace Redux slice unchanged
+- `@nexus/shared-ui` composites only — no duplicate primitives
+
+`MainLayout` delegates to `ApplicationShell` → `AppShell`. `AuthLayout` / `BlankLayout` remain pass-through stubs.
+
+### Not implemented (intentionally)
+
+- Feature modules (Documents, Prompt Library, AI Chat, Agents, Admin)
+- Notification center, command palette, search backend
+- Recent/pinned data surfaces (EmptyState until APIs exist)
+- Theme toggle product control
+- AI/MCP/agent controls
+
+See `docs/sprint-5/APPLICATION_SHELL.md` for batch 5.DS.8 detail.
+
+## Mobile shell (`MobileAppShell`)
+
+Authenticated chrome (header + drawer + content) wraps authenticated stack screens via `createShellScreen` in `RootNavigator`.
+
+Guest auth routes and infrastructure `NotFound` remain content-only (no drawer chrome).
+
+### Regions
+
+- Safe-area root (`SafeAreaView` + bottom inset)
+- **Header:** hamburger, page title, compact workspace, notification placeholder, profile avatar
+- **Drawer (overlay):** logo, workspace switcher, search placeholder, primary navigation (existing routes), recent/pinned empty states, settings, profile summary, version
+- **Main:** `ContentArea` + screen children with keyboard avoidance
+
+### Reuse (no duplication)
+
+- React Navigation stack unchanged
+- `MobileAuthBootstrap`, `MobileWorkspaceBootstrap`, workspace Redux slice unchanged
+- `@nexus/shared-ui` composites only — no duplicate primitives
+
+`ApplicationShell` in `apps/mobile/src/shell` re-exports `MobileAppShell`.
+
+### Not implemented (intentionally)
+
+- Feature modules (Documents, Prompt Library, AI Chat, Agents, Admin)
+- Notification center, command palette, search backend
+- Recent/pinned data surfaces (EmptyState until APIs exist)
+- React Native Storybook (TD-057)
+- Tab bar (drawer-only navigation on mobile)
+
+See `docs/sprint-5/MOBILE_APPLICATION_SHELL.md` for batch 5.DS.9 detail.
+
+## Mobile shell (legacy stub — superseded)
+
+The Sprint 3 stub at `apps/mobile/src/shell` is superseded by `MobileAppShell`. Export path preserved for compatibility.
+
+Previously documented as stub-only:
 
 - Safe-area-aware root layout
 - Header / title region
 - Screen content boundary
-- Shared-ui primitives only (no duplicated components)
 
-Not implemented: tab bar, drawer, account menu, workspace selector, feature chrome.
+Now implemented in production AppShell module.
 
 ## Accessibility
 
-- Web: semantic `header` / `nav` / `main`, skip link with visible focus, labeled regions
-- Mobile: labeled header/content regions, shared Button touch targets, no motion-only navigation feedback
+- Web: semantic `aside` / `header` / `nav` / `main`, skip link with visible focus, labeled regions, shared ListRow/IconButton focus rings
+- Mobile: labeled header/drawer/main regions, drawer open/close announcements, shared IconButton/ListRow touch targets (≥44pt), SearchField placeholder hints
 - Loading announcements via shared `Loader` / `RouteLoading` (`accessibilityRole="progress"`)
 
 ## Responsive behavior
 
-- Web: flexible column shell with padding; works at narrow / tablet / desktop widths without a product sidebar
-- Mobile: safe-area insets; phone orientations inherit RN defaults — tablet optimization not claimed
+- Web: desktop persistent sidebar; tablet collapsible sidebar; mobile drawer overlay — breakpoints from `@nexus/shared-ui` (`md`/`lg`)
+- Mobile: drawer overlay; safe-area insets via `react-native-safe-area-context`; phone orientations inherit RN defaults — tablet optimization not claimed
 
 ## State
 
-Shells render without backend connectivity. No shell Redux slice, no navigation persistence, no feature state.
+Shell chrome reads auth and workspace bootstrap state only. No shell Redux slice, no navigation persistence, no feature state.

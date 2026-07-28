@@ -7,4 +7,5 @@ export const selectAuthInitialized = (state: RootReducerState) =>
   state.auth.initialized;
 export const selectAuthLoading = (state: RootReducerState) => state.auth.loading;
 export const selectAuthError = (state: RootReducerState) => state.auth.error;
+export const selectAuthStatus = (state: RootReducerState) => state.auth.status;
 export const selectUser = (state: RootReducerState) => state.auth.user;
