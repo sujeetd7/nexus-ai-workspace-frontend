@@ -301,6 +301,17 @@ export const WorkspaceListScreen: FC = () => {
                           ? 'Current workspace'
                           : 'Use workspace'}
                     </Button>
+                    <Button
+                      variant="secondary"
+                      onPress={() =>
+                        navigation.navigate(MOBILE_ROUTE_NAMES.WorkspaceDetail, {
+                          workspaceId: workspace.id,
+                        })
+                      }
+                      accessibilityLabel={`Manage ${workspace.name}`}
+                    >
+                      Manage
+                    </Button>
                   </Stack>
                 }
               />
@@ -317,6 +328,16 @@ export const WorkspaceListScreen: FC = () => {
           Continue
         </Button>
       ) : null}
+
+      <Button
+        variant="secondary"
+        onPress={() =>
+          navigation.navigate(MOBILE_ROUTE_NAMES.AcceptInvitation)
+        }
+        accessibilityLabel="Accept invitation"
+      >
+        Accept invitation
+      </Button>
     </Stack>
   );
 };

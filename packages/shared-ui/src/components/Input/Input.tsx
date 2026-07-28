@@ -24,6 +24,8 @@ export type InputAutoComplete =
   | "off"
   | "on"
   | "name"
+  | "given-name"
+  | "family-name"
   | "email"
   | "username"
   | "current-password"
@@ -49,6 +51,10 @@ function mapAutoCompleteForTextInput(
       return "off";
     case "name":
       return "name";
+    case "given-name":
+      return "name-given";
+    case "family-name":
+      return "name-family";
     case "email":
       return "email";
     case "username":

@@ -9,8 +9,12 @@
       "queryOwner": "userApi.getCurrentUser",
       "webFeature": "ProfileScreen",
       "mobileFeature": "ProfileScreen",
-      "tests": ["packages/shared-utils/src/user/createUserClient.test.ts"],
-      "maturity": "mobile-wired"
+      "tests": [
+        "packages/shared-utils/src/user/createUserClient.test.ts",
+        "apps/web/src/features/profile/screens/ProfileScreens.test.tsx",
+        "apps/mobile/__tests__/ProfileScreens.test.tsx"
+      ],
+      "maturity": "cross-platform-wired"
     },
     {
       "operationId": "userUpdateMe",
@@ -18,10 +22,15 @@
       "swaggerDocumented": true,
       "userClient": "createUserClient.updateCurrentUser",
       "queryOwner": "userApi.updateCurrentUser",
-      "webFeature": "EditProfileScreen",
-      "mobileFeature": null,
-      "tests": ["packages/shared-utils/src/user/createUserClient.test.ts"],
-      "maturity": "web-wired"
+      "webFeature": "EditProfileScreen|PreferencesScreen",
+      "mobileFeature": "EditProfileScreen|PreferencesScreen",
+      "tests": [
+        "packages/shared-utils/src/user/createUserClient.test.ts",
+        "apps/web/src/features/profile/screens/ProfileScreens.test.tsx",
+        "apps/mobile/__tests__/ProfileScreens.test.tsx"
+      ],
+      "maturity": "cross-platform-wired",
+      "notes": "Avatar managed as optional URL string field; no dedicated upload API."
     },
     {
       "operationId": "userCreate",
@@ -31,8 +40,12 @@
       "queryOwner": "userApi.createUserProfile",
       "webFeature": "ProfileScreen",
       "mobileFeature": "ProfileScreen",
-      "tests": [],
-      "maturity": "client-wired"
+      "tests": [
+        "apps/web/src/features/profile/screens/ProfileScreens.test.tsx",
+        "apps/mobile/__tests__/ProfileScreens.test.tsx"
+      ],
+      "maturity": "cross-platform-wired",
+      "notes": "Auto-create on GET /users/me 404 only."
     },
     {
       "operationId": "userUpdate",
@@ -43,7 +56,44 @@
       "webFeature": null,
       "mobileFeature": null,
       "tests": [],
-      "maturity": "gateway-wired"
+      "maturity": "gateway-wired",
+      "notes": "Admin/directory update by id — deferred; current-user flow uses userUpdateMe."
+    },
+    {
+      "operationId": "userList",
+      "gatewayRoute": "GET /api/v1/users",
+      "swaggerDocumented": true,
+      "userClient": null,
+      "queryOwner": null,
+      "webFeature": null,
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "gateway-wired",
+      "notes": "Directory list deferred — not a current-user self-service capability."
+    },
+    {
+      "operationId": "userGet",
+      "gatewayRoute": "GET /api/v1/users/{id}",
+      "swaggerDocumented": true,
+      "userClient": null,
+      "queryOwner": null,
+      "webFeature": null,
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "gateway-wired",
+      "notes": "Directory get-by-id deferred."
+    },
+    {
+      "operationId": "userDelete",
+      "gatewayRoute": "DELETE /api/v1/users/{id}",
+      "swaggerDocumented": true,
+      "userClient": null,
+      "queryOwner": null,
+      "webFeature": null,
+      "mobileFeature": null,
+      "tests": [],
+      "maturity": "gateway-wired",
+      "notes": "Directory delete deferred."
     }
   ]
 }

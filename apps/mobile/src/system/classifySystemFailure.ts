@@ -263,3 +263,49 @@ export function workspaceFailureCopy(
       };
   }
 }
+
+/** Stable copy for profile / preferences surfaces. */
+export function profileFailureCopy(
+  kind: SystemFailureKind,
+  fallbackMessage?: string,
+): { title: string; message: string } {
+  switch (kind) {
+    case "sessionExpired":
+      return {
+        title: "Session expired",
+        message: "Your session has expired. Sign in again to continue.",
+      };
+    case "unauthorized":
+      return {
+        title: "Sign-in required",
+        message: "You need to sign in to view your profile.",
+      };
+    case "forbidden":
+      return {
+        title: "Permission denied",
+        message: "You do not have permission to view this profile.",
+      };
+    case "networkUnavailable":
+      return {
+        title: "Service unavailable",
+        message:
+          "Unable to reach Nexus right now. Check your connection and try again.",
+      };
+    case "retryableApi":
+      return {
+        title: "Unable to load profile",
+        message:
+          fallbackMessage && fallbackMessage.trim().length > 0
+            ? fallbackMessage
+            : "A temporary error occurred. Please try again.",
+      };
+    default:
+      return {
+        title: "Unable to load profile",
+        message:
+          fallbackMessage && fallbackMessage.trim().length > 0
+            ? fallbackMessage
+            : COPY.generic.message,
+      };
+  }
+}

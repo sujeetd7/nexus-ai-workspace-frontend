@@ -1,24 +1,36 @@
-import { type FC } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useState, type FC } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Button,
+  EmptyState,
   InlineAlert,
   Loader,
   Stack,
   Text,
 } from "@nexus/shared-ui";
 import type { WorkspaceRole } from "@nexus/shared-types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { mapApiError } from "../../../hooks/useApiErrorMessage";
 import { WEB_ROUTE_PATHS } from "../../../router/paths";
+import { createWebSelectedWorkspaceStorage } from "../../../platform/workspace";
+import type { AppDispatch } from "../../../store/createAppStore";
+import { sessionExpiredAcknowledged } from "../../../store/slices/auth/authSlice";
 import { selectUser } from "../../../store/slices/auth/selectors";
+import { clearSelectedWorkspace } from "../../../store/slices/workspace/workspaceSlice";
+import { selectSelectedWorkspaceId } from "../../../store/slices/workspace/selectors";
+import {
+  classifySystemFailure,
+  workspaceFailureCopy,
+} from "../../../system";
 import {
   useGetWorkspaceQuery,
   useListMembersQuery,
   useRemoveMemberMutation,
   useUpdateMemberRoleMutation,
 } from "../api";
+
+const workspaceStorage = createWebSelectedWorkspaceStorage();
 
 const ROLE_OPTIONS: WorkspaceRole[] = [
   "OWNER",
@@ -29,33 +41,94 @@ const ROLE_OPTIONS: WorkspaceRole[] = [
 
 export const WorkspaceMembersScreen: FC = () => {
   const { workspaceId = "" } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const authUser = useSelector(selectUser);
+  const selectedId = useSelector(selectSelectedWorkspaceId);
   const { data: workspace } = useGetWorkspaceQuery(workspaceId, {
     skip: !workspaceId,
   });
-  const { data, error, isLoading, refetch } = useListMembersQuery(workspaceId, {
-    skip: !workspaceId,
-  });
+  const { data, error, isLoading, isFetching, refetch } = useListMembersQuery(
+    workspaceId,
+    {
+      skip: !workspaceId,
+    },
+  );
   const [updateRole, updateState] = useUpdateMemberRoleMutation();
   const [removeMember, removeState] = useRemoveMemberMutation();
+  const [retrying, setRetrying] = useState(false);
+  const [actionError, setActionError] = useState<string | undefined>();
 
   if (!workspaceId) {
-    return <Text>Workspace not found.</Text>;
+    return (
+      <Stack padding="xl" gap="md">
+        <EmptyState
+          title="Workspace not found"
+          description="No workspace was selected."
+        />
+      </Stack>
+    );
   }
 
   if (isLoading) {
-    return <Loader accessibilityLabel="Loading members" />;
+    return (
+      <Stack
+        align="center"
+        padding="xl"
+        gap="md"
+        testID="workspace-members-loading"
+        accessibilityLabel="Loading members"
+      >
+        <Loader accessibilityLabel="Loading members" />
+        <Text>Loading members…</Text>
+      </Stack>
+    );
   }
 
   if (error) {
     const apiError = mapApiError(error);
+    const presentation = classifySystemFailure({
+      status: apiError.status,
+      code: apiError.code,
+      message: apiError.message,
+      causeType: apiError.causeType,
+      retryable: apiError.retryable,
+      authAction: apiError.authAction,
+      authorizationAction: apiError.authorizationAction,
+      context: "authenticated",
+    });
+    const copy = workspaceFailureCopy(presentation.kind, apiError.message);
+    const busy = retrying || isFetching;
+
     return (
-      <Stack padding="xl" gap="md">
-        <InlineAlert tone="error" title="Unable to load members">
-          {apiError.message}
+      <Stack padding="xl" gap="md" testID="workspace-members-error">
+        <InlineAlert tone={presentation.tone} title={copy.title}>
+          {copy.message}
         </InlineAlert>
-        {apiError.retryable ? (
-          <Button onPress={() => refetch()}>Retry</Button>
+        {presentation.primaryAction === "retry" ? (
+          <Button
+            loading={busy}
+            disabled={busy}
+            onPress={() => {
+              setRetrying(true);
+              void Promise.resolve(refetch()).finally(() => {
+                setRetrying(false);
+              });
+            }}
+            accessibilityLabel="Retry loading members"
+          >
+            Retry
+          </Button>
+        ) : null}
+        {presentation.primaryAction === "signIn" ? (
+          <Button
+            onPress={() => {
+              dispatch(sessionExpiredAcknowledged());
+            }}
+            accessibilityLabel="Sign in"
+          >
+            Sign in
+          </Button>
         ) : null}
       </Stack>
     );
@@ -77,58 +150,127 @@ export const WorkspaceMembersScreen: FC = () => {
           </Link>
         ) : null}
       </Stack>
-      {members.length === 0 ? <Text>No members yet.</Text> : null}
-      <Stack gap="md">
-        {members.map((member) => {
-          const isOwner = member.role === "OWNER";
-          const isSelf = member.userId === authUser?.id;
-          return (
-            <Stack
-              key={member.id}
-              direction="horizontal"
-              justify="space-between"
-              align="center"
-              gap="md"
-            >
-              <Stack gap="xs">
-                <Text weight="bold">{member.userId}</Text>
-                <Text>Role: {member.role}</Text>
-              </Stack>
-              {canManage && !isOwner ? (
-                <Stack direction="horizontal" gap="sm" align="center">
-                  <select
-                    aria-label={`Role for ${member.userId}`}
-                    value={member.role}
-                    disabled={updateState.isLoading}
-                    onChange={(event) => {
-                      void updateRole({
-                        workspaceId,
-                        memberId: member.id,
-                        body: {
-                          role: event.target.value as WorkspaceRole,
-                        },
-                      });
-                    }}
-                  >
-                    {ROLE_OPTIONS.map((role) => (
-                      <option key={role} value={role}>{role}</option>
-                    ))}
-                  </select>
-                  <Button
-                    variant="secondary"
-                    disabled={isSelf || removeState.isLoading}
-                    onPress={() =>
-                      removeMember({ workspaceId, memberId: member.id })
-                    }
-                  >
-                    Remove
-                  </Button>
+
+      {actionError ? (
+        <InlineAlert tone="error" title="Unable to update membership">
+          {actionError}
+        </InlineAlert>
+      ) : null}
+
+      {members.length === 0 ? (
+        <EmptyState
+          title="No members yet"
+          description="Invite a teammate to join this workspace."
+          primaryAction={
+            canManage ? (
+              <Link to={`/workspaces/${workspaceId}/invite`}>
+                <Button>Invite member</Button>
+              </Link>
+            ) : undefined
+          }
+        />
+      ) : (
+        <Stack gap="md">
+          {members.map((member) => {
+            const isOwner = member.role === "OWNER";
+            const isSelf = member.userId === authUser?.id;
+            const canLeaveSelf =
+              isSelf && !isOwner && authUser?.id !== workspace?.ownerId;
+
+            return (
+              <Stack
+                key={member.id}
+                direction="horizontal"
+                justify="space-between"
+                align="center"
+                gap="md"
+              >
+                <Stack gap="xs">
+                  <Text weight="bold">{member.userId}</Text>
+                  <Text>Role: {member.role}</Text>
                 </Stack>
-              ) : null}
-            </Stack>
-          );
-        })}
-      </Stack>
+                <Stack direction="horizontal" gap="sm" align="center">
+                  {canManage && !isOwner ? (
+                    <>
+                      <select
+                        aria-label={`Role for ${member.userId}`}
+                        value={member.role}
+                        disabled={updateState.isLoading}
+                        onChange={(event) => {
+                          setActionError(undefined);
+                          void updateRole({
+                            workspaceId,
+                            memberId: member.id,
+                            body: {
+                              role: event.target.value as WorkspaceRole,
+                            },
+                          })
+                            .unwrap()
+                            .catch((err) => {
+                              setActionError(mapApiError(err).message);
+                            });
+                        }}
+                      >
+                        {ROLE_OPTIONS.map((role) => (
+                          <option key={role} value={role}>
+                            {role}
+                          </option>
+                        ))}
+                      </select>
+                      {!isSelf ? (
+                        <Button
+                          variant="secondary"
+                          disabled={removeState.isLoading}
+                          onPress={() => {
+                            setActionError(undefined);
+                            void removeMember({
+                              workspaceId,
+                              memberId: member.id,
+                            })
+                              .unwrap()
+                              .catch((err) => {
+                                setActionError(mapApiError(err).message);
+                              });
+                          }}
+                        >
+                          Remove
+                        </Button>
+                      ) : null}
+                    </>
+                  ) : null}
+                  {canLeaveSelf ? (
+                    <Button
+                      variant="secondary"
+                      loading={removeState.isLoading}
+                      onPress={() => {
+                        setActionError(undefined);
+                        void removeMember({
+                          workspaceId,
+                          memberId: member.id,
+                        })
+                          .unwrap()
+                          .then(async () => {
+                            if (selectedId === workspaceId) {
+                              await workspaceStorage.clearSelectedWorkspaceId();
+                              dispatch(clearSelectedWorkspace());
+                            }
+                            navigate(WEB_ROUTE_PATHS.workspaces);
+                          })
+                          .catch((err) => {
+                            setActionError(mapApiError(err).message);
+                          });
+                      }}
+                      accessibilityLabel="Leave workspace"
+                    >
+                      Leave workspace
+                    </Button>
+                  ) : null}
+                </Stack>
+              </Stack>
+            );
+          })}
+        </Stack>
+      )}
       <Link to={`/workspaces/${workspaceId}`}>
         <Button variant="secondary">Back to workspace</Button>
       </Link>

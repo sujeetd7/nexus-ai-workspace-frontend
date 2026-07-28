@@ -56,27 +56,31 @@ function SidebarSearch() {
 
 function SidebarRecents() {
   return (
-    <Stack gap="xs" style={sidebarSectionStyle}>
-      <NavigationSectionLabel>Recent</NavigationSectionLabel>
-      <EmptyState
-        title="No recent items"
-        description="Recent navigation will appear here when available."
-        testID="app-shell-recent-empty"
-      />
-    </Stack>
+    <View style={sidebarSectionStyle}>
+      <Stack gap="xs">
+        <NavigationSectionLabel>Recent</NavigationSectionLabel>
+        <EmptyState
+          title="No recent items"
+          description="Recent navigation will appear here when available."
+          testID="app-shell-recent-empty"
+        />
+      </Stack>
+    </View>
   );
 }
 
 function SidebarPinned() {
   return (
-    <Stack gap="xs" style={sidebarSectionStyle}>
-      <NavigationSectionLabel>Pinned</NavigationSectionLabel>
-      <EmptyState
-        title="Nothing pinned"
-        description="Pinned items will appear here when available."
-        testID="app-shell-pinned-empty"
-      />
-    </Stack>
+    <View style={sidebarSectionStyle}>
+      <Stack gap="xs">
+        <NavigationSectionLabel>Pinned</NavigationSectionLabel>
+        <EmptyState
+          title="Nothing pinned"
+          description="Pinned items will appear here when available."
+          testID="app-shell-pinned-empty"
+        />
+      </Stack>
+    </View>
   );
 }
 
@@ -85,22 +89,24 @@ function SidebarSettings({ onNavigate }: { onNavigate?: () => void }) {
   const selected = pathname.startsWith(SETTINGS_NAV_ITEM.path);
 
   return (
-    <Stack gap="xs" style={sidebarSectionStyle}>
-      <NavigationSectionLabel>Settings</NavigationSectionLabel>
-      <Link
-        to={SETTINGS_NAV_ITEM.path}
-        onClick={onNavigate}
-        style={{ textDecoration: "none", color: "inherit", display: "block" }}
-        aria-current={selected ? "page" : undefined}
-      >
-        <ListRow
-          title={SETTINGS_NAV_ITEM.label}
-          selected={selected}
-          accessibilityLabel={SETTINGS_NAV_ITEM.label}
-          testID={`app-shell-nav-${SETTINGS_NAV_ITEM.id}`}
-        />
-      </Link>
-    </Stack>
+    <View style={sidebarSectionStyle}>
+      <Stack gap="xs">
+        <NavigationSectionLabel>Settings</NavigationSectionLabel>
+        <Link
+          to={SETTINGS_NAV_ITEM.path}
+          onClick={onNavigate}
+          style={{ textDecoration: "none", color: "inherit", display: "block" }}
+          aria-current={selected ? "page" : undefined}
+        >
+          <ListRow
+            title={SETTINGS_NAV_ITEM.label}
+            selected={selected}
+            accessibilityLabel={SETTINGS_NAV_ITEM.label}
+            testID={`app-shell-nav-${SETTINGS_NAV_ITEM.id}`}
+          />
+        </Link>
+      </Stack>
+    </View>
   );
 }
 

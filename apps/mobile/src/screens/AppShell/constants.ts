@@ -7,10 +7,17 @@ export const APP_SHELL_VERSION = '0.0.1';
 
 export type ShellNavSection = 'primary' | 'settings';
 
+/** Shell drawer destinations — param-less authenticated routes only. */
+export type ShellNavRouteName =
+  | 'Dashboard'
+  | 'Workspaces'
+  | 'Profile'
+  | 'ProfilePreferences';
+
 export interface ShellNavItem {
   readonly id: string;
   readonly label: string;
-  readonly routeName: keyof typeof MOBILE_ROUTE_NAMES;
+  readonly routeName: ShellNavRouteName;
   readonly section: ShellNavSection;
 }
 
@@ -37,11 +44,24 @@ export const PRIMARY_NAV_ITEMS: readonly ShellNavItem[] = [
 ] as const;
 
 export const SETTINGS_NAV_ITEM: ShellNavItem = {
-  id: ROUTE_IDS.PROFILE,
+  id: ROUTE_IDS.PROFILE_PREFERENCES,
   label: 'Settings',
-  routeName: 'Profile',
+  routeName: 'ProfilePreferences',
   section: 'settings',
 };
 
 export const SEARCH_PLACEHOLDER =
   'Search (placeholder — backend not connected)';
+
+/** Compile-time guard: shell nav names must exist in mobile route catalog. */
+const _shellNavRouteNames: Record<
+  ShellNavRouteName,
+  (typeof MOBILE_ROUTE_NAMES)[ShellNavRouteName]
+> = {
+  Dashboard: MOBILE_ROUTE_NAMES.Dashboard,
+  Workspaces: MOBILE_ROUTE_NAMES.Workspaces,
+  Profile: MOBILE_ROUTE_NAMES.Profile,
+  ProfilePreferences: MOBILE_ROUTE_NAMES.ProfilePreferences,
+};
+
+void _shellNavRouteNames;

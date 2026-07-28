@@ -1,4 +1,3 @@
-import type { PressHandler } from "../../types/events";
 import type { NexusTestProps } from "../shared/types";
 
 export interface SwitchProps extends NexusTestProps {

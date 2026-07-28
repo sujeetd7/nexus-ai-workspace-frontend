@@ -1,28 +1,40 @@
-import { useState, type FC, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, type FC } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {
   Button,
+  FormField,
   InlineAlert,
   Loader,
   Stack,
   Text,
-} from "@nexus/shared-ui";
-import { userPreferencesSchema } from "@nexus/shared-validation";
+} from '@nexus/shared-ui';
+import { userPreferencesSchema } from '@nexus/shared-validation';
+import { useDispatch } from 'react-redux';
 
-import { mapApiError } from "../../../hooks/useApiErrorMessage";
-import { WEB_ROUTE_PATHS } from "../../../router/paths";
+import {
+  useGetCurrentUserQuery,
+  useUpdateCurrentUserMutation,
+} from '../../api/services/user/userApi';
+import { mapApiError } from '../../hooks/useApiErrorMessage';
+import type { RootStackParamList } from '../../navigation/types';
+import { MOBILE_ROUTE_NAMES } from '../../navigation/types';
+import type { AppDispatch } from '../../store/createAppStore';
+import { sessionExpiredAcknowledged } from '../../store/slices/auth/authSlice';
 import {
   classifySystemFailure,
   profileFailureCopy,
-} from "../../../system";
-import { useGetCurrentUserQuery, useUpdateCurrentUserMutation } from "../api";
+} from '../../system';
 
 export const PreferencesScreen: FC = () => {
-  const navigate = useNavigate();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const dispatch = useDispatch<AppDispatch>();
   const { data: profile, isLoading, isFetching, error, refetch } =
     useGetCurrentUserQuery();
   const [updateProfile, updateState] = useUpdateCurrentUserMutation();
   const [retrying, setRetrying] = useState(false);
+  const [preferencesText, setPreferencesText] = useState<string | undefined>();
   const [parseError, setParseError] = useState<string | undefined>();
   const [successMessage, setSuccessMessage] = useState<string | undefined>();
 
@@ -32,7 +44,7 @@ export const PreferencesScreen: FC = () => {
         align="center"
         padding="xl"
         gap="md"
-        testID="preferences-loading"
+        testID="mobile-preferences-loading"
         accessibilityLabel="Loading preferences"
       >
         <Loader accessibilityLabel="Loading preferences" />
@@ -51,17 +63,17 @@ export const PreferencesScreen: FC = () => {
       retryable: apiError.retryable,
       authAction: apiError.authAction,
       authorizationAction: apiError.authorizationAction,
-      context: "authenticated",
+      context: 'authenticated',
     });
     const copy = profileFailureCopy(presentation.kind, apiError.message);
     const busy = retrying || isFetching;
 
     return (
-      <Stack padding="xl" gap="md" testID="preferences-error">
+      <Stack padding="xl" gap="md" testID="mobile-preferences-error">
         <InlineAlert tone={presentation.tone} title={copy.title}>
           {copy.message}
         </InlineAlert>
-        {presentation.primaryAction === "retry" ? (
+        {presentation.primaryAction === 'retry' ? (
           <Button
             loading={busy}
             disabled={busy}
@@ -76,52 +88,48 @@ export const PreferencesScreen: FC = () => {
             Retry
           </Button>
         ) : null}
-        {presentation.primaryAction === "signIn" ? (
-          <Link to={WEB_ROUTE_PATHS.login}>
-            <Button accessibilityLabel="Sign in">Sign in</Button>
-          </Link>
+        {presentation.primaryAction === 'signIn' ? (
+          <Button
+            onPress={() => {
+              dispatch(sessionExpiredAcknowledged());
+            }}
+            accessibilityLabel="Sign in"
+          >
+            Sign in
+          </Button>
         ) : null}
       </Stack>
     );
   }
 
-  const preferences = profile?.preferences ?? {};
-  const preferenceText = JSON.stringify(preferences, null, 2);
+  const preferenceText =
+    preferencesText ??
+    JSON.stringify(profile?.preferences ?? {}, null, 2);
 
-  const onSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+  const onSubmit = async () => {
     setParseError(undefined);
     setSuccessMessage(undefined);
 
-    const form = event.currentTarget as HTMLFormElement;
-    const textarea = form.elements.namedItem("preferences") as
-      | HTMLTextAreaElement
-      | null;
-
-    if (!textarea) {
-      return;
-    }
-
     let parsed: Record<string, unknown>;
     try {
-      parsed = JSON.parse(textarea.value || "{}") as Record<string, unknown>;
+      parsed = JSON.parse(preferenceText || '{}') as Record<string, unknown>;
     } catch {
-      setParseError("Preferences must be valid JSON.");
+      setParseError('Preferences must be valid JSON.');
       return;
     }
 
     const validated = userPreferencesSchema.safeParse({ preferences: parsed });
     if (!validated.success) {
       setParseError(
-        validated.error.issues[0]?.message ?? "Invalid preferences object.",
+        validated.error.issues[0]?.message ?? 'Invalid preferences object.',
       );
       return;
     }
 
     try {
       await updateProfile({ preferences: validated.data.preferences }).unwrap();
-      setSuccessMessage("Preferences saved.");
-      navigate(WEB_ROUTE_PATHS.profile);
+      setSuccessMessage('Preferences saved.');
+      navigation.navigate(MOBILE_ROUTE_NAMES.Profile);
     } catch {
       // surfaced below
     }
@@ -132,7 +140,7 @@ export const PreferencesScreen: FC = () => {
     : undefined;
 
   return (
-    <Stack padding="xl" gap="lg" testID="preferences-screen">
+    <Stack padding="xl" gap="md" testID="mobile-preferences-screen">
       <Text variant="h2" accessibilityRole="heading">
         Preferences
       </Text>
@@ -151,36 +159,30 @@ export const PreferencesScreen: FC = () => {
           {mutationError}
         </InlineAlert>
       ) : null}
-      <form onSubmit={onSubmit}>
-        <Stack gap="md">
-          <label htmlFor="preferences-json">
-            <Text weight="bold">Preferences (JSON)</Text>
-          </label>
-          <textarea
-            id="preferences-json"
-            name="preferences"
-            rows={10}
-            defaultValue={preferenceText}
-            aria-label="Preferences JSON"
-            aria-invalid={Boolean(parseError)}
-            style={{ width: "100%", fontFamily: "monospace" }}
-          />
-          <Stack direction="horizontal" gap="md">
-            <Button
-              type="submit"
-              loading={updateState.isLoading}
-              accessibilityLabel="Save preferences"
-            >
-              Save preferences
-            </Button>
-            <Link to={WEB_ROUTE_PATHS.profile}>
-              <Button variant="secondary" accessibilityLabel="Cancel">
-                Cancel
-              </Button>
-            </Link>
-          </Stack>
-        </Stack>
-      </form>
+      <FormField
+        label="Preferences (JSON)"
+        value={preferenceText}
+        onChangeText={value => setPreferencesText(value)}
+        errorText={parseError}
+        helperText="JSON object stored on the user profile."
+        accessibilityLabel="Preferences JSON"
+      />
+      <Button
+        loading={updateState.isLoading}
+        onPress={() => {
+          void onSubmit();
+        }}
+        accessibilityLabel="Save preferences"
+      >
+        Save preferences
+      </Button>
+      <Button
+        variant="secondary"
+        onPress={() => navigation.navigate(MOBILE_ROUTE_NAMES.Profile)}
+        accessibilityLabel="Cancel"
+      >
+        Cancel
+      </Button>
     </Stack>
   );
 };

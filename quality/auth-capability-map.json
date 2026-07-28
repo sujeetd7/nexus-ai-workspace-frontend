@@ -10,7 +10,7 @@
       "webFeature": "RegisterScreen",
       "mobileFeature": "RegisterScreen",
       "tests": [
-        "packages/shared-utils/src/auth/createAuthClient.test.ts",
+        "apps/web/src/api/auth/createWebAuthClient.test.ts",
         "apps/web/src/features/auth/screens/AuthScreens.test.tsx",
         "apps/mobile/__tests__/AuthScreens.test.tsx"
       ],
@@ -25,7 +25,7 @@
       "webFeature": "LoginScreen",
       "mobileFeature": "LoginScreen",
       "tests": [
-        "packages/shared-utils/src/auth/createAuthClient.test.ts",
+        "apps/web/src/api/auth/createWebAuthClient.test.ts",
         "apps/web/src/features/auth/screens/LoginScreen.test.tsx",
         "apps/web/src/stories/patterns/auth/LoginComposition.test.tsx",
         "apps/mobile/__tests__/AuthScreens.test.tsx"
@@ -57,7 +57,7 @@
       "webFeature": "DashboardScreen",
       "mobileFeature": "DashboardScreen",
       "tests": [
-        "packages/shared-utils/src/auth/createAuthClient.test.ts",
+        "apps/web/src/api/auth/createWebAuthClient.test.ts",
         "apps/mobile/__tests__/DashboardScreen.test.tsx"
       ],
       "maturity": "cross-platform-wired"
@@ -70,7 +70,7 @@
       "sessionOwner": "createSessionManager.logoutAll",
       "webFeature": null,
       "mobileFeature": null,
-      "tests": ["packages/shared-utils/src/auth/createAuthClient.test.ts"],
+      "tests": ["apps/web/src/api/auth/createWebAuthClient.test.ts"],
       "maturity": "client-wired"
     },
     {

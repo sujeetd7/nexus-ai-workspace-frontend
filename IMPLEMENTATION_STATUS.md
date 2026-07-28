@@ -2,11 +2,43 @@
 
 ## Current Phase
 
-Sprint 5 — Workspace Bootstrap remediation (5D.1-R1): **Implemented — validation user-owned**
-Sprint 5 — AI Engineering Platform Consumer Wiring: **In progress** (Batch 5.1G complete; Batch 5.2D auth UI composition contract complete; Batch 5.2E a11y prop adapter complete)
-Sprint 5 — Design System screenshot SoT: **In progress** (5.DS.0–5.DS.9 complete — validation user-owned)
-Batch 5.DS.9 — Mobile Application Shell: **Implemented — validation user-owned**
-Batch 5.DS.8 — Web Application Shell: **Implemented — validation user-owned**
+Sprint 5 — Final Acceptance (5.F.4): **Accepted — `pnpm verify` passed (2026-07-28)**
+Sprint 5 — Workspace Management Reconciliation (5.F.3): **Implemented**
+Sprint 5 — User Management Reconciliation (5.F.2): **Implemented**
+Sprint 5 — Workspace Bootstrap remediation (5D.1-R1 / mapping 5D.1-R2): **Implemented**
+Sprint 5 — AI Engineering Platform Consumer Wiring: **Complete for Sprint 5 scope** (Batch 5.1G; 5.2D auth UI composition; 5.2E a11y prop adapter)
+Sprint 5 — Design System screenshot SoT: **Complete for Sprint 5 scope** (5.DS.0–5.DS.9)
+Batch 5.DS.9 — Mobile Application Shell: **Implemented**
+Batch 5.DS.8 — Web Application Shell: **Implemented**
+
+## Sprint 5 — Final Acceptance (5.F.4)
+
+- Scope: reconcile Auth / User / Workspace / Shells / Bootstrap / Session / Failure UX / Storybook / QI / docs; fix confirmed defects only; no Sprint 6 features
+- Defects fixed: mobile NotFound guest recovery; mobile shell nav typecheck; mobile `useValidatedForm` exhaustive-deps; shared-ui Skeleton/Switch lint; Input `given-name`/`family-name`; web VerifyEmail narrowing; Sidebar/Skeleton Stack `style` misuse; workspace test role typing; auth QI broken test path; web typecheck script (`tsc -b`); navigation architecture + status docs
+- Validation evidence (2026-07-28): `pnpm verify` exit 0 (lint, typecheck, boundaries, adr, test, build, storybook:build)
+- Deferred remain: RN Storybook (TD-057), mobile deep-link host (TD-060), mobile create workspace, workspace avatar/settings entity, admin user directory, avatar upload
+- QI: auth/user/workspace/ui capability maps + `quality/test-map.json` reconciled for Sprint 5 surfaces
+- Production readiness: Sprint 5 engineering acceptance complete; ops deploy automation remains deferred
+
+## Sprint 5 — Batch 5.F.3 (Workspace Management Reconciliation)
+
+- Backend SoT: workspace CRUD, members, invitations (accept/reject); leave = self `removeMember`; no workspace avatar; settings entity deferred (not OpenAPI-stable)
+- Mobile: Detail / Settings / Members / Invitations / Invite / Accept+Decline; routes/linking/shell; failure UX
+- Web: failure classification, settings form sync, leave workspace, decline invitation, EmptyState
+- Reuses workspaceApi / bootstrap / switcher / shells / SessionManager / classifySystemFailure — no shared-ui or backend changes
+- Docs: `docs/sprint-5/WORKSPACE_MANAGEMENT_RECONCILIATION.md`
+- QI: `quality/workspace-capability-map.json`, `quality/test-map.json` (FE-WORKSPACE-MANAGEMENT)
+- Deferred: workspace avatar, settings entity API, mobile create workspace, dedicated leave route
+
+## Sprint 5 — Batch 5.F.2 (User Management Reconciliation)
+
+- Backend SoT: `GET/PATCH /users/me`, `POST /users`; avatar = optional URL string (no upload API)
+- Mobile: Edit Profile + Preferences screens; Profile details + Avatar; routes/linking/shell titles; Settings → Preferences
+- Web: failure classification (401/403/session/retry), Avatar display, edit form sync after load, preferences JSON validation
+- Reuses UserClient / RTK Query / shells / SessionManager / classifySystemFailure — no shared-ui or backend changes
+- Docs: `docs/sprint-5/USER_MANAGEMENT_RECONCILIATION.md`
+- QI: `quality/user-capability-map.json`, `quality/test-map.json` (FE-USER-MANAGEMENT)
+- Deferred: admin directory CRUD (`/users/{id}`, list), avatar upload
 
 ## Sprint 5 — Batch 5.DS.9 (Mobile Application Shell)
 
@@ -441,13 +473,15 @@ See `docs/sprint-2/BATCH_MAP.md` and `docs/sprint-2/SPRINT_2_COMPLETION_REPORT.m
 
 ## Deferred
 
-- Sprint 4+ product features (AI/MCP/agents/tools, business routes, auth/RBAC UI) — not started
+- Sprint 6+ product features (Documents, Prompt Library, AI Chat, Agents, Admin, AI/MCP/tools runtime)
+- Full RBAC / role-gated route evaluation beyond session + workspace bootstrap gates
 - Product feature manifests (framework ready; lists empty by design in Sprint 3)
 - GraphQL React provider (deferred until approved consumer; ADR-0006)
 - React Native Storybook (TD-057)
 - Overlay composites / Tooltip (TD-056 — architecture review)
 - Design System generator implementation (specs only)
-- Level 3 Patterns / Level 4 shared Screen catalog
+- Level 3 Patterns catalog expansion beyond AuthShell / AppShell compositions
+- Level 4 shared Screen catalog
 - APK/AAB release automation
 - web deployment automation
 - production SonarQube integration (root baseline config present; hosted scan deferred)
@@ -470,7 +504,8 @@ See `docs/sprint-2/BATCH_MAP.md` and `docs/sprint-2/SPRINT_2_COMPLETION_REPORT.m
 - Shared audit metadata / soft-delete / optimistic versioning (see technical debt)
 - API response runtime validation at DTO boundaries
 - Automatic Axios interceptor conversion to `AppError`
-- Sprint 2 authentication UI and product features
+- Workspace avatar / settings entity API / mobile create workspace (5.F.3)
+- Admin user directory CRUD / avatar upload API (5.F.2)
 - Tamagui stub-component migration (TD-047) — closed in Batch 2.4
 - Tamagui compiler extraction / Metro plugin (TD-048)
 

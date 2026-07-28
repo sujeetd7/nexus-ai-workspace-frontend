@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "batch": "5D.1-R2",
+  "version": 3,
+  "batch": "5.F.3",
   "capabilities": [
     {
       "operationId": "workspaceList",
@@ -30,19 +30,8 @@
         "mcp": "authenticated; canonical file + Nexus Tokens + page created in 5D.1-R2; frame nodes pending MCP quota reset"
       },
       "tests": [
-        "backend/services/workspace-service/tests/unit/workspace-list-membership.spec.ts",
-        "backend/services/workspace-service/tests/unit/workspace.repository.spec.ts",
-        "backend/gateway/api-gateway/tests/integration/gateway.swagger.spec.ts",
-        "packages/shared-utils/src/workspace/createWorkspaceClient.test.ts",
-        "apps/web/src/providers/WorkspaceBootstrap.test.tsx",
         "apps/web/src/features/workspaces/screens/WorkspaceListScreen.test.tsx",
-        "apps/web/src/router/guards/AuthRouteGuard.test.tsx",
-        "apps/web/src/system/classifySystemFailure.test.ts",
-        "apps/web/src/platform/workspace/createWebSelectedWorkspaceStorage.test.ts",
-        "apps/mobile/__tests__/workspaceStorage.test.ts",
-        "apps/mobile/__tests__/WorkspaceListScreen.test.tsx",
-        "apps/mobile/__tests__/classifySystemFailure.test.ts",
-        "apps/mobile/__tests__/RootNavigator.systemFailure.test.tsx"
+        "apps/mobile/__tests__/WorkspaceListScreen.test.tsx"
       ],
       "systemFailureStates": [
         "sessionExpired",
@@ -52,23 +41,9 @@
         "retryableApi"
       ],
       "errorClassification": "apps/*/src/system/classifySystemFailure.ts via mapApiError",
-      "traceability": [
-        "Workspace Selection",
-        "Backend Route GET /api/v1/workspaces",
-        "Gateway GET /api/v1/workspaces",
-        "Swagger documented",
-        "RTK Query workspaceApi.listWorkspaces",
-        "Web WorkspaceListScreen",
-        "Mobile WorkspaceListScreen",
-        "Storybook Patterns/Workspace/WorkspaceSelection",
-        "Tests (web + mobile list screens)",
-        "Figma node 1:21 (file FsvUWNEF0SJAvYEawUBuqg)"
-      ],
       "maturity": "mobile-wired",
       "residualRisks": [
-        "Mobile selected-workspace persistence is session-scoped (TD-032 durable KV ADR pending)",
-        "Figma MCP Starter quota blocked finishing individual state frames; token page + design contract are canonical until frames are painted",
-        "Gateway swagger aggregation depends on workspace-service OpenAPI build artifact"
+        "Mobile selected-workspace persistence is session-scoped (TD-032 durable KV ADR pending)"
       ]
     },
     {
@@ -80,7 +55,8 @@
       "webFeature": "CreateWorkspaceScreen",
       "mobileFeature": null,
       "tests": [],
-      "maturity": "web-wired"
+      "maturity": "web-wired",
+      "deferredReason": "Mobile create not in 5.F.3 confirmed gap list"
     },
     {
       "operationId": "workspaceGet",
@@ -89,20 +65,41 @@
       "workspaceClient": "createWorkspaceClient.getWorkspace",
       "queryOwner": "workspaceApi.getWorkspace",
       "webFeature": "WorkspaceDetailScreen",
-      "mobileFeature": null,
-      "tests": [],
-      "maturity": "web-wired"
+      "mobileFeature": "WorkspaceDetailScreen",
+      "webScreen": "apps/web/src/features/workspaces/screens/WorkspaceDetailScreen.tsx",
+      "mobileScreen": "apps/mobile/src/screens/workspaces/WorkspaceDetailScreen.tsx",
+      "tests": [
+        "apps/web/src/features/workspaces/screens/WorkspaceManagementScreens.test.tsx",
+        "apps/mobile/__tests__/WorkspaceManagementScreens.test.tsx"
+      ],
+      "maturity": "mobile-wired"
     },
     {
       "operationId": "workspaceUpdate",
+      "capability": "Workspace Settings / Metadata",
       "gatewayRoute": "PATCH /api/v1/workspaces/{id}",
       "swaggerDocumented": true,
       "workspaceClient": "createWorkspaceClient.updateWorkspace",
       "queryOwner": "workspaceApi.updateWorkspace",
-      "webFeature": "WorkspaceDetailScreen",
+      "webFeature": "WorkspaceDetailScreen settings form",
+      "mobileFeature": "WorkspaceDetailScreen settings form",
+      "tests": [
+        "apps/web/src/features/workspaces/screens/WorkspaceManagementScreens.test.tsx",
+        "apps/mobile/__tests__/WorkspaceManagementScreens.test.tsx"
+      ],
+      "maturity": "mobile-wired"
+    },
+    {
+      "operationId": "workspaceDelete",
+      "gatewayRoute": "DELETE /api/v1/workspaces/{id}",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.deleteWorkspace",
+      "queryOwner": "workspaceApi.deleteWorkspace",
+      "webFeature": null,
       "mobileFeature": null,
       "tests": [],
-      "maturity": "web-wired"
+      "maturity": "client-wired",
+      "deferredReason": "Destructive delete UX not in 5.F.3 confirmed gap list"
     },
     {
       "operationId": "workspaceMemberList",
@@ -111,11 +108,12 @@
       "workspaceClient": "createWorkspaceClient.listMembers",
       "queryOwner": "workspaceApi.listMembers",
       "webFeature": "WorkspaceMembersScreen",
-      "mobileFeature": null,
+      "mobileFeature": "WorkspaceMembersScreen",
       "tests": [
-        "packages/shared-utils/src/workspace/createWorkspaceClient.test.ts"
+        "apps/web/src/features/workspaces/screens/WorkspaceManagementScreens.test.tsx",
+        "apps/mobile/__tests__/WorkspaceManagementScreens.test.tsx"
       ],
-      "maturity": "web-wired"
+      "maturity": "mobile-wired"
     },
     {
       "operationId": "workspaceMemberUpdateRole",
@@ -124,20 +122,25 @@
       "workspaceClient": "createWorkspaceClient.updateMemberRole",
       "queryOwner": "workspaceApi.updateMemberRole",
       "webFeature": "WorkspaceMembersScreen",
-      "mobileFeature": null,
+      "mobileFeature": "WorkspaceMembersScreen",
       "tests": [],
-      "maturity": "web-wired"
+      "maturity": "mobile-wired"
     },
     {
       "operationId": "workspaceMemberRemove",
+      "capability": "Remove member / Leave workspace",
       "gatewayRoute": "DELETE /api/v1/workspaces/{id}/members/{memberId}",
       "swaggerDocumented": true,
       "workspaceClient": "createWorkspaceClient.removeMember",
       "queryOwner": "workspaceApi.removeMember",
-      "webFeature": "WorkspaceMembersScreen",
-      "mobileFeature": null,
-      "tests": [],
-      "maturity": "web-wired"
+      "webFeature": "WorkspaceMembersScreen + WorkspaceDetailScreen leave",
+      "mobileFeature": "WorkspaceMembersScreen + WorkspaceDetailScreen leave",
+      "notes": "No dedicated leave route; leave = self removeMember",
+      "tests": [
+        "apps/web/src/features/workspaces/screens/WorkspaceManagementScreens.test.tsx",
+        "apps/mobile/__tests__/WorkspaceManagementScreens.test.tsx"
+      ],
+      "maturity": "mobile-wired"
     },
     {
       "operationId": "workspaceInvitationList",
@@ -146,9 +149,11 @@
       "workspaceClient": "createWorkspaceClient.listInvitations",
       "queryOwner": "workspaceApi.listInvitations",
       "webFeature": "WorkspaceInvitationsScreen",
-      "mobileFeature": null,
-      "tests": [],
-      "maturity": "web-wired"
+      "mobileFeature": "WorkspaceInvitationsScreen",
+      "tests": [
+        "apps/web/src/features/workspaces/screens/WorkspaceManagementScreens.test.tsx"
+      ],
+      "maturity": "mobile-wired"
     },
     {
       "operationId": "workspaceInvitationCreate",
@@ -157,9 +162,9 @@
       "workspaceClient": "createWorkspaceClient.createInvitation",
       "queryOwner": "workspaceApi.createInvitation",
       "webFeature": "InviteMemberScreen",
-      "mobileFeature": null,
+      "mobileFeature": "InviteMemberScreen",
       "tests": [],
-      "maturity": "web-wired"
+      "maturity": "mobile-wired"
     },
     {
       "operationId": "workspaceInvitationAccept",
@@ -168,11 +173,21 @@
       "workspaceClient": "createWorkspaceClient.acceptInvitation",
       "queryOwner": "workspaceApi.acceptInvitation",
       "webFeature": "AcceptInvitationScreen",
-      "mobileFeature": null,
-      "tests": [
-        "packages/shared-utils/src/workspace/createWorkspaceClient.test.ts"
-      ],
-      "maturity": "web-wired"
+      "mobileFeature": "AcceptInvitationScreen",
+      "tests": [],
+      "maturity": "mobile-wired"
+    },
+    {
+      "operationId": "workspaceInvitationReject",
+      "capability": "Decline invitation",
+      "gatewayRoute": "POST /api/v1/workspaces/invitations/reject",
+      "swaggerDocumented": true,
+      "workspaceClient": "createWorkspaceClient.rejectInvitation",
+      "queryOwner": "workspaceApi.rejectInvitation",
+      "webFeature": "AcceptInvitationScreen decline",
+      "mobileFeature": "AcceptInvitationScreen decline",
+      "tests": [],
+      "maturity": "mobile-wired"
     },
     {
       "operationId": "workspaceInvitationDelete",
@@ -181,9 +196,28 @@
       "workspaceClient": "createWorkspaceClient.deleteInvitation",
       "queryOwner": "workspaceApi.deleteInvitation",
       "webFeature": "WorkspaceInvitationsScreen",
-      "mobileFeature": null,
+      "mobileFeature": "WorkspaceInvitationsScreen",
       "tests": [],
-      "maturity": "web-wired"
+      "maturity": "mobile-wired"
+    },
+    {
+      "operationId": "workspaceAvatar",
+      "capability": "Workspace Avatar",
+      "swaggerDocumented": false,
+      "webFeature": null,
+      "mobileFeature": null,
+      "maturity": "deferred",
+      "deferredReason": "Workspace entity has no avatar field"
+    },
+    {
+      "operationId": "workspaceSettingsEntity",
+      "capability": "Workspace Settings entity API",
+      "backendRoute": "GET/POST/PATCH /api/v1/workspaces/{id}/settings",
+      "swaggerDocumented": false,
+      "webFeature": null,
+      "mobileFeature": null,
+      "maturity": "deferred",
+      "deferredReason": "Present in service routes but not OpenAPI stable routes / gateway swagger"
     }
   ]
 }

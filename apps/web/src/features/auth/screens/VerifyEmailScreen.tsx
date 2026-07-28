@@ -59,12 +59,12 @@ export const VerifyEmailScreen: FC = () => {
         return;
       }
 
-      if (result.success) {
-        setSuccess(true);
-        setApiError(undefined);
-      } else {
+      if ("error" in result) {
         setSuccess(false);
         setApiError(result.error);
+      } else {
+        setSuccess(true);
+        setApiError(undefined);
       }
 
       setLoading(false);
@@ -94,10 +94,10 @@ export const VerifyEmailScreen: FC = () => {
 
     const result = await requestEmailVerification(token);
 
-    if (result.success) {
-      setSuccess(true);
-    } else {
+    if ("error" in result) {
       setApiError(result.error);
+    } else {
+      setSuccess(true);
     }
 
     setLoading(false);

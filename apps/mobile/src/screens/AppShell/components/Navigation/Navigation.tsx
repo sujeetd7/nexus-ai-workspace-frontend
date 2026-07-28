@@ -4,7 +4,6 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ListRow, Stack, Text } from '@nexus/shared-ui';
 
 import type { RootStackParamList } from '../../../../navigation/types';
-import { MOBILE_ROUTE_NAMES } from '../../../../navigation/types';
 import {
   PRIMARY_NAV_ITEMS,
   SETTINGS_NAV_ITEM,
@@ -20,7 +19,8 @@ function isNavItemActive(
   item: ShellNavItem,
   currentRoute: string,
 ): boolean {
-  return MOBILE_ROUTE_NAMES[item.routeName] === currentRoute;
+  // ShellNavRouteName keys match MOBILE_ROUTE_NAMES values (param-less routes).
+  return item.routeName === currentRoute;
 }
 
 function NavItemRow({
@@ -44,7 +44,7 @@ function NavItemRow({
       testID={`mobile-app-shell-nav-${item.id}`}
       onPress={() => {
         onNavigate?.();
-        navigation.navigate(MOBILE_ROUTE_NAMES[item.routeName]);
+        navigation.navigate(item.routeName);
       }}
     />
   );
@@ -93,8 +93,7 @@ export function SettingsNavigation({
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const route = useRoute();
-  const selected =
-    MOBILE_ROUTE_NAMES[SETTINGS_NAV_ITEM.routeName] === route.name;
+  const selected = SETTINGS_NAV_ITEM.routeName === route.name;
 
   return (
     <Stack gap="xs">
@@ -106,7 +105,7 @@ export function SettingsNavigation({
         testID={`mobile-app-shell-nav-${SETTINGS_NAV_ITEM.id}-settings`}
         onPress={() => {
           onNavigate?.();
-          navigation.navigate(MOBILE_ROUTE_NAMES[SETTINGS_NAV_ITEM.routeName]);
+          navigation.navigate(SETTINGS_NAV_ITEM.routeName);
         }}
       />
     </Stack>

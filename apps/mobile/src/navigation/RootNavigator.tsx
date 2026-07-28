@@ -16,9 +16,20 @@ import {
   ResetPasswordScreen,
   VerifyEmailScreen,
 } from "../screens/auth";
-import { ProfileScreen } from "../screens/profile/ProfileScreen";
+import {
+  EditProfileScreen,
+  PreferencesScreen,
+  ProfileScreen,
+} from "../screens/profile";
 import { createShellScreen } from "../screens/AppShell";
-import { WorkspaceListScreen } from "../screens/workspaces/WorkspaceListScreen";
+import {
+  AcceptInvitationScreen,
+  InviteMemberScreen,
+  WorkspaceDetailScreen,
+  WorkspaceInvitationsScreen,
+  WorkspaceListScreen,
+  WorkspaceMembersScreen,
+} from "../screens/workspaces";
 import {
   classifySystemFailure,
   SystemFailureView,
@@ -48,7 +59,16 @@ const NativeStack = createNativeStackNavigator<RootStackParamList>();
 
 const ShellDashboardScreen = createShellScreen(DashboardScreen);
 const ShellWorkspaceListScreen = createShellScreen(WorkspaceListScreen);
+const ShellWorkspaceDetailScreen = createShellScreen(WorkspaceDetailScreen);
+const ShellWorkspaceMembersScreen = createShellScreen(WorkspaceMembersScreen);
+const ShellWorkspaceInvitationsScreen = createShellScreen(
+  WorkspaceInvitationsScreen,
+);
+const ShellInviteMemberScreen = createShellScreen(InviteMemberScreen);
+const ShellAcceptInvitationScreen = createShellScreen(AcceptInvitationScreen);
 const ShellProfileScreen = createShellScreen(ProfileScreen);
+const ShellEditProfileScreen = createShellScreen(EditProfileScreen);
+const ShellPreferencesScreen = createShellScreen(PreferencesScreen);
 const ShellHomeScreen = createShellScreen(HomeScreen);
 
 function AuthLoadingScreen() {
@@ -222,12 +242,40 @@ export function RootNavigator() {
             component={ShellWorkspaceListScreen}
           />
           <NativeStack.Screen
+            name={MOBILE_ROUTE_NAMES.WorkspaceDetail}
+            component={ShellWorkspaceDetailScreen}
+          />
+          <NativeStack.Screen
+            name={MOBILE_ROUTE_NAMES.WorkspaceMembers}
+            component={ShellWorkspaceMembersScreen}
+          />
+          <NativeStack.Screen
+            name={MOBILE_ROUTE_NAMES.WorkspaceInvitations}
+            component={ShellWorkspaceInvitationsScreen}
+          />
+          <NativeStack.Screen
+            name={MOBILE_ROUTE_NAMES.WorkspaceInvite}
+            component={ShellInviteMemberScreen}
+          />
+          <NativeStack.Screen
+            name={MOBILE_ROUTE_NAMES.AcceptInvitation}
+            component={ShellAcceptInvitationScreen}
+          />
+          <NativeStack.Screen
             name={MOBILE_ROUTE_NAMES.Dashboard}
             component={ShellDashboardScreen}
           />
           <NativeStack.Screen
             name={MOBILE_ROUTE_NAMES.Profile}
             component={ShellProfileScreen}
+          />
+          <NativeStack.Screen
+            name={MOBILE_ROUTE_NAMES.ProfileEdit}
+            component={ShellEditProfileScreen}
+          />
+          <NativeStack.Screen
+            name={MOBILE_ROUTE_NAMES.ProfilePreferences}
+            component={ShellPreferencesScreen}
           />
           <NativeStack.Screen
             name={MOBILE_ROUTE_NAMES.Home}

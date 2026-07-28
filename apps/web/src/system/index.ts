@@ -1,6 +1,7 @@
 export {
   classifySystemFailure,
   workspaceFailureCopy,
+  profileFailureCopy,
   type SystemFailureInput,
   type SystemFailureKind,
   type SystemFailurePresentation,

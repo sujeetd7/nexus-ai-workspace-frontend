@@ -1,5 +1,6 @@
 import {
   classifySystemFailure,
+  profileFailureCopy,
   workspaceFailureCopy,
 } from '../src/system/classifySystemFailure';
 
@@ -47,5 +48,12 @@ describe('classifySystemFailure (mobile)', () => {
   it('keeps workspace copy titles stable', () => {
     expect(workspaceFailureCopy('sessionExpired').title).toBe('Session expired');
     expect(workspaceFailureCopy('forbidden').title).toBe('Permission denied');
+  });
+
+  it('keeps profile copy titles stable', () => {
+    expect(profileFailureCopy('unauthorized').message).toContain('profile');
+    expect(profileFailureCopy('retryableApi').title).toBe(
+      'Unable to load profile',
+    );
   });
 });

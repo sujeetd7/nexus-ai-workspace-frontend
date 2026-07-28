@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   classifySystemFailure,
+  profileFailureCopy,
   workspaceFailureCopy,
 } from "./classifySystemFailure";
 
@@ -78,5 +79,12 @@ describe("classifySystemFailure", () => {
   it("maps workspace copy for forbidden and session expired", () => {
     expect(workspaceFailureCopy("forbidden").title).toBe("Permission denied");
     expect(workspaceFailureCopy("sessionExpired").title).toBe("Session expired");
+  });
+
+  it("maps profile copy for unauthorized and retryable failures", () => {
+    expect(profileFailureCopy("unauthorized").message).toContain("profile");
+    expect(profileFailureCopy("retryableApi").title).toBe(
+      "Unable to load profile",
+    );
   });
 });

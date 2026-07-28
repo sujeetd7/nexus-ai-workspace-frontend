@@ -34,6 +34,16 @@
       "id": "FE-MOBILE-APPLICATION-SHELL",
       "title": "Mobile application shell (header, drawer, content)",
       "tags": ["shell", "mobile", "navigation", "workspace"]
+    },
+    {
+      "id": "FE-USER-MANAGEMENT",
+      "title": "User management reconciliation (profile, edit, preferences, avatar URL)",
+      "tags": ["user", "profile", "web", "mobile"]
+    },
+    {
+      "id": "FE-WORKSPACE-MANAGEMENT",
+      "title": "Workspace management reconciliation (detail, members, invitations, leave, decline)",
+      "tags": ["workspace", "web", "mobile"]
     }
   ],
   "mappings": [
@@ -59,7 +69,11 @@
         "apps/web/src/features/workspaces/screens/WorkspaceListScreen.test.tsx",
         "apps/mobile/__tests__/WorkspaceListScreen.test.tsx",
         "apps/web/src/screens/AppShell/AppShell.test.tsx",
-        "apps/mobile/src/screens/AppShell/MobileAppShell.test.tsx"
+        "apps/mobile/src/screens/AppShell/MobileAppShell.test.tsx",
+        "apps/web/src/features/profile/screens/ProfileScreens.test.tsx",
+        "apps/mobile/__tests__/ProfileScreens.test.tsx",
+        "apps/web/src/features/workspaces/screens/WorkspaceManagementScreens.test.tsx",
+        "apps/mobile/__tests__/WorkspaceManagementScreens.test.tsx"
       ]
     },
     {
@@ -130,6 +144,28 @@
         "apps/mobile/src/screens/AppShell/MobileAppShell.test.tsx",
         "apps/mobile/src/screens/AppShell/hooks/useDrawer.test.tsx",
         "apps/mobile/src/screens/AppShell/utils/profileDisplay.test.ts"
+      ]
+    },
+    {
+      "targetType": "requirement",
+      "targetId": "FE-USER-MANAGEMENT",
+      "tests": [
+        "apps/web/src/features/profile/screens/ProfileScreens.test.tsx",
+        "apps/mobile/__tests__/ProfileScreens.test.tsx",
+        "apps/mobile/__tests__/navigation.test.ts",
+        "apps/web/src/system/classifySystemFailure.test.ts",
+        "apps/mobile/__tests__/classifySystemFailure.test.ts",
+        "packages/shared-utils/src/user/createUserClient.test.ts"
+      ]
+    },
+    {
+      "targetType": "requirement",
+      "targetId": "FE-WORKSPACE-MANAGEMENT",
+      "tests": [
+        "apps/web/src/features/workspaces/screens/WorkspaceManagementScreens.test.tsx",
+        "apps/mobile/__tests__/WorkspaceManagementScreens.test.tsx",
+        "apps/mobile/__tests__/navigation.test.ts",
+        "packages/shared-utils/src/workspace/createWorkspaceClient.test.ts"
       ]
     },
     {

@@ -1,5 +1,7 @@
-import { useState, type FC, type FormEvent } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState, type FC } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RouteProp } from '@react-navigation/native';
 import {
   Button,
   EmptyState,
@@ -8,36 +10,43 @@ import {
   Loader,
   Stack,
   Text,
-} from "@nexus/shared-ui";
-import type { Workspace } from "@nexus/shared-types";
-import { updateWorkspaceSchema } from "@nexus/shared-validation";
-import { useDispatch, useSelector } from "react-redux";
+} from '@nexus/shared-ui';
+import type { Workspace } from '@nexus/shared-types';
+import { updateWorkspaceSchema } from '@nexus/shared-validation';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { mapApiError } from "../../../hooks/useApiErrorMessage";
-import { useValidatedForm } from "../../../hooks/useValidatedForm";
-import { WEB_ROUTE_PATHS } from "../../../router/paths";
-import { createWebSelectedWorkspaceStorage } from "../../../platform/workspace";
-import type { AppDispatch } from "../../../store/createAppStore";
-import { sessionExpiredAcknowledged } from "../../../store/slices/auth/authSlice";
-import { selectUser } from "../../../store/slices/auth/selectors";
-import { clearSelectedWorkspace } from "../../../store/slices/workspace/workspaceSlice";
-import { selectSelectedWorkspaceId } from "../../../store/slices/workspace/selectors";
-import {
-  classifySystemFailure,
-  workspaceFailureCopy,
-} from "../../../system";
 import {
   useGetWorkspaceQuery,
   useListMembersQuery,
   useRemoveMemberMutation,
   useUpdateWorkspaceMutation,
-} from "../api";
+} from '../../api/services/workspace/workspaceApi';
+import { mapApiError } from '../../hooks/useApiErrorMessage';
+import { useValidatedForm } from '../../hooks/useValidatedForm';
+import type { RootStackParamList } from '../../navigation/types';
+import { MOBILE_ROUTE_NAMES } from '../../navigation/types';
+import { createMobileSelectedWorkspaceStorage } from '../../platform/workspace/createMobileSelectedWorkspaceStorage';
+import type { AppDispatch } from '../../store/createAppStore';
+import { sessionExpiredAcknowledged } from '../../store/slices/auth/authSlice';
+import { selectUser } from '../../store/slices/auth/selectors';
+import {
+  clearSelectedWorkspace,
+} from '../../store/slices/workspace/workspaceSlice';
+import {
+  selectSelectedWorkspaceId,
+} from '../../store/slices/workspace/selectors';
+import {
+  classifySystemFailure,
+  workspaceFailureCopy,
+} from '../../system';
 
-const workspaceStorage = createWebSelectedWorkspaceStorage();
+const workspaceStorage = createMobileSelectedWorkspaceStorage();
 
-const WorkspaceSettingsForm: FC<{ readonly workspace: Workspace }> = ({
-  workspace,
-}) => {
+type DetailRoute = RouteProp<RootStackParamList, 'WorkspaceDetail'>;
+
+const WorkspaceSettingsForm: FC<{
+  readonly workspace: Workspace;
+}> = ({ workspace }) => {
   const [updateWorkspace, updateState] = useUpdateWorkspaceMutation();
   const [successMessage, setSuccessMessage] = useState<string | undefined>();
 
@@ -48,12 +57,11 @@ const WorkspaceSettingsForm: FC<{ readonly workspace: Workspace }> = ({
     schema: updateWorkspaceSchema,
     initialValues: {
       name: workspace.name,
-      description: workspace.description ?? "",
+      description: workspace.description ?? '',
     },
   });
 
-  const onSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+  const onSubmit = async () => {
     setSuccessMessage(undefined);
     if (!form.validate()) {
       return;
@@ -67,7 +75,7 @@ const WorkspaceSettingsForm: FC<{ readonly workspace: Workspace }> = ({
           description: form.values.description || undefined,
         },
       }).unwrap();
-      setSuccessMessage("Workspace updated.");
+      setSuccessMessage('Workspace updated.');
     } catch {
       // surfaced below
     }
@@ -78,41 +86,51 @@ const WorkspaceSettingsForm: FC<{ readonly workspace: Workspace }> = ({
     : undefined;
 
   return (
-    <form onSubmit={onSubmit}>
-      <Stack gap="md" testID="workspace-settings-form">
-        <Text variant="h3">Workspace settings</Text>
-        {successMessage ? (
-          <InlineAlert tone="success" title="Saved">
-            {successMessage}
-          </InlineAlert>
-        ) : null}
-        {mutationError ? (
-          <InlineAlert tone="error" title="Unable to update workspace">
-            {mutationError}
-          </InlineAlert>
-        ) : null}
-        <FormField
-          label="Name"
-          value={form.values.name}
-          onChangeText={(value) => form.setField("name", value)}
-          errorText={form.fieldErrors.name}
-        />
-        <FormField
-          label="Description"
-          value={form.values.description}
-          onChangeText={(value) => form.setField("description", value)}
-        />
-        <Button type="submit" loading={updateState.isLoading}>
-          Save changes
-        </Button>
-      </Stack>
-    </form>
+    <Stack gap="md" testID="mobile-workspace-settings-form">
+      <Text variant="h3" accessibilityRole="heading">
+        Workspace settings
+      </Text>
+      {successMessage ? (
+        <InlineAlert tone="success" title="Saved">
+          {successMessage}
+        </InlineAlert>
+      ) : null}
+      {mutationError ? (
+        <InlineAlert tone="error" title="Unable to update workspace">
+          {mutationError}
+        </InlineAlert>
+      ) : null}
+      <FormField
+        label="Name"
+        value={form.values.name}
+        onChangeText={value => form.setField('name', value)}
+        errorText={form.fieldErrors.name}
+        accessibilityLabel="Workspace name"
+      />
+      <FormField
+        label="Description"
+        value={form.values.description}
+        onChangeText={value => form.setField('description', value)}
+        accessibilityLabel="Workspace description"
+      />
+      <Button
+        loading={updateState.isLoading}
+        onPress={() => {
+          void onSubmit();
+        }}
+        accessibilityLabel="Save workspace changes"
+      >
+        Save changes
+      </Button>
+    </Stack>
   );
 };
 
 export const WorkspaceDetailScreen: FC = () => {
-  const { workspaceId = "" } = useParams();
-  const navigate = useNavigate();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const route = useRoute<DetailRoute>();
+  const workspaceId = route.params?.workspaceId ?? '';
   const dispatch = useDispatch<AppDispatch>();
   const authUser = useSelector(selectUser);
   const selectedId = useSelector(selectSelectedWorkspaceId);
@@ -129,7 +147,7 @@ export const WorkspaceDetailScreen: FC = () => {
 
   if (!workspaceId) {
     return (
-      <Stack padding="xl" gap="md" testID="workspace-detail-missing">
+      <Stack padding="xl" gap="md" testID="mobile-workspace-detail-missing">
         <EmptyState
           title="Workspace not found"
           description="No workspace was selected."
@@ -144,7 +162,7 @@ export const WorkspaceDetailScreen: FC = () => {
         align="center"
         padding="xl"
         gap="md"
-        testID="workspace-detail-loading"
+        testID="mobile-workspace-detail-loading"
         accessibilityLabel="Loading workspace"
       >
         <Loader accessibilityLabel="Loading workspace" />
@@ -163,17 +181,17 @@ export const WorkspaceDetailScreen: FC = () => {
       retryable: apiError.retryable,
       authAction: apiError.authAction,
       authorizationAction: apiError.authorizationAction,
-      context: "authenticated",
+      context: 'authenticated',
     });
     const copy = workspaceFailureCopy(presentation.kind, apiError.message);
     const busy = retrying || isFetching;
 
     return (
-      <Stack padding="xl" gap="md" testID="workspace-detail-error">
+      <Stack padding="xl" gap="md" testID="mobile-workspace-detail-error">
         <InlineAlert tone={presentation.tone} title={copy.title}>
           {copy.message}
         </InlineAlert>
-        {presentation.primaryAction === "retry" ? (
+        {presentation.primaryAction === 'retry' ? (
           <Button
             loading={busy}
             disabled={busy}
@@ -188,7 +206,7 @@ export const WorkspaceDetailScreen: FC = () => {
             Retry
           </Button>
         ) : null}
-        {presentation.primaryAction === "signIn" ? (
+        {presentation.primaryAction === 'signIn' ? (
           <Button
             onPress={() => {
               dispatch(sessionExpiredAcknowledged());
@@ -204,29 +222,31 @@ export const WorkspaceDetailScreen: FC = () => {
 
   if (!data) {
     return (
-      <Stack padding="xl" gap="md" testID="workspace-detail-empty">
+      <Stack padding="xl" gap="md" testID="mobile-workspace-detail-empty">
         <EmptyState
           title="Workspace not found"
           description="This workspace may have been removed or you no longer have access."
-          primaryAction={
-            <Link to={WEB_ROUTE_PATHS.workspaces}>
-              <Button>All workspaces</Button>
-            </Link>
-          }
         />
+        <Button
+          variant="secondary"
+          onPress={() => navigation.navigate(MOBILE_ROUTE_NAMES.Workspaces)}
+          accessibilityLabel="Back to workspaces"
+        >
+          All workspaces
+        </Button>
       </Stack>
     );
   }
 
   const canEdit =
     authUser?.id === data.ownerId ||
-    authUser?.role === "ADMIN" ||
-    authUser?.role === "MANAGER";
+    authUser?.role === 'ADMIN' ||
+    authUser?.role === 'MANAGER';
 
-  const selfMember = members?.find((member) => member.userId === authUser?.id);
+  const selfMember = members?.find(member => member.userId === authUser?.id);
   const canLeave =
     selfMember != null &&
-    selfMember.role !== "OWNER" &&
+    selfMember.role !== 'OWNER' &&
     authUser?.id !== data.ownerId;
 
   const onLeave = async () => {
@@ -243,32 +263,55 @@ export const WorkspaceDetailScreen: FC = () => {
         await workspaceStorage.clearSelectedWorkspaceId();
         dispatch(clearSelectedWorkspace());
       }
-      navigate(WEB_ROUTE_PATHS.workspaces);
+      navigation.navigate(MOBILE_ROUTE_NAMES.Workspaces);
     } catch (leaveErr) {
       setLeaveError(mapApiError(leaveErr).message);
     }
   };
 
   return (
-    <Stack padding="xl" gap="lg" testID="workspace-detail-screen">
-      <Text variant="h2">{data.name}</Text>
-      <Text>Slug: {data.slug}</Text>
-      <Text>Owner: {data.ownerId}</Text>
+    <Stack padding="xl" gap="lg" testID="mobile-workspace-detail-screen">
+      <Text variant="h2" accessibilityRole="heading">
+        {data.name}
+      </Text>
+      <Text color="textSecondary">Slug: {data.slug}</Text>
       <Text>Status: {data.status}</Text>
       <Text color="textSecondary">
-        {data.description ?? "No description"}
+        {data.description ?? 'No description'}
       </Text>
-      <Stack direction="horizontal" gap="md">
-        <Link to={`/workspaces/${workspaceId}/members`}>
-          <Button variant="secondary">Members</Button>
-        </Link>
-        <Link to={`/workspaces/${workspaceId}/invitations`}>
-          <Button variant="secondary">Invitations</Button>
-        </Link>
-        <Link to={WEB_ROUTE_PATHS.workspaces}>
-          <Button variant="secondary">All workspaces</Button>
-        </Link>
+
+      <Stack gap="sm">
+        <Button
+          variant="secondary"
+          onPress={() =>
+            navigation.navigate(MOBILE_ROUTE_NAMES.WorkspaceMembers, {
+              workspaceId,
+            })
+          }
+          accessibilityLabel="View members"
+        >
+          Members
+        </Button>
+        <Button
+          variant="secondary"
+          onPress={() =>
+            navigation.navigate(MOBILE_ROUTE_NAMES.WorkspaceInvitations, {
+              workspaceId,
+            })
+          }
+          accessibilityLabel="View invitations"
+        >
+          Invitations
+        </Button>
+        <Button
+          variant="secondary"
+          onPress={() => navigation.navigate(MOBILE_ROUTE_NAMES.Workspaces)}
+          accessibilityLabel="Back to workspaces"
+        >
+          All workspaces
+        </Button>
       </Stack>
+
       {canEdit ? (
         <WorkspaceSettingsForm key={data.updatedAt} workspace={data} />
       ) : (
@@ -276,6 +319,7 @@ export const WorkspaceDetailScreen: FC = () => {
           You do not have permission to edit this workspace.
         </InlineAlert>
       )}
+
       {canLeave ? (
         <Stack gap="sm">
           {leaveError ? (

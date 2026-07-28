@@ -1,4 +1,4 @@
-import { type FC, type FormEvent } from "react";
+import { useState, type FC, type FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   Button,
@@ -7,18 +7,26 @@ import {
   Stack,
   Text,
 } from "@nexus/shared-ui";
-import { acceptInvitationSchema } from "@nexus/shared-validation";
+import {
+  acceptInvitationSchema,
+  rejectInvitationSchema,
+} from "@nexus/shared-validation";
 
 import { mapApiError } from "../../../hooks/useApiErrorMessage";
 import { useValidatedForm } from "../../../hooks/useValidatedForm";
 import { useWorkspaceSwitch } from "../../../hooks/useWorkspaceSwitch";
 import { WEB_ROUTE_PATHS } from "../../../router/paths";
-import { useAcceptInvitationMutation } from "../api";
+import {
+  useAcceptInvitationMutation,
+  useRejectInvitationMutation,
+} from "../api";
 
 export const AcceptInvitationScreen: FC = () => {
   const [searchParams] = useSearchParams();
   const switchWorkspace = useWorkspaceSwitch();
   const [acceptInvitation, acceptState] = useAcceptInvitationMutation();
+  const [rejectInvitation, rejectState] = useRejectInvitationMutation();
+  const [declineMessage, setDeclineMessage] = useState<string | undefined>();
 
   const form = useValidatedForm<{ token: string }>({
     schema: acceptInvitationSchema,
@@ -27,8 +35,9 @@ export const AcceptInvitationScreen: FC = () => {
     },
   });
 
-  const onSubmit = async (event: FormEvent) => {
+  const onAccept = async (event: FormEvent) => {
     event.preventDefault();
+    setDeclineMessage(undefined);
     if (!form.validate()) {
       return;
     }
@@ -43,16 +52,41 @@ export const AcceptInvitationScreen: FC = () => {
     }
   };
 
-  const mutationError = acceptState.error
+  const onDecline = async () => {
+    const result = rejectInvitationSchema.safeParse({
+      token: form.values.token,
+    });
+    if (!result.success) {
+      form.validate();
+      return;
+    }
+
+    try {
+      await rejectInvitation({ token: form.values.token }).unwrap();
+      setDeclineMessage("Invitation declined.");
+    } catch {
+      // surfaced below
+    }
+  };
+
+  const acceptError = acceptState.error
     ? mapApiError(acceptState.error).message
+    : undefined;
+  const declineError = rejectState.error
+    ? mapApiError(rejectState.error).message
     : undefined;
 
   return (
     <Stack padding="xl" gap="lg" testID="accept-invitation-screen">
       <Text variant="h2">Accept invitation</Text>
-      {mutationError ? (
+      {acceptError ? (
         <InlineAlert tone="error" title="Unable to accept invitation">
-          {mutationError}
+          {acceptError}
+        </InlineAlert>
+      ) : null}
+      {declineError ? (
+        <InlineAlert tone="error" title="Unable to decline invitation">
+          {declineError}
         </InlineAlert>
       ) : null}
       {acceptState.isSuccess ? (
@@ -60,7 +94,12 @@ export const AcceptInvitationScreen: FC = () => {
           You have joined the workspace.
         </InlineAlert>
       ) : null}
-      <form onSubmit={onSubmit}>
+      {declineMessage ? (
+        <InlineAlert tone="success" title="Invitation declined">
+          {declineMessage}
+        </InlineAlert>
+      ) : null}
+      <form onSubmit={onAccept}>
         <Stack gap="md">
           <FormField
             label="Invitation token"
@@ -71,6 +110,17 @@ export const AcceptInvitationScreen: FC = () => {
           />
           <Button type="submit" loading={acceptState.isLoading}>
             Accept invitation
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            loading={rejectState.isLoading}
+            onPress={() => {
+              void onDecline();
+            }}
+            accessibilityLabel="Decline invitation"
+          >
+            Decline invitation
           </Button>
         </Stack>
       </form>

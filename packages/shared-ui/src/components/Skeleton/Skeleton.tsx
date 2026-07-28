@@ -46,9 +46,9 @@ export const Skeleton: FC<SkeletonProps> = ({
   accessibilityLabel = "Loading",
   testID,
 }) => {
-  let resolvedWidth: number | `${number}%` | "100%" = width ?? "100%";
-  let resolvedHeight = height ?? textHeight;
-  let borderRadius: RadiusToken | undefined = "sm";
+  let resolvedWidth: number | `${number}%` | "100%";
+  let resolvedHeight: number;
+  let borderRadius: RadiusToken | undefined;
   let padding: SpacingToken | undefined;
 
   switch (variant) {
